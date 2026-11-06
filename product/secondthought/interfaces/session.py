@@ -46,6 +46,7 @@ class Session:
     created_at: float
     profile: dict | None = None          # the visitor's own — never shared
     llm_calls: list = field(default_factory=list)
+    profile_writes: list = field(default_factory=list)
     approvals: ApprovalGate = None
 
     def __post_init__(self):
@@ -128,18 +129,28 @@ class SessionStore:
 
     # -- budget ------------------------------------------------------------
     def allow_llm(self, session: Session, ip: str, now: float | None = None) -> tuple:
-        """(allowed, reason). Two keys, because one is not a limit."""
+        """(allowed, reason) for model-backed requests."""
+        return self._allow(session.llm_calls, ip, now, "model-backed")
+
+    def allow_profile(self, session: Session, ip: str,
+                      now: float | None = None) -> tuple:
+        """(allowed, reason) for profile mutations, separate from model budget."""
+        return self._allow(session.profile_writes, ip, now, "profile")
+
+    def _allow(self, session_calls: list, ip: str, now: float | None,
+               label: str) -> tuple:
+        """Apply the same session/IP window to a specific request category."""
         now = now or time.time()
         cutoff = now - self.window
-        session.llm_calls = [t for t in session.llm_calls if t > cutoff]
-        if len(session.llm_calls) >= self.per_session:
-            return False, (f"session limit: {self.per_session} model-backed requests per "
+        session_calls[:] = [t for t in session_calls if t > cutoff]
+        if len(session_calls) >= self.per_session:
+            return False, (f"session limit: {self.per_session} {label} requests per "
                            f"{self.window // 60} minutes")
         calls = [t for t in self._ip_calls.get(ip, []) if t > cutoff]
         if len(calls) >= self.per_ip:
-            return False, (f"network limit: {self.per_ip} model-backed requests per "
+            return False, (f"network limit: {self.per_ip} {label} requests per "
                            f"{self.window // 60} minutes from this address")
-        session.llm_calls.append(now)
+        session_calls.append(now)
         calls.append(now)
         self._ip_calls[ip] = calls
-        return True, f"{self.per_session - len(session.llm_calls)} left in this session"
+        return True, f"{self.per_session - len(session_calls)} {label} requests left"

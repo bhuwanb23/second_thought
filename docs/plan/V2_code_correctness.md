@@ -13,7 +13,7 @@
 
 ```bash
 cd product
-python3 -m unittest discover -s tests -v     # Ran 154 tests … OK
+python3 -m unittest discover -s tests -v     # Ran 155 tests … OK
 python3 scripts/preflight_deploy.py                    # ALL CHECKS PASSED   (10 checks)
 
 cd product

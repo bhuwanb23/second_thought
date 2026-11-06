@@ -220,7 +220,7 @@ class App:
         profile = body.get("profile")
         if not isinstance(profile, dict):
             return {"error": "profile must be an object"}, "400 Bad Request", headers
-        allowed, why = self.sessions.allow_llm(session, ip(environ), self.clock())
+        allowed, why = self.sessions.allow_profile(session, ip(environ), self.clock())
         if not allowed:
             return {"error": "rate limit", "reason": why}, "429 Too Many Requests", headers
         session.profile = profile

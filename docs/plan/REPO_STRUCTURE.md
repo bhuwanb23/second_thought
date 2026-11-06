@@ -60,7 +60,7 @@ to exceed the code limit — it is the deliverable, not a module.
 
 ## Tests — `../../product/tests/`
 
-**154 tests, no third-party runtime dependencies, no network.**
+**155 tests, no third-party runtime dependencies, no network.**
 
 | File | Covers |
 |---|---|

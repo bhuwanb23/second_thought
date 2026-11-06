@@ -70,7 +70,7 @@ python3 demo_ai.py --offline         # messy text → DEFER → reservation → 
 python3 scripts/serve.py             # the web page on :8000 — open / in a browser
 bash scripts/v5_two_jars.sh          # 22 live checks against a real socket: isolation, limits, tokens
 python3 scripts/preflight_deploy.py  # 18 checks on root render.yaml
-python3 -m unittest discover -s tests -q   # 154 tests, ~0.32 s
+python3 -m unittest discover -s tests -q   # 155 tests, ~0.32 s
 ```
 
 All seven are green as of today except the two that need the outside world (`demo.py
@@ -191,7 +191,7 @@ which exist and can be tightened.
 | `product/` | The real build. `secondthought/domain/` decides, `app/` orchestrates, `ai/` reads, `infra/` talks to PayPal, `interfaces/` is the outside |
 | `product/secondthought/interfaces/screens.py` | The page a stranger sees — and `explain()`, the plain-language layer |
 | `product/scripts/` | The instruments: V0 check, V5 two jars, V6 cold check, V7 capture/verdict, V8 observer, preflight |
-| `product/` | **Canonical active build.** 154 tests, root Git repository |
+| `product/` | **Canonical active build.** 155 tests, root Git repository |
 | `archive/prototype/` | **Frozen reference.** Original prototype files and history bundle |
 
 ---

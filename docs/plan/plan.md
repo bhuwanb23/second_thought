@@ -63,7 +63,7 @@ either passes or stops the build.
 | **[V3](V3_live_paypal.md)** | **Live PayPal, local** | 2 Nov | **2.0** | 🔴 **Blocked at V0.1.** Instrument built; 21 tests; `--dry-run` 5/5. Needs the key |
 | **[V4](V4_live_ai.md)** | **Live AI** | 2 Nov | **2.0** | 🔴 **Blocked at V0.3.** AI layer built; safety half proven by 49 tests; quality half needs the key |
 | **[V5](V5_session_security.md)** | **Session isolation & security** | 2 Nov | **2.5** | 🟢 **5 of 6 PASS** over a real socket — 22/22 checks. Item 6 proven locally, pending the Render redeploy |
-| **[V6](V6_deployment.md)** | **Deployment & durability** | 4 Nov | **2.0** | 🔴 **No public URL — nothing deployed.** Webhook verification built (P5.6, 24 tests), deploy config green (17 checks), cold-check instrument works, calendar filed |
+| **[V6](V6_deployment.md)** | **Deployment & durability** | 4 Nov | **2.0** | 🔴 **No public URL — nothing deployed.** Webhook verification built (P5.6, 24 tests), deploy config green (18 checks), cold-check instrument works, calendar filed |
 | **[V7](V7_human_validation.md)** | **Human validation** | 4 Nov | **1.5** | 🔴 **Not run — n = 0.** Cannot be delegated. Capture + verdict scripts built and tested; the pre-commitment is now mechanical |
 | **[V0](V0_preconditions.md)** | **Preconditions — do once** | 2 Nov | **0.75** | **`python3 scripts/v0_check.py` exits 0**, and the four manual rows are confirmed | Tech Impl + Stage 1 |
 | **[P0](P0_lock_and_foundation.md)** | Lock & foundation | 1 Nov | ✅ 0 | Concept frozen; canonical product build and root repository established | all |
@@ -138,7 +138,7 @@ filesystems are ephemeral anyway: a redeploy or spin-down wipes them.
 | `test_one_visitor_cannot_change_anothers_verdict` | The defect cannot silently return |
 | **`/healthz` returns booleans and status words only** | No paths, keys, versions, session counts, or internal details on a public unauthenticated URL |
 | **`/diagnostics` is operator-only** | Returns 404 without a matching `DIAG_TOKEN`, so it does not advertise itself |
-| `154 tests` | Canonical product suite, no network required |
+| `155 tests` | Canonical product suite, no network required |
 
 Verified over HTTP with two cookie jars: judge B sees `DEFER` while judge A, who saved a profile,
 sees `DECLINE`.
@@ -211,7 +211,7 @@ Plus the internal bar: `python3 -m unittest discover -s tests -q` → **OK**,
 
 ```bash
 cd product
-python3 -m unittest discover -s tests -q     # must say OK (154 tests)
+python3 -m unittest discover -s tests -q     # must say OK (155 tests)
 python3 scripts/preflight_deploy.py          # must say ALL CHECKS PASSED
 git -C .. status                              # nothing uncommitted, no .env
 ```

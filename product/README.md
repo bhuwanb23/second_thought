@@ -20,7 +20,7 @@ python3 -m unittest discover -s tests -q
 ```
 
 **No third-party runtime dependencies. Python 3.11+. Every file under 300 lines.
-154 tests, ~0.35 s.**
+155 tests, ~0.35 s.**
 
 The HTTP runtime uses the configured `ST_DB_PATH`; Render maps this to its
 paid persistent disk. It selects the simulated
