@@ -232,8 +232,10 @@ class App:
             return {"error": "unknown persona"}, "400 Bad Request", headers
         svc = self.service(session)
         try:
-            amount = self._amount(
-                body.get("amount_minor") or (persona or {}).get("amount_minor", 24_900))
+            raw_amount = body.get("amount_minor")
+            if raw_amount is None:
+                raw_amount = (persona or {}).get("amount_minor", 24_900)
+            amount = self._amount(raw_amount)
             out = svc.propose(Checkout(key, "Northwind Audio", amount, "USD"), date(2026, 11, 1))
         except InvalidRequest as exc:
             return {"error": str(exc)}, "400 Bad Request", headers

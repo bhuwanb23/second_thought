@@ -72,9 +72,9 @@ no usable facts produces `NO_DECISION`; model wording cannot override the engine
 
 SQLite stores profiles, reservations, ledger entries, and webhook event state.
 Sessions and approval tokens are intentionally process-local, so Render is
-configured as a single instance. The configured SQLite path is honored, but
-Render's `/tmp` filesystem is ephemeral; durable multi-instance operation would
-require managed storage and external session state.
+configured as a single instance with a paid persistent disk for SQLite. Durable
+multi-instance operation would still require managed storage and external
+session state.
 
 Use [`product/README.md`](../../product/README.md) for setup, tests, local
 execution, configuration, and deployment commands.

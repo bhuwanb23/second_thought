@@ -62,6 +62,8 @@ def main() -> int:
     plans = re.findall(r"^\s*plan:\s*(\S+)", text, re.M)
     check("plan is starter (free sleeps and loses the review window)",
           plans == ["starter"], f"found {plans}")
+    check("rootDir points at the canonical product",
+          bool(re.search(r"^\s*rootDir:\s*product\s*$", text, re.M)))
     check("/healthz is the health check",
           bool(re.search(r"^\s*healthCheckPath:\s*/healthz\s*$", text, re.M)))
 

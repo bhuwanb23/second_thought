@@ -61,7 +61,7 @@ def load(path: Path) -> list[dict]:
     if not path.exists():
         return []
     out = []
-    for i, line in enumerate(path.read_text().splitlines(), 1):
+    for i, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
         line = line.strip()
         if not line:
             continue

@@ -83,8 +83,12 @@ def precheck(url: str) -> int:
         check("/healthz answers with booleans only", False, "invalid JSON")
         print(f"\n  {ok} passed, {fail} failed\n")
         return 1
-    check("/healthz answers with booleans only",
-          set(health) == {"status", "ai_mode", "payments_mode", "checks"})
+    valid_health = (isinstance(health, dict)
+                    and set(health) == {"status", "ai_mode", "payments_mode", "checks"})
+    check("/healthz answers with booleans only", valid_health)
+    if not valid_health:
+        print(f"\n  {ok} passed, {fail} failed\n")
+        return 1
     print(f"\n  ai_mode     {health.get('ai_mode')}")
     print(f"  payments    {health.get('payments_mode')}")
     if health.get("ai_mode") == "llm-mock":

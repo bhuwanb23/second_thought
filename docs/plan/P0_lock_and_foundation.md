@@ -35,7 +35,7 @@ python3 scripts/preflight_deploy.py                     # expect: ALL CHECKS PAS
 python3 demo.py                               # expect: three personas, three verdicts
 ```
 
-Then open a browser at the demo server (`python3 server.py 8000`).
+Then open a browser at the demo server (`python3 scripts/serve.py`).
 
 | Check | Expected |
 |---|---|

@@ -69,12 +69,12 @@ python3 demo.py --dry-run            # all five PayPal calls, on a fake transpor
 python3 demo_ai.py --offline         # messy text → DEFER → reservation → tampered approval REFUSED
 python3 scripts/serve.py             # the web page on :8000 — open / in a browser
 bash scripts/v5_two_jars.sh          # 22 live checks against a real socket: isolation, limits, tokens
-python3 scripts/preflight_deploy.py  # 17 checks on render.yaml
+python3 scripts/preflight_deploy.py  # 18 checks on root render.yaml
 python3 -m unittest discover -s tests -q   # 154 tests, ~0.32 s
 ```
 
 All seven are green as of today except the two that need the outside world (`demo.py
---live` exits 2 without credentials; `preflight_deploy.py` passes 17/17 offline).
+--live` exits 2 without credentials; `preflight_deploy.py` passes 18/18 offline).
 
 The page is real and self-contained: three named months with amounts visible before any
 click, answers rendered as sentences ("Pay on Sat 7 Nov — and it ships once you've paid"),
@@ -122,7 +122,7 @@ whole thing has been reviewed only by the person who built it.
 |---|---|---|
 | **V0** preconditions (14 vars) | 🔴 4 failed | 3 credentials + a Render account |
 | **V1** Pay Later sandbox probe | 🔴 not started | the PayPal creds; confirms the band from the response, never assumed |
-| **V2** code correctness | ✅ 154 tests, preflight 17/17, mutation 14/3 | done |
+| **V2** code correctness | ✅ 155 tests, preflight 18/18, mutation 14/3 | done |
 | **V3** five live PayPal calls | 🔴 instrument ready, exits 2 | `PAYPAL_CLIENT_ID` + `PAYPAL_CLIENT_SECRET`, then `demo.py --live` |
 | **V4** live AI | 🔴 safety half proven offline, quality half blocked | `LLM_API_KEY`, then `demo_ai.py --live` |
 | **V5** session isolation & security | 🟢 22/22, one item pending deploy | a redeploy to prove it in production |

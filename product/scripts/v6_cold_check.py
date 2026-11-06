@@ -106,7 +106,8 @@ def main() -> int:
     if args.record:
         Path(args.state).write_text(json.dumps(
             {"url": args.url, "boot": boot, "at": time.time(),
-             "first_ms": first[0], "badges": badges, "checks": checks}, indent=2))
+             "first_ms": first[0], "badges": badges, "checks": checks}, indent=2),
+            encoding="utf-8")
         print(f"\n  recorded to {args.state}. Walk away for 30+ minutes, then --compare.")
         return 0
 
@@ -114,7 +115,7 @@ def main() -> int:
     if not previous.exists():
         print(f"\n  ✗ no state at {previous}; run --record first")
         return 2
-    before = json.loads(previous.read_text())
+    before = json.loads(previous.read_text(encoding="utf-8"))
     gap = (time.time() - before["at"]) / 60
     print(f"  gap         {gap:.0f} minutes since the recording")
     check("the gap was actually 30 minutes or more", gap >= 30, f"{gap:.0f} min")

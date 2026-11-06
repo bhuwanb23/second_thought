@@ -20,6 +20,10 @@ services:
     buildCommand: pip install .
     startCommand: python3 scripts/serve.py
     healthCheckPath: /healthz
+    disk:
+      name: secondthought-data
+      mountPath: /var/data
+      sizeGB: 1
     autoDeploy: true
     envVars:
       # --- PayPal sandbox (V0.1) ---------------------------------------
@@ -49,6 +53,6 @@ services:
       - key: ST_ENV
         value: production
       - key: ST_DB_PATH
-        value: /tmp/secondthought.sqlite3   # ephemeral is correct: personas are seeded
+        value: /var/data/secondthought.sqlite3
       - key: RENDER_API_KEY
         sync: false                 # only read by scripts/v0_check.py, to prove the plan

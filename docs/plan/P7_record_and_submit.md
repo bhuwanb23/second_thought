@@ -125,7 +125,7 @@ Then, and only then:
 |---|---|
 | Recording is bad on 10 Nov | Re-record on 11 **morning**. Still submit on 11 Nov evening. Never submit late to get a better take |
 | Video over 3:00 | Cut the architecture section first; keep the live product and the approval gate |
-| Hosted demo down on recording day | Record locally with `python3 server.py 8000`, say "running locally, sandbox", and keep the hosted URL in the submission. Honest and survivable |
+| Hosted demo down on recording day | Record locally with `python3 scripts/serve.py`, say "running locally, sandbox", and keep the hosted URL in the submission. Honest and survivable |
 | Form asks for something unavailable | Submit what exists; do not invent. Missing a field is better than a false claim |
 | It is 11 Nov 23:00 and the video is not uploaded | Upload the best take you have. A finished 2:30 beats a perfect 0:00 |
 | Temptation to claim live when it is simulated | The badge is on screen. It will be caught |

@@ -175,7 +175,7 @@ limitation and say so; a webhook endpoint that accepts anything is worse than no
 
 | Symptom | Response |
 |---|---|
-| Blueprint deploy fails | Deploy as a plain **Web Service → Python** using `product/render.yaml` and record the deviation in [DECISION_LOG](DECISION_LOG.md) |
+| Blueprint deploy fails | Deploy as a plain **Web Service → Python** using root `render.yaml` with `rootDir: product`, and record the deviation in [DECISION_LOG](DECISION_LOG.md) |
 | Build succeeds, app crashes | Read the Render log; almost always a missing env var. `/healthz` shows which subsystem is degraded |
 | `paypal:"simulated"` in production | Secret missing. Fix before recording — a simulated public demo is fine *if labelled*, but the point of P5 is live |
 | Free-plan sleeping (if you override to free) | Accept longer cold start, keep the keep-alive, and say it in the README |

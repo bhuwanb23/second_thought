@@ -14,7 +14,7 @@ python3 demo_ai.py --offline        # the AI reader on unfamiliar text + a tampe
 python3 demo_ai.py --live           # the same, with the real model
 python3 scripts/serve.py            # the HTTP interface on :8000 — open / in a browser
 bash scripts/v5_two_jars.sh         # 22 live checks: isolation, limits, /healthz, tokens
-python3 scripts/preflight_deploy.py # 17 checks on render.yaml
+python3 scripts/preflight_deploy.py # 18 checks on root render.yaml
 python3 scripts/v6_cold_check.py --url https://<app> --record|--compare   # did it sleep?
 python3 -m unittest discover -s tests -q
 ```
@@ -22,7 +22,8 @@ python3 -m unittest discover -s tests -q
 **No third-party runtime dependencies. Python 3.11+. Every file under 300 lines.
 154 tests, ~0.35 s.**
 
-The HTTP runtime uses the configured `ST_DB_PATH`. It selects the simulated
+The HTTP runtime uses the configured `ST_DB_PATH`; Render maps this to its
+paid persistent disk. It selects the simulated
 gateway without PayPal credentials and the sandbox adapter when credentials are
 configured. `PAYPAL_ENV=live` is rejected by the adapter.
 

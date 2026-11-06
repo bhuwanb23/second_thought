@@ -68,7 +68,8 @@ That split is a judgement call. V6.4 asks for the rejection to be *visible*; a c
 
 ## 3. The deploy configuration
 
-`product/render.yaml`, checked by `scripts/preflight_deploy.py` — **17 checks, all green.**
+Root `render.yaml` (with `rootDir: product`), checked by
+`product/scripts/preflight_deploy.py` — **18 checks, all green.**
 
 ```
 ✓ plan is starter (free sleeps and loses the review window)
@@ -91,7 +92,7 @@ That split is a judgement call. V6.4 asks for the rejection to be *visible*; a c
 14 passed, 3 failed
 ```
 
-Then restored to 17/17. A check that has never failed is a check nobody has tested.
+The root Blueprint and canonical `rootDir` check are included in the current 18/18 result.
 
 `starter`, not `free`, for the reason already recorded: free instances sleep after 15 minutes idle, and a judge arriving cold would wait through a spin-up inside a three-minute review window. `numInstances: 1` because sessions are in memory on purpose.
 
