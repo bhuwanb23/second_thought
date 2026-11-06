@@ -34,7 +34,7 @@ The five questions I asked went unanswered, so I made these calls rather than st
 | # | Assumption | Why I chose it | Reversal cost |
 |---|---|---|---|
 | **A1** | All research and concept docs now live under `../research/`; decisions, submission kit and phases under `` | Matches the structure requested. 117 references rewritten and verified — 103 resolve, 0 broken | Nil; moving back is the same script in reverse |
-| **A2** | The code stays at `../../09_build/prototype/`, and **that folder is the public submission repo** | It already has `git init`, `LICENSE`, `Dockerfile`, `render.yaml` and a passing preflight. Moving it breaks the deploy config for cosmetic gain | Medium — P6.4 covers promotion to repo root if we decide the presentation is worth it |
+| **A2** | The code stays at `../../product/`, and **that folder is the public submission repo** | It already has `git init`, `LICENSE`, `Dockerfile`, `render.yaml` and a passing preflight. Moving it breaks the deploy config for cosmetic gain | Medium — P6.4 covers promotion to repo root if we decide the presentation is worth it |
 | **A3** | Credential status is **unknown**, so P3/P4/P5 each open with a 30-second possession check and carry the acquisition steps inline | Cheapest assumption to be wrong about; costs one check, not a rewrite | Nil |
 | **A4** | Conversations may not happen, so P2 defines pre-agreed wording for n = 5, n = 3 and n = 0 | The claim is the thing that must not be improvised on 10 Nov | Nil |
 | **A5** | Video is **self-recorded**; generated narration exists as a fallback | Own voice is stronger on Presentation; the fallback protects a bad recording day | Nil |
@@ -209,7 +209,7 @@ Plus the internal bar: `python3 -m unittest discover -s tests` → **OK**, `bash
 ## 9. Daily ritual — 10 minutes, every day until submission
 
 ```bash
-cd 09_build/prototype
+cd product
 python3 -m unittest discover -s tests -q     # must say OK (119 tests)
 bash scripts/preflight.sh                     # must say ALL CHECKS PASSED
 git status                                    # nothing uncommitted, no .env

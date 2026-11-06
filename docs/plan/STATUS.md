@@ -102,7 +102,7 @@ This is the honest ledger. The right-hand column is what the next eight days are
 | AI decision isolation (model cannot move the verdict) | ✅ **Real** and tested — the invariant holds whatever the model says | — | done |
 | Sessions, rate limits, spend cap, token signing | ✅ **Real**, 22 checks over a live socket, per-session secrets | — | done |
 | The public URL | 🔴 **Does not exist** | deploy to Render | needs an account |
-| Version control for `product/` | 🔴 **Not a git repo** — only the frozen prototype is | `git init`, push, tag the submission commit | you |
+| Version control for the workspace | 🟡 **Root git repo initialized** | Review and commit the consolidated tree | you |
 | Human validation | 🔴 **n = 0** | 5 conversations, or accept n = 0 | only you |
 | Outside-eye rehearsal | 🔴 **n = 0**, page is ready | one stranger, 30 minutes, 9–10 Nov | only you |
 
@@ -191,7 +191,8 @@ which exist and can be tightened.
 | `product/` | The real build. `secondthought/domain/` decides, `app/` orchestrates, `ai/` reads, `infra/` talks to PayPal, `interfaces/` is the outside |
 | `product/secondthought/interfaces/screens.py` | The page a stranger sees — and `explain()`, the plain-language layer |
 | `product/scripts/` | The instruments: V0 check, V5 two jars, V6 cold check, V7 capture/verdict, V8 observer, preflight |
-| `09_build/prototype/` | **Frozen.** 119 tests, HEAD `04ec7e6`. Reference only — not the submission |
+| `product/` | **Canonical active build.** 152 tests, root Git repository |
+| `archive/prototype/` | **Frozen reference.** Original prototype files and history bundle |
 
 ---
 

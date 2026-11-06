@@ -12,7 +12,7 @@ tested; verification and submission in progress.
 | **[`docs/plan/plan.md`](docs/plan/plan.md)** | The master plan: eight phases, exit conditions, unverified register |
 | **[`docs/plan/LOCK.md`](docs/plan/LOCK.md)** | What is frozen, and the two tripwires |
 | **[`docs/plan/REPO_STRUCTURE.md`](docs/plan/REPO_STRUCTURE.md)** | How the code is laid out, and why |
-| **[`09_build/prototype/`](09_build/prototype/)** | The code — 119 tests, no dependencies, every file under 300 lines |
+| **[`product/`](product/)** | The active application — 152 tests, no third-party runtime dependencies |
 
 ---
 
@@ -24,7 +24,8 @@ This workspace has three parts, and they do not overlap:
 |---|---|---|
 | **[`docs/research/`](docs/research/)** | Rules, intent, field scan, evidence of pain, API capability, sponsors, concepts | Records **what is true**, with sources. Internal — not the submission |
 | **[`docs/plan/`](docs/plan/)** | Master plan, eight phase documents, lock, decisions, submission kit | Records **what to do by when** |
-| **[`09_build/prototype/`](09_build/prototype/)** | The working product, its tests, Dockerfile and deploy config | **This folder is the public submission repo** |
+| **[`product/`](product/)** | The canonical working product, its tests and Render config | **This is the active application** |
+| **[`archive/prototype/`](archive/prototype/)** | The earlier implementation | Frozen reference only; not deployed |
 
 `docs/README.md` explains the split in more detail.
 
@@ -47,13 +48,16 @@ This workspace has three parts, and they do not overlap:
 ## Verify it in three commands
 
 ```bash
-cd 09_build/prototype
-python3 -m unittest discover -s tests -q     # Ran 119 tests … OK
-bash scripts/preflight.sh                     # ALL CHECKS PASSED
-python3 demo.py                               # three shoppers, three verdicts
+cd product
+python3 -m unittest discover -s tests -q     # 152 tests … OK
+python3 scripts/preflight_deploy.py          # deployment configuration checks
+python3 -m secondthought.cli                # three shoppers, three verdicts
 ```
 
-Then: `python3 server.py 8000` and open `http://localhost:8000`.
+Then: `python3 scripts/serve.py` and open `http://localhost:8000`.
+
+The full architecture is documented in [`docs/architecture/`](docs/architecture/).
+The historical prototype is preserved in [`archive/`](archive/).
 
 ---
 

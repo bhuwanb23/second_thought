@@ -188,12 +188,12 @@ Word the submission as **budgeting and timing transparency**, never as "responsi
 
 ## V12 — PASS: proven, not asserted
 
-A working prototype now exists in `../../../09_build/prototype/.env.example`: a deterministic integer-cents engine, a plan ledger, an invoice/authorize execution path with a live/simulated PayPal adapter, an agent layer that cannot alter the verdict, and a test suite including red-team cases.
+A working prototype now exists in `../../../product/.env.example`: a deterministic integer-cents engine, a plan ledger, an invoice/authorize execution path with a live/simulated PayPal adapter, an agent layer that cannot alter the verdict, and a test suite including red-team cases.
 
 Run it:
 
 ```bash
-cd ../../../09_build/prototype/.env.example && python3 -m pytest tests -q   # or: python3 tests/run_tests.py
+cd ../../../product/.env.example && python3 -m pytest tests -q   # or: python3 tests/run_tests.py
 python3 demo.py                                       # CLI end-to-end
 python3 server.py                                     # UI at :8000
 ```

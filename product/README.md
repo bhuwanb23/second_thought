@@ -2,10 +2,9 @@
 
 **A payday-aware checkout that sometimes says "not yet".**
 
-This is the real build, written from scratch around the locked idea
+This is the canonical build, written from scratch around the locked idea
 ([`../docs/research/07_concepts/C02_THE_IDEA.md`](../docs/research/07_concepts/C02_THE_IDEA.md)).
-The earlier prototype in `../09_build/prototype/` was how we found out what the idea was; it is kept
-for reference and is no longer the thing we ship.
+The earlier prototype is preserved in `../archive/prototype/` for reference and is not deployed.
 
 ```bash
 python3 -m secondthought.cli        # the whole product, in a terminal, no network
@@ -20,7 +19,12 @@ python3 scripts/v6_cold_check.py --url https://<app> --record|--compare   # did 
 python3 -m unittest discover -s tests -q
 ```
 
-**No dependencies. Python 3.11+. Every file under 300 lines. 152 tests, ~0.35 s.**
+**No third-party runtime dependencies. Python 3.11+. Every file under 300 lines.
+152 tests, ~0.35 s.**
+
+The HTTP runtime uses the configured `ST_DB_PATH`. It selects the simulated
+gateway without PayPal credentials and the sandbox adapter when credentials are
+configured. `PAYPAL_ENV=live` is rejected by the adapter.
 
 ## The page
 

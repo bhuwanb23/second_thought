@@ -7,8 +7,8 @@ Two things only, kept apart on purpose:
 | **[`research/`](research/)** | Everything we learned: the contest rules, what PayPal wants, the competitive field, the evidence of pain, API capability, sponsors, the concepts, and the idea itself | You want to know **why** the product is what it is |
 | **[`plan/`](plan/)** | The master plan, eight phase documents, the lock, the decision log, and the submission kit | You want to know **what to do next** |
 
-The code lives outside `docs/` at [`../09_build/prototype/`](../09_build/prototype/) — it has its own
-git repository, deploy config and test suite, and it is the thing that gets submitted.
+The active code lives outside `docs/` at [`../product/`](../product/). The earlier implementation is
+preserved separately in [`../archive/prototype/`](../archive/prototype/) and is not deployed.
 
 ---
 

@@ -262,7 +262,7 @@ presented as a feature.
 
 **Privacy commitments:** no bureaus, no open banking today, no cross-merchant profile, no data
 sold, no adverse action, every verdict overridable, profile deletable. Full detail in
-`../../../09_build/prototype/DATA_AND_PRIVACY.md`.
+`../../../product/DATA_AND_PRIVACY.md`.
 
 ---
 
@@ -390,7 +390,7 @@ $36.75 short, safe amount $200), **Dev → DEFER** (paid Thursday, invoice due t
 OFFER** (never dips below $1,925).
 
 **Not yet done, and the only real unknown:** the Pay Later sandbox probe
-(`../../../09_build/prototype/PAYLATER_SANDBOX_TEST.md`). Eligibility is only knowable client-side, so the
+(`../../../product/PAYLATER_SANDBOX_TEST.md`). Eligibility is only knowable client-side, so the
 server never guesses it; OFFER falls back to a real authorisation hold when eligibility isn't
 confirmed. **That probe decides how the OFFER branch gets worded on camera** — and if Pay Later
 won't render, the invoice becomes the hero rather than a mocked button being shown.

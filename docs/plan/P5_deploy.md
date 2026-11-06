@@ -27,7 +27,7 @@ Serves: **Presentation**, **Technological Implementation**, and rule compliance 
 ## P5.1 — Pre-deploy sanity (15 min)
 
 ```bash
-cd 09_build/prototype
+cd product
 python3 -m unittest discover -s tests -q     # OK
 bash scripts/preflight.sh                     # ALL CHECKS PASSED
 docker build -t second-thought . 2>&1 | tail -3   # optional: catches Dockerfile errors locally
@@ -44,7 +44,7 @@ Confirm before shipping:
 
 ## P5.2 — Deploy to Render (40 min)
 
-1. Push `../../09_build/prototype` to a **public** GitHub repo (P5.4 covers licensing).
+1. Push `../../product` to a **public** GitHub repo (P5.4 covers licensing).
 2. Render → **New → Blueprint** → select the repo. It reads `render.yaml`.
 3. Set the secrets marked `sync: false`: `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET`,
    `LLM_API_KEY`. `LLM_MODEL` and `APPROVAL_SECRET` are handled by the blueprint.

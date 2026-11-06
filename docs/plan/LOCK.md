@@ -36,7 +36,7 @@ whole point of writing them down now.
 | | |
 |---|---|
 | **Question** | Does Pay Later render for us in sandbox? |
-| **Tool** | `../../09_build/prototype/paylater_probe.html` — open in a real browser, paste the `sb…` client ID |
+| **Tool** | `../../product/paylater_probe.html` — open in a real browser, paste the `sb…` client ID |
 | **Changes** | **Only the wording of the OFFER branch.** Nothing else |
 | **Does not change** | The idea, the verdicts, the DEFER rule, the safe amount, the pitch |
 

@@ -106,7 +106,7 @@ This is load-bearing. State it in the README, in the UI, and out loud in the vid
 
 ## 5. Deterministic engine
 
-`../../../09_build/prototype/engine.py` — implemented, tested.
+`../../../product/engine.py` — implemented, tested.
 
 - **All money is integer minor units.** No floats anywhere. `$249.00` is `24900`.
 - **Instalment split is exact.** Largest-remainder distribution so `sum(instalments) == amount` to the cent. (Tested: `10000/3`, `9999/4`.)
@@ -138,7 +138,7 @@ This is load-bearing. State it in the README, in the UI, and out loud in the vid
 | **Deterministic engine** | Every verdict, every amount, every date, every collision | Be overridden by the model |
 | **Agent (LLM)** | How to *say* it — the sentence, the tone, the alternative framing | Change a verdict, an amount, or a date |
 
-Implementation (`../../../09_build/prototype/agent.py`):
+Implementation (`../../../product/agent.py`):
 1. Engine returns structured findings.
 2. Agent receives findings + a strict JSON schema for its output.
 3. Output is validated. **Any** failure — malformed JSON, missing field, unknown verdict, a number that disagrees with the engine — falls back to a deterministic template.

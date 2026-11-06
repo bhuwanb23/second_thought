@@ -7,7 +7,7 @@
 > already written, not to be reinterpreted). Everything else is execution.
 >
 > **The plan is now structured:** → **[`docs/plan/plan.md`](docs/plan/plan.md)** (master, 8 phases)
-> · research in [`docs/research/`](docs/research/) · code in [`09_build/prototype/`](09_build/prototype/)
+> · research in [`docs/research/`](docs/research/) · active code in [`product/`](product/)
 
 Two minutes. Then go build.
 
@@ -42,7 +42,7 @@ You need to make **one decision** — what to build — and then eleven days of 
 > then route the sale to an instrument that actually fits.
 
 **Validated and built.** Spec: `docs/research/07_concepts/C02_PRD.md`. Validation: `docs/research/07_concepts/C02_VALIDATION_REPORT.md`.
-Working prototype (**119 tests passing**): `09_build/prototype/.env.example`.
+Canonical application (**152 tests passing**): `product/.env.example`.
 
 **Read the idea itself: `docs/research/07_concepts/C02_THE_IDEA.md`** — customer, data provenance and the
 pay-before-ship DEFER rule, all resolved.
@@ -52,7 +52,7 @@ only way "validated" becomes a true word before 11 Nov.
 
 **What remains is not building.** In order:
 
-1. Run `09_build/prototype/PAYLATER_SANDBOX_TEST.md` — it decides how you word the OFFER branch.
+1. Run `product/PAYLATER_SANDBOX_TEST.md` — it decides how you word the OFFER branch.
 2. Set `PAYPAL_CLIENT_ID`/`SECRET` and run `demo.py --live`.
 3. Set `LLM_API_KEY` so the AI badge reads `LLM`, not `LLM-MOCK`, when a judge looks.
 4. Deploy (Render starter, *not* free) and verify `/healthz` on 1 Dec.
@@ -79,9 +79,9 @@ C01 scores higher on paper but is a smaller version of a product PayPal's CTO de
 
 ## Then do exactly this
 
-1. **Today:** read the four files. Write your concept's one sentence. Do not open an editor.
-2. **Tomorrow:** scaffold the repo — licence, `.env.example`, CI, sandbox app, OAuth token.
-3. **Day 3:** prove the one PayPal primitive your concept depends on.
+1. **Today:** read the four files and the architecture overview.
+2. **Run locally:** `cd product && python3 -m unittest discover -s tests -q`.
+3. **Deploy from:** `product/render.yaml` using `python3 scripts/serve.py`.
 4. **Follow `docs/plan/archive/BUILD_PLAN.md`** backwards from a recorded video on 10 Nov.
 5. **Take the easy money:** AG Grid ($10,000, 5 slots) and APIMatic (3 slots, under an hour). See `docs/research/06_sponsors/SPONSOR_STRATEGY.md`.
 6. **Walk the gates** in `docs/plan/GATES_AND_REDTEAM.md`. A failed gate means falling back, not pushing on.

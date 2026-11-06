@@ -3,7 +3,7 @@
 **Status:** ✅ **green**, with two test defects found and fixed
 **Run:** 2 Nov 2026 · **Pass:** all green, and the tests actually assert what their names claim
 
-> **Path note:** V2 names `09_build/prototype`, but the shipped code is now `product/`. Both were run.
+> **Path note:** V2 names `product`, but the shipped code is now `product/`. Both were run.
 > The prototype carries the AI and session guarantees the product has not ported yet; the product
 > carries the reservation guarantees the prototype never had. The table below says which is where.
 
@@ -12,7 +12,7 @@
 ## 1. The runs
 
 ```bash
-cd 09_build/prototype
+cd product
 python3 -m unittest discover -s tests -v     # Ran 119 tests … OK   (116 matched "… ok" on one line)
 bash scripts/preflight.sh                    # ALL CHECKS PASSED   (10 checks)
 
@@ -109,7 +109,7 @@ exactly that regression and could not.
 ## 6. Repeat this before the freeze (9 Nov)
 
 ```bash
-cd 09_build/prototype && python3 -m unittest discover -s tests -v && bash scripts/preflight.sh
+cd product && python3 -m unittest discover -s tests -v && bash scripts/preflight.sh
 cd product            && python3 -m unittest discover -s tests -v
 ```
 

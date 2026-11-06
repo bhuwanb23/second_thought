@@ -56,7 +56,7 @@ rather than debugging it alone. This is listed in [plan.md §2b](plan.md) as a t
 
 ## P1.2 — Run the probe (2 min)
 
-1. Download `../../09_build/prototype/paylater_probe.html`.
+1. Download `../../product/paylater_probe.html`.
 2. **Double-click it** — it must open in Chrome or Safari directly. It will **not** work inside the
    workspace preview pane, which blocks network access.
 3. Paste the `sb…` client ID. Amount is pre-filled at `249.00`.
@@ -71,7 +71,7 @@ answer is treated as "not eligible", the same position `paylater.py` takes.
 ## P1.3 — Record the result (2 min)
 
 Click **Copy result line**, then paste it into the results table in
-`../../09_build/prototype/PAYLATER_SANDBOX_TEST.md` and fill in the row.
+`../../product/PAYLATER_SANDBOX_TEST.md` and fill in the row.
 
 Expected shape: `probe | amount 249.00 US | sdk_loaded yes | findEligibleMethods returned | isEligible(paylater) true | codes XYZ / US`
 

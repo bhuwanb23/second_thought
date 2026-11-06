@@ -22,7 +22,7 @@ Serves: **Technological Implementation** (the tiebreak criterion).
 ## P3.1 — Possession check (30 seconds)
 
 ```bash
-cd 09_build/prototype && ls -a | grep -q '^\.env$' && grep -c '^PAYPAL_CLIENT_ID=..' .env || echo "no .env yet"
+cd product && ls -a | grep -q '^\.env$' && grep -c '^PAYPAL_CLIENT_ID=..' .env || echo "no .env yet"
 ```
 
 **Yes** → skip to P3.2. **No** → do P1.1 (create the sandbox app) and copy both values.
@@ -32,7 +32,7 @@ cd 09_build/prototype && ls -a | grep -q '^\.env$' && grep -c '^PAYPAL_CLIENT_ID
 ## P3.2 — Set the credentials (5 min)
 
 ```bash
-cd 09_build/prototype
+cd product
 cp .env.example .env                       # .env is gitignored — verified by preflight
 # edit .env and set:
 #   PAYPAL_CLIENT_ID=sb...
@@ -51,7 +51,7 @@ Rules:
 ## P3.3 — Prove the invoice is real (20 min)
 
 ```bash
-cd 09_build/prototype
+cd product
 python3 demo.py --live 2>&1 | tee /tmp/p3_live.log
 ```
 
@@ -107,7 +107,7 @@ that test's name in the README.
 
 ## P3.5 — Record the evidence (10 min)
 
-Add to `../../09_build/prototype/README.md`:
+Add to `../../product/README.md`:
 
 - the sandbox invoice id from your run, dated
 - the `AUTH-…` id, dated

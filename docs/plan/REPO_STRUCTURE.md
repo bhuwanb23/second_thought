@@ -12,12 +12,13 @@ paypal-hackathon/
 ├── docs/                      # NOT the submission — working documents
 │   ├── research/              # what is true, with sources (26 docs)
 │   └── plan/                  # what to do by when (plan.md + P0…P7)
-└── 09_build/prototype/        # THE SUBMISSION REPO (its own git repo)
+├── product/                   # THE ACTIVE APPLICATION
+└── archive/prototype/         # FROZEN REFERENCE IMPLEMENTATION
 ```
 
 ---
 
-## The code — `../../09_build/prototype/`
+## The code — `../../product/`
 
 | Layer | File | Lines | Job |
 |---|---|---|---|
@@ -57,9 +58,9 @@ to exceed the code limit — it is the deliverable, not a module.
 
 ---
 
-## Tests — `../../09_build/prototype/tests/`
+## Tests — `../../product/tests/`
 
-**119 tests, ~0.8 s, no dependencies, no network.**
+**152 tests, no third-party runtime dependencies, no network.**
 
 | File | Covers |
 |---|---|

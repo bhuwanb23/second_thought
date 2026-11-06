@@ -62,7 +62,7 @@ The README is read by a machine as well as a human — automated analysis is exp
 
 ## P6.4 — Repo shape decision (20 min)
 
-Assumption **A2** keeps the code at `../../09_build/prototype` and pushes *that folder* as the repo.
+Assumption **A2** keeps the code at `../../product` and pushes *that folder* as the repo.
 Revisit only if all of these hold:
 
 - [ ] Promotion to repo root is done by **file move only** (no code edits)
@@ -94,7 +94,7 @@ Go through every judge-visible word. **Any claim without a source gets deleted, 
 Then:
 
 ```bash
-cd 09_build/prototype && bash scripts/preflight.sh && python3 -m unittest discover -s tests -q
+cd product && bash scripts/preflight.sh && python3 -m unittest discover -s tests -q
 ```
 
 ---

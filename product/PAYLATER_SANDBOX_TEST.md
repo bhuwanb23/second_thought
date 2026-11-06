@@ -6,7 +6,7 @@ may say on camera.
 **Pass:** a decision is written down with evidence, not a guess.
 **Fails if:** the decision is written from memory, or from a number we assumed.
 
-> This supersedes `../09_build/prototype/PAYLATER_SANDBOX_TEST.md`. That file described a one-amount
+> This supersedes `../archive/prototype/PAYLATER_SANDBOX_TEST.md`. That file described a one-amount
 > probe; this one runs the three amounts and the band sweep, and captures a machine-readable report.
 
 ---
