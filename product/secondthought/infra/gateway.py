@@ -46,6 +46,12 @@ class SimulatedGateway:
         self.calls.append(f"create_invoice {inv.id} {amount_minor} due {due_date}")
         return inv
 
+    def send_invoice(self, invoice_id: str) -> None:
+        inv = self.get_invoice(invoice_id)
+        if inv.status == "PAID":
+            raise GatewayError("cannot send a paid invoice")
+        inv.status = "SENT"
+
     def get_invoice(self, invoice_id: str) -> Invoice:
         try:
             return self._invoices[invoice_id]

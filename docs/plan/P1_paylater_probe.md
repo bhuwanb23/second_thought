@@ -56,7 +56,7 @@ rather than debugging it alone. This is listed in [plan.md §2b](plan.md) as a t
 
 ## P1.2 — Run the probe (2 min)
 
-1. Download `../../product/paylater_probe.html`.
+1. Download `../../product/probe/v1_probe.html`.
 2. **Double-click it** — it must open in Chrome or Safari directly. It will **not** work inside the
    workspace preview pane, which blocks network access.
 3. Paste the `sb…` client ID. Amount is pre-filled at `249.00`.

@@ -1,7 +1,7 @@
 # Master plan — Second Thought (C02)
 
 **Project:** payday-aware checkout that sometimes says "not yet"
-**Status:** 🔒 concept locked 1 Nov 2026 · 103 tests passing · build complete, *verification and submission remain*
+**Status:** 🔒 concept locked 1 Nov 2026 · 155 tests passing · build complete, *verification and submission remain*
 **Hard deadline:** Thu 12 Nov 2026, 12:00 PT = **13 Nov 01:30 IST**
 **Internal deadline:** **11 Nov** — one day of slack, non-negotiable
 **Builder:** solo · **budget:** ~25 hours across 10 days (~2.5 h/day)
@@ -59,7 +59,7 @@ either passes or stops the build.
 
 | Phase | Name | Window | Hours | Exit condition (checkable) | Serves |
 |---|---|---|---|---|---|
-| **[V2](V2_code_correctness.md)** | **Code correctness — automated** | 2 Nov | **0.5** | ✅ **Green.** 149 tests, both suites; 2 test defects found and fixed |
+| **[V2](V2_code_correctness.md)** | **Code correctness — automated** | 2 Nov | **0.5** | ✅ **Green.** 155 tests, both suites; 2 test defects found and fixed |
 | **[V3](V3_live_paypal.md)** | **Live PayPal, local** | 2 Nov | **2.0** | 🔴 **Blocked at V0.1.** Instrument built; 21 tests; `--dry-run` 5/5. Needs the key |
 | **[V4](V4_live_ai.md)** | **Live AI** | 2 Nov | **2.0** | 🔴 **Blocked at V0.3.** AI layer built; safety half proven by 49 tests; quality half needs the key |
 | **[V5](V5_session_security.md)** | **Session isolation & security** | 2 Nov | **2.5** | 🟢 **5 of 6 PASS** over a real socket — 22/22 checks. Item 6 proven locally, pending the Render redeploy |

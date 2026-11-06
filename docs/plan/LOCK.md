@@ -3,7 +3,7 @@
 **Concept C02, "Second Thought", is locked.** The idea, the scope and the pitch are frozen.
 From this point the work is execution, not revision.
 
-Locked at **103 tests passing**, preflight clean, five rounds of review incorporated.
+Locked at **155 tests passing**, preflight clean, five rounds of review incorporated.
 
 ---
 
@@ -36,7 +36,7 @@ whole point of writing them down now.
 | | |
 |---|---|
 | **Question** | Does Pay Later render for us in sandbox? |
-| **Tool** | `../../product/paylater_probe.html` — open in a real browser, paste the `sb…` client ID |
+| **Tool** | `../../product/probe/v1_probe.html` — open in a real browser, paste the `sb…` client ID |
 | **Changes** | **Only the wording of the OFFER branch.** Nothing else |
 | **Does not change** | The idea, the verdicts, the DEFER rule, the safe amount, the pitch |
 
@@ -106,7 +106,7 @@ Deadline: **Thu 12 Nov 2026, 12:00 PT** = 13 Nov 01:30 IST. Submitting 11 Nov le
 - ✅ All claims checked; the credit-bureau asymmetry claim **removed as outdated**
 - ✅ "Volume preserved" replaced with the honest trade
 - ✅ "No adverse action" replaced with the two-mode framing
-- ✅ 103 tests, preflight passes, demo runs offline and is labelled honestly
+- ✅ 155 tests, preflight passes, demo runs offline and is labelled honestly
 - ✅ Probe page built and self-contained
 - ✅ Video script, tools-used text, judge Q&As in `SUBMISSION_KIT.md`
 

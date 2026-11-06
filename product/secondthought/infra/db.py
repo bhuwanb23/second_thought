@@ -191,6 +191,14 @@ class WebhookRepo:
                 "INSERT OR IGNORE INTO webhook_events(event_id, kind, received_at)"
                 " VALUES(?,?,?)", (event_id, kind, now.isoformat()))
 
+    def claim(self, event_id: str, kind: str, now: datetime) -> bool:
+        """Atomically claim an event ID; false means it was already processed."""
+        with self.db.tx() as c:
+            cur = c.execute(
+                "INSERT OR IGNORE INTO webhook_events(event_id, kind, received_at)"
+                " VALUES(?,?,?)", (event_id, kind, now.isoformat()))
+        return cur.rowcount == 1
+
 
 def iso_now() -> datetime:
     return datetime.now().replace(microsecond=0)

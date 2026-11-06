@@ -2,7 +2,7 @@
 
 **Status:** ✅ **complete** (1 November 2026)
 **Owner:** agent · **Window:** up to 1 Nov · **Hours:** 0 remaining
-**Exit condition:** concept frozen · 103 tests passing · preflight passes · repo committed
+**Exit condition:** concept frozen · 155 tests passing · preflight passes · repo committed
 
 ---
 
@@ -30,7 +30,7 @@ verify the foundation in sixty seconds without trusting a summary.
 
 ```bash
 cd product
-python3 -m unittest discover -s tests -q     # expect: Ran 103 tests … OK
+python3 -m unittest discover -s tests -q     # expect: Ran 155 tests … OK
 python3 scripts/preflight_deploy.py                     # expect: ALL CHECKS PASSED
 python3 demo.py                               # expect: three personas, three verdicts
 ```
@@ -69,7 +69,7 @@ Then open a browser at the demo server (`python3 scripts/serve.py`).
 
 Recorded so absence reads as a decision, not an oversight:
 
-- **No framework.** Stdlib only, no dependencies, no build step. A judge can `python3 server.py`.
+- **No framework.** Stdlib only, no dependencies, no build step. A judge can run `python3 scripts/serve.py`.
 - **No Subscriptions or vaulting.** PayPal's docs say Pay Later messaging is unavailable alongside
   them; mixing them would produce a demo where one feature silently disables another.
 - **No APIMatic.** Not free, and an unused sponsor tool earns nothing.
@@ -93,7 +93,7 @@ Recorded so absence reads as a decision, not an oversight:
 ## Exit criteria
 
 - [x] Concept locked with a written frozen/not-frozen table
-- [x] 103 tests, `OK`, no dependencies, no network needed
+- [x] 155 tests, `OK`, no dependencies, no network needed
 - [x] Preflight `ALL CHECKS PASSED` (license, `.env` hygiene, secrets, README claims, health check)
 - [x] Offline demo rehearses the whole arc honestly
 - [x] Git committed with no secrets

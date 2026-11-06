@@ -212,7 +212,7 @@ which exist and can be tightened.
 5. **The 3-of-5 contradiction** between `VALIDATION_CONVERSATIONS.md` and
    `P2_five_conversations.md` is unresolved by design. If conversations do run, resolve it
    *before* the first one, not after.
-6. **`product/` is not a git repo.** No history, no tag, no repo link for V8 or Devpost.
+6. **The root repository is now initialized.** Review and commit the consolidated tree before publishing.
    Ten minutes of work, and it is on the critical path.
 
 ---

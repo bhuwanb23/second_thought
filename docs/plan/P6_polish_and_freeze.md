@@ -21,7 +21,7 @@ Serves: **Design** (20%) and protects the tiebreak (**Technological Implementati
 
 - [ ] It can be done in **≤3 hours** without touching the engine or the API
 - [ ] It is used **genuinely** — a real balance-curve grid with real projected data, not a bolt-on table
-- [ ] It does not break any of the 103 tests
+- [ ] It does not break any of the 155 tests
 - [ ] It leaves ≥4 h of slack before the freeze
 
 If AG Grid requires React + Studio Agent Framework to be *judgeable* as a sponsor integration, the

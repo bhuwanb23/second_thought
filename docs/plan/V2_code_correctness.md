@@ -100,7 +100,7 @@ exactly that regression and could not.
 
 ## 5. What this means for the submission
 
-- The suite is **green and honest**: 119 + 30 = **149 tests**, no network, no keys.
+- The suite is **green and honest**: 119 + 30 = **155 tests**, no network, no keys.
 - One test was renamed because it overclaimed; one was strengthened because it under-tested. Both
   changes make the suite *less* flattering and more trustworthy, which is the only direction that
   matters for a judge who reads assertions rather than names.

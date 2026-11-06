@@ -119,7 +119,7 @@ tripwires can change anything, and both are pre-committed.
 
 | Date | Work | Tripwire |
 |---|---|---|
-| **1 Nov** | ✅ Engine, agent, PayPal adapter, profile, fulfilment rule, **103 tests**, UI, probe page, all five review rounds | — |
+| **1 Nov** | ✅ Engine, agent, PayPal adapter, profile, fulfilment rule, **155 tests**, UI, probe page, all five review rounds | — |
 | **2 Nov** | **Pay Later probe first** (`paylater_probe.html`) — closes tripwire 1 and fixes the OFFER wording. Then sandbox client ID + secret → `demo.py --live`. **Start conversations.** | ⚠️ 1 |
 | **3 Nov** | `LLM_API_KEY` → badge reads `LLM`. Conversations continue | ⚠️ 2 |
 | **4 Nov** | Conversations finish and are recorded in the table. **Apply the pre-committed decision rules — no reinterpretation.** Deploy to Render starter; verify `/healthz` | ⚠️ 2 |

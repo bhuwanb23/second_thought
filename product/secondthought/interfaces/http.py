@@ -26,7 +26,7 @@ from ..app.checkout import Checkout, CheckoutService
 from ..app.ports import GatewayError
 from ..domain import InvalidRequest, Policy
 from ..domain.engine import decide
-from ..infra.db import Database, LedgerRepo, ProfileRepo, ReservationRepo
+from ..infra.db import Database, LedgerRepo, ProfileRepo, ReservationRepo, WebhookRepo
 from ..infra.gateway import SimulatedGateway
 from ..infra.paypal_live import PayPalLiveGateway
 from .badge import badges, health_payload
@@ -100,11 +100,13 @@ class App:
         self.defaults = ProfileRepo(self.db)          # read-only persona store
         self.reservations = ReservationRepo(self.db)
         self.ledger = LedgerRepo(self.db)
+        self.webhook_events = WebhookRepo(self.db)
         self.boot = self.sessions.boot
         self.attempts: list = []                      # refused money calls, for tests
         self.webhooks = WebhookAPI(settings.paypal.webhook_id,
                                    diag_token=settings.diag_token,
-                                   cert_lookup=cert_lookup)
+                                   cert_lookup=cert_lookup,
+                                   event_repo=self.webhook_events)
         for key, persona in PERSONAS.items():
             self.defaults.save(key, persona["profile"], datetime(2026, 11, 1, 9, 0))
 
@@ -243,6 +245,10 @@ class App:
 
     @staticmethod
     def _amount(value) -> int:
+        if isinstance(value, bool):
+            raise InvalidRequest("amount_minor must be an integer")
+        if isinstance(value, float):
+            raise InvalidRequest("amount_minor must be an integer")
         try:
             amount = int(value)
         except (TypeError, ValueError):
