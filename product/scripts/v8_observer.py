@@ -73,7 +73,16 @@ def precheck(url: str) -> int:
     check("it says the money is simulated", "Nothing is charged" in text)
 
     status, body = fetch(url, "/healthz")
-    health = json.loads(body)
+    if status != 200:
+        check("/healthz answers with booleans only", False, f"HTTP {status}")
+        print(f"\n  {ok} passed, {fail} failed\n")
+        return 1
+    try:
+        health = json.loads(body)
+    except (ValueError, UnicodeDecodeError):
+        check("/healthz answers with booleans only", False, "invalid JSON")
+        print(f"\n  {ok} passed, {fail} failed\n")
+        return 1
     check("/healthz answers with booleans only",
           set(health) == {"status", "ai_mode", "payments_mode", "checks"})
     print(f"\n  ai_mode     {health.get('ai_mode')}")
@@ -139,7 +148,8 @@ def report() -> int:
     if not LOG.exists():
         print("\nNo rehearsals recorded. V8 has not run.\n")
         return 0
-    rows = [json.loads(line) for line in LOG.read_text().splitlines() if line.strip()]
+    rows = [json.loads(line) for line in
+            LOG.read_text(encoding="utf-8").splitlines() if line.strip()]
     passed = [r for r in rows if r["pass"]]
     print(f"\nV8 report — {len(rows)} rehearsal(s), {len(passed)} passing\n")
     for r in rows:

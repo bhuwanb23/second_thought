@@ -22,7 +22,8 @@ Deadline: **12 Nov 12:00 PT = 13 Nov 01:30 IST.** We submit on **11 Nov**, leavi
 - [ ] Microphone tested; record 15 s and play it back before the real take
 - [ ] Browser at 100% zoom, one tab, no bookmarks bar, no notifications
 - [ ] Notifications off (macOS Focus / Windows Do Not Disturb)
-- [ ] Demo state reset: `rm -f ledger.json profiles.json` then restart the server
+- [ ] Demo state reset: stop the local server and remove the development SQLite file
+      configured by `ST_DB_PATH`, then restart the server
 - [ ] **Warm the hosted demo** — hit the URL five minutes before recording so nothing cold-starts on camera
 
 **Fallback if a bad recording day:** generated narration can be laid over the same capture. Ask me

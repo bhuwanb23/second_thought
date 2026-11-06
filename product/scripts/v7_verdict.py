@@ -35,7 +35,8 @@ def load(path: Path) -> tuple[list[dict], list[str]]:
     problems = []
     if not path.exists():
         return [], []          # no log is n = 0, not a tamper alarm
-    records = [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+    records = [json.loads(line) for line in
+               path.read_text(encoding="utf-8").splitlines() if line.strip()]
     prev = "genesis"
     for i, r in enumerate(records, 1):
         if r.get("seq") != i:

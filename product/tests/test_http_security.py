@@ -183,6 +183,16 @@ class OtherSurface(unittest.TestCase):
         self.assertEqual(seen.get("Cache-Control"), "no-store")
         self.assertEqual(seen.get("X-Content-Type-Options"), "nosniff")
 
+    def test_invalid_amounts_are_client_errors(self):
+        status, body = self.c.call("/api/quote", query="persona=maya&amount_minor=not-a-number")
+        self.assertEqual(status, "400 Bad Request")
+        self.assertIn("amount_minor", body["error"])
+
+        status, body = self.c.call("/api/plan", "POST",
+                                   {"persona": "maya", "amount_minor": -1})
+        self.assertEqual(status, "400 Bad Request")
+        self.assertIn("amount_minor", body["error"])
+
     def test_a_500_does_not_echo_internals(self):
         def explode(_environ):
             raise RuntimeError("secret detail: /home/user/db.sqlite3 password=hunter2")

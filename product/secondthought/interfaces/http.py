@@ -153,9 +153,11 @@ class App:
         if session is None:
             session = self.sessions.new()
             new_cookie = self.sessions.issue_cookie(session)
-        headers = [("Set-Cookie", f"{COOKIE}={new_cookie}; Path=/; HttpOnly; "
-                                  f"SameSite=Lax")] if new_cookie else [("Set-Cookie",
-                                                                        "")]
+        cookie_flags = "Path=/; HttpOnly; SameSite=Lax"
+        if self.settings.env == "production":
+            cookie_flags += "; Secure"
+        headers = [("Set-Cookie", f"{COOKIE}={new_cookie}; {cookie_flags}")] \
+            if new_cookie else [("Set-Cookie", "")]
         headers = [h for h in headers if h[1]]
 
         if path in ("/api/webhook", "/diagnostics"):
@@ -199,13 +201,13 @@ class App:
         key, persona = self._persona(key)
         if key is None:
             return {"error": "unknown persona"}, "400 Bad Request", headers
-        amount = int((query.get("amount_minor") or [persona["amount_minor"]])[0])
         svc = self.service(session)
         try:
+            raw_amount = (query.get("amount_minor") or [persona["amount_minor"]])[0]
+            amount = self._amount(raw_amount)
             out = svc.quote(Checkout(key, "Northwind Audio", amount, "USD"), date(2026, 11, 1))
         except InvalidRequest as exc:
-            return {"error": str(exc), "verdict": "NO_DECISION",
-                    "hint": "save a profile first, or pick a named persona"}, "200 OK", headers
+            return {"error": str(exc)}, "400 Bad Request", headers
         out["profile"] = "session" if key == "me" and session.profile else (
             "persona-default" if key != "me" else None)
         out["explain"] = explain(out)          # the words a shopper actually reads
@@ -228,13 +230,24 @@ class App:
         key, persona = self._persona(str(body.get("persona", "maya")))
         if key is None:
             return {"error": "unknown persona"}, "400 Bad Request", headers
-        amount = int(body.get("amount_minor") or (persona or {}).get("amount_minor", 24_900))
         svc = self.service(session)
         try:
+            amount = self._amount(
+                body.get("amount_minor") or (persona or {}).get("amount_minor", 24_900))
             out = svc.propose(Checkout(key, "Northwind Audio", amount, "USD"), date(2026, 11, 1))
         except InvalidRequest as exc:
             return {"error": str(exc)}, "400 Bad Request", headers
         return out, "200 OK", headers
+
+    @staticmethod
+    def _amount(value) -> int:
+        try:
+            amount = int(value)
+        except (TypeError, ValueError):
+            raise InvalidRequest("amount_minor must be an integer") from None
+        if amount <= 0 or amount > 100_000_000:
+            raise InvalidRequest("amount_minor is outside the supported range")
+        return amount
 
     def _execute(self, session, environ, headers):
         body = json_body(environ)

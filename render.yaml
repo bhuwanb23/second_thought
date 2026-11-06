@@ -13,6 +13,7 @@ services:
   - type: web
     name: second-thought
     runtime: python
+    rootDir: product
     plan: starter
     region: oregon
     numInstances: 1                 # one instance: session state is in memory, on purpose
