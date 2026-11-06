@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>V1 — Pay Later sandbox probe</title>
+<style>
+  :root{--bg:#0e1116;--card:#161b23;--line:#232b36;--ink:#e8edf4;--muted:#8b97a8;
+        --ok:#2ecc71;--bad:#e74c3c;--warn:#f1c40f;--accent:#4a9eff}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);padding:26px 18px 70px;
+       font:14px/1.55 ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:920px;margin:0 auto}
+  h1{font-size:21px;margin:0 0 3px;letter-spacing:-.01em}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:18px}
+  .banner{background:#2a2110;border:1px solid #5a4a1a;color:#f3d98b;border-radius:10px;
+          padding:11px 13px;font-size:12.5px;margin-bottom:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px}
+  label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+        color:var(--muted);margin-bottom:5px}
+  input{width:100%;background:#0b0e13;border:1px solid var(--line);color:var(--ink);
+        border-radius:8px;padding:9px 11px;font:inherit;font-size:13px}
+  .grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin-bottom:12px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+  @media(max-width:680px){.grid,.grid2{grid-template-columns:1fr}}
+  button{background:var(--accent);color:#04121f;border:0;border-radius:8px;padding:11px 16px;
+         font:inherit;font-weight:650;font-size:13.5px;cursor:pointer}
+  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:500}
+  button:disabled{opacity:.45;cursor:default}
+  .btns{display:flex;gap:9px;flex-wrap:wrap}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px}
+  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+  .yes{color:var(--ok);font-weight:600}.no{color:var(--bad);font-weight:600}
+  .muted{color:var(--muted)}
+  pre{background:#0b0e13;border:1px solid var(--line);border-radius:8px;padding:11px;
+      font:11.5px/1.5 ui-monospace,Menlo,monospace;overflow:auto;max-height:340px;
+      white-space:pre-wrap;word-break:break-word;color:#c8d3e0}
+  .log{font:11.5px/1.65 ui-monospace,Menlo,monospace;color:var(--muted);max-height:220px;overflow:auto}
+  .log b{color:var(--ink);font-weight:600}
+  #decision{border-radius:10px;padding:14px;display:none;margin-top:12px}
+  #decision.a{background:#0f2418;border:1px solid #1f5c3a}
+  #decision.b{background:#241416;border:1px solid #6b2b2b}
+  #decision h2{margin:0 0 6px;font-size:15px}
+  #mount{display:flex;gap:14px;align-items:center;flex-wrap:wrap;min-height:54px;
+         border:1px dashed var(--line);border-radius:8px;padding:8px}
+  .pill{display:inline-block;padding:1px 7px;border-radius:999px;font-size:11px;
+        border:1px solid var(--line);color:var(--muted)}
+  h3{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:18px 0 7px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>V1 — Pay Later sandbox probe</h1>
+  <div class="sub">Second Thought · proves <b>whether Pay Later renders</b>, for which amounts,
+      and what the OFFER branch may say on camera.</div>
+
+  <div class="banner">
+    <b>Open this from a served origin, not a file path.</b> Run
+    <code>python3 scripts/serve_probe.py</code> and open the URL it prints.
+    The JS SDK will not load from <code>file://</code>, and the workspace preview blocks the network.
+  </div>
+
+  <div class="card">
+    <div class="grid">
+      <div><label for="cid">Sandbox client ID</label>
+        <input id="cid" placeholder="sb… / AX… from developer.paypal.com" autocomplete="off" spellcheck="false"></div>
+      <div><label for="cur">Currency</label><input id="cur" value="USD"></div>
+      <div><label for="ctry">Buyer country</label><input id="ctry" value="US" maxlength="2"></div>
+    </div>
+    <div class="grid2">
+      <div><label for="amounts">Amounts to test ($, comma separated)</label>
+        <input id="amounts" value="10,500,2500"></div>
+      <div><label for="sweep">Band sweep (log-spaced, $)</label>
+        <input id="sweep" value="25,50,100,200,400,800,1200,1500"></div>
+    </div>
+    <div class="btns">
+      <button id="go">Run V1 probe</button>
+      <button id="copy" class="ghost" disabled>Copy JSON report</button>
+      <button id="dl" class="ghost" disabled>Download report</button>
+    </div>
+    <div class="sub" style="margin:10px 0 0">
+      Three amounts answer your question. The sweep answers <i>“what is the band?”</i> —
+      which the eligibility response tells us, rather than a number we assumed.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Results</h3>
+    <table id="tbl"><thead><tr>
+      <th>Amount</th><th>findEligibleMethods</th><th>paylater</th><th>paypal</th>
+      <th>Details</th><th>Button</th><th>Session</th>
+    </tr></thead><tbody id="tbody"><tr><td colspan="7" class="muted">Not run yet.</td></tr></tbody></table>
+    <div id="mount"><span class="muted" style="font-size:12px">Button mount target — a visible button
+      here means Pay Later actually renders for that amount.</span></div>
+  </div>
+
+  <div id="decision"><h2 id="dtitle"></h2><p id="dbody" style="margin:0;font-size:13px"></p></div>
+
+  <div class="card"><h3>Raw responses</h3><pre id="raw">—</pre></div>
+  <div class="card"><h3>Step log</h3><div class="log" id="log"></div></div>
+
+  <div class="card"><h3>How to read it</h3>
+    <ol style="font-size:13px;padding-left:18px;margin:0">
+      <li><b>Pay Later eligible + button visible</b> → Script A. The OFFER branch shows the real thing.</li>
+      <li><b>Not eligible</b> → Script B. OFFER falls back to a real <code>AUTHORIZE</code> hold.
+          The invoice becomes the hero. This is a <b>result</b>, not a failure.</li>
+      <li><b>No boolean at all</b> → treat as not eligible, say why on camera. Never fake a button.</li>
+      <li>The <b>band</b> is whatever the responses show. Do not quote $30–$1,500 unless the JSON agrees.</li>
+    </ol>
+  </div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const state = { log: [], results: [], report: null, sdk: null, instance: null, loaded: false };
+
+function log(html) {
+  state.log.push(html);
+  $("#log").innerHTML = state.log.map((l, i) => `<div>${i + 1}. ${l}</div>`).join("");
+  $(".log") || ( $("#log").scrollTop = $("#log").scrollHeight );
+}
+function raw(label, obj) {
+  state.results.push({ label, at: new Date().toISOString(), value: obj });
+  $("#raw").textContent = JSON.stringify(state.results, null, 2);
+}
+const money = n => `$${Number(n).toFixed(2)}`;
+const safeStr = o => { try { return JSON.stringify(o); } catch (e) { return String(o); } };
+
+async function loadSdk(cid, currency, country) {
+  if (state.loaded) return window.paypal;
+  const src = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(cid)}` +
+              `&components=buttons,messages&enable-funding=paylater` +
+              `&currency=${encodeURIComponent(currency)}&buyer-country=${encodeURIComponent(country)}` +
+              `&intent=capture`;
+  log(`loading SDK: <b>${src.replace(cid, cid.slice(0, 6) + "…")}</b>`);
+  await new Promise((res, rej) => {
+    const s = document.createElement("script");
+    s.src = src; s.onload = res;
+    s.onerror = () => rej(new Error("script failed to load (CSP, network, or bad id)"));
+    document.head.appendChild(s);
+    setTimeout(() => rej(new Error("timed out after 20s")), 20000);
+  });
+  state.loaded = true;
+  raw("sdkKeys", Object.keys(window.paypal || {}));
+  log(`SDK loaded. Exposes: <b>${Object.keys(window.paypal || {}).join(", ")}</b>`);
+  return window.paypal;
+}
+
+async function getInstance() {
+  if (state.instance) return state.instance;
+  const p = window.paypal;
+  if (typeof p.createInstance === "function") {
+    log("v6 path: <b>paypal.createInstance()</b>");
+    state.instance = await p.createInstance({ components: ["paypal-payments"], pageType: "checkout" });
+    log("instance created");
+    return state.instance;
+  }
+  log("<b style='color:#f1c40f'>no createInstance</b> — falling back to the SDK object (v5-style)");
+  state.instance = p;
+  return state.instance;
+}
+
+async function checkAmount(amount) {
+  const row = { amount, methods: null, paylater: null, paypal: null, details: null,
+                button: "not attempted", session: "not attempted", errors: [] };
+  const sdk = await getInstance();
+  if (typeof sdk.findEligibleMethods !== "function") {
+    row.errors.push("findEligibleMethods is not a function on this SDK build");
+    return row;
+  }
+  try {
+    row.methods = await sdk.findEligibleMethods({
+      currencyCode: $("#cur").value.trim().toUpperCase(),
+      countryCode: $("#ctry").value.trim().toUpperCase(),
+      amount: Number(amount).toFixed(2)
+    });
+    raw(`findEligibleMethods ${amount}`, row.methods);
+    if (typeof row.methods.isEligible === "function") {
+      row.paylater = row.methods.isEligible("paylater");
+      row.paypal = row.methods.isEligible("paypal");
+      if (row.paylater && typeof row.methods.getDetails === "function") {
+        try { row.details = row.methods.getDetails("paylater"); } catch (e) { row.errors.push("getDetails: " + e.message); }
+      }
+    } else {
+      row.errors.push("methods object has no isEligible; keys: " + Object.keys(row.methods).join(","));
+    }
+  } catch (e) {
+    row.errors.push("findEligibleMethods threw: " + e.message);
+  }
+  return row;
+}
+
+async function tryButton(amount) {
+  const sdk = await getInstance();
+  const mount = $("#mount");
+  mount.querySelectorAll("paypal-paylater-button,paypal-button,div").forEach(n => n.remove());
+  try {
+    if (typeof sdk.createPayLaterOneTimePaymentSession !== "function" &&
+        typeof sdk.createPayPalButton !== "function") {
+      return "no button factory on this SDK";
+    }
+    const el = document.createElement("paypal-paylater-button");
+    el.setAttribute("type", "pay");
+    el.setAttribute("amount", Number(amount).toFixed(2));
+    el.setAttribute("currency-code", $("#cur").value.trim().toUpperCase());
+    mount.appendChild(el);
+    await new Promise(r => setTimeout(r, 900));
+    const r = el.getBoundingClientRect();
+    const visible = r.width > 0 && r.height > 0 && getComputedStyle(el).display !== "none";
+    return visible ? `visible ${Math.round(r.width)}×${Math.round(r.height)}` : "rendered but hidden";
+  } catch (e) {
+    return "threw: " + e.message;
+  }
+}
+
+async function trySession(amount) {
+  const sdk = await getInstance();
+  try {
+    if (typeof sdk.createPayLaterOneTimePaymentSession !== "function") {
+      return "createPayLaterOneTimePaymentSession unavailable";
+    }
+    const session = sdk.createPayLaterOneTimePaymentSession({
+      onApprove: d => log(`<b style="color:#2ecc71">session approved</b> ${safeStr(d)}`),
+      onCancel: d => log(`session cancelled ${safeStr(d)}`),
+      onError: e => log(`<b style="color:#e74c3c">session error</b> ${e && e.message}`)
+    });
+    raw(`session-create ${amount}`, { created: true, keys: Object.keys(session || {}) });
+    // start() opens the buyer flow. It will ask for sandbox buyer login.
+    const maybe = session.start({ presentationMode: "auto" }, {});
+    if (maybe && typeof maybe.then === "function") await maybe;
+    return "session started — complete it as the sandbox buyer";
+  } catch (e) {
+    return "threw: " + e.message;
+  }
+}
+
+function decide(rows) {
+  const eligible = rows.filter(r => r.paylater === true);
+  const box = $("#decision");
+  if (eligible.length) {
+    box.className = "a"; box.style.display = "block";
+    $("#dtitle").textContent = "Script A — Pay Later renders";
+    $("#dbody").innerHTML = `Eligible at ${eligible.map(r => money(r.amount)).join(", ")}.
+      The OFFER branch may show the real <code>&lt;paypal-paylater-button&gt;</code>.
+      Record the productCode and countryCode from the details above.`;
+  } else {
+    box.className = "b"; box.style.display = "block";
+    $("#dtitle").textContent = "Script B — Pay Later does not render";
+    $("#dbody").innerHTML = `No amount returned <code>paylater: true</code>. OFFER falls back to a real
+      <code>AUTHORIZE</code> hold, and <b>the invoice becomes the hero</b>. Say this on camera; it is a
+      finding, not a failure.`;
+  }
+}
+
+function render(rows) {
+  $("#tbody").innerHTML = rows.map(r => `
+    <tr>
+      <td><b>${money(r.amount)}</b></td>
+      <td>${r.methods ? '<span class="yes">returned</span>' : '<span class="no">failed</span>'}</td>
+      <td>${r.paylater === true ? '<span class="yes">true</span>'
+           : r.paylater === false ? '<span class="no">false</span>' : '<span class="muted">—</span>'}</td>
+      <td>${r.paypal === true ? "true" : r.paypal === false ? "false" : "—"}</td>
+      <td class="muted">${r.details ? safeStr(r.details) : "—"}</td>
+      <td class="muted">${r.button}</td>
+      <td class="muted">${r.session}</td>
+    </tr>`).join("");
+}
+
+$("#go").addEventListener("click", async () => {
+  const cid = $("#cid").value.trim();
+  if (!cid) { log("<b style='color:#e74c3c'>no client ID</b>"); return; }
+  state.log = []; state.results = []; state.loaded = false; state.instance = null;
+  $("#raw").textContent = "—"; $("#decision").style.display = "none";
+  $("#copy").disabled = $("#dl").disabled = true;
+  $("#go").disabled = true;
+  const cur = $("#cur").value.trim().toUpperCase(), ctry = $("#ctry").value.trim().toUpperCase();
+
+  try { await loadSdk(cid, cur, ctry); }
+  catch (e) {
+    log(`<b style='color:#e74c3c'>SDK failed:</b> ${e.message} — this is inconclusive, not an answer`);
+    $("#go").disabled = false; return;
+  }
+
+  const primary = $("#amounts").value.split(",").map(s => parseFloat(s)).filter(n => n > 0);
+  const sweep = $("#sweep").value.split(",").map(s => parseFloat(s)).filter(n => n > 0);
+  const rows = [];
+  for (const a of primary) { log(`checking <b>${money(a)}</b>`); rows.push(await checkAmount(a)); }
+  for (const r of rows) { r.button = await tryButton(r.amount); log(`button @ ${money(r.amount)}: ${r.button}`); }
+
+  const firstEligible = rows.find(r => r.paylater === true);
+  if (firstEligible) {
+    log(`attempting a real session at ${money(firstEligible.amount)}`);
+    firstEligible.session = await trySession(firstEligible.amount);
+  }
+
+  const band = [];
+  for (const a of sweep) { band.push(await checkAmount(a)); }
+  const okBand = band.filter(r => r.paylater === true).map(r => r.amount).sort((x, y) => x - y);
+  raw("bandSweep", band.map(r => ({ amount: r.amount, paylater: r.paylater })));
+
+  render(rows);
+  decide(rows);
+
+  state.report = {
+    ranAt: new Date().toISOString(),
+    currency: cur, buyerCountry: ctry,
+    primary: rows, evidence: state.results,
+    band: { tested: sweep, eligible: okBand,
+            observedMin: okBand.length ? Math.min(...okBand) : null,
+            observedMax: okBand.length ? Math.max(...okBand) : null },
+    decision: rows.some(r => r.paylater === true) ? "A" : "B"
+  };
+  $("#copy").disabled = $("#dl").disabled = false;
+  $("#go").disabled = false;
+  log(`<b>done</b> — decision ${state.report.decision}. Paste the report into PAYLATER_SANDBOX_TEST.md.`);
+});
+
+$("#copy").addEventListener("click", async () => {
+  const txt = JSON.stringify(state.report, null, 2);
+  try { await navigator.clipboard.writeText(txt); $("#copy").textContent = "Copied"; }
+  catch (e) { prompt("Copy the report:", txt); }
+  setTimeout(() => $("#copy").textContent = "Copy JSON report", 1600);
+});
+
+$("#dl").addEventListener("click", () => {
+  const blob = new Blob([JSON.stringify(state.report, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `paylater-probe-${new Date().toISOString().slice(0, 10)}.json`;
+  a.click();
+});
+</script>
+</body>
+</html>

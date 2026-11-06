@@ -1,0 +1,38 @@
+[
+ {
+  "repo": "paypal/paypal-js",
+  "archived": false,
+  "pushed": "2026-10-29",
+  "open_issues": 22,
+  "stars": 342,
+  "desc": "PayPal JS Monorepo containing a loading wrapper, TypeScript types, and a React library for the PayPal JS SDK",
+  "default_branch": "main"
+ },
+ {
+  "repo": "paypal/PayPal-PHP-SDK",
+  "archived": true,
+  "pushed": "2025-08-22",
+  "open_issues": 20,
+  "stars": 41,
+  "desc": "Deprecated in favor of:",
+  "default_branch": "master"
+ },
+ {
+  "repo": "paypal/agent-toolkit",
+  "archived": false,
+  "pushed": "2026-09-01",
+  "open_issues": 45,
+  "stars": 198,
+  "desc": "PayPal Agent",
+  "default_branch": "main"
+ },
+ {
+  "repo": "paypal/paypal-checkout-components",
+  "archived": false,
+  "pushed": "2026-10-28",
+  "open_issues": 13,
+  "stars": 1339,
+  "desc": "please submit Issues about the PayPal JS SDK here: https://github.com/paypal/paypal-js/issues",
+  "default_branch": "main"
+ }
+]

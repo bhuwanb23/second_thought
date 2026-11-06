@@ -1,0 +1,23 @@
+[project]
+name = "secondthought"
+version = "1.0.0.dev0"
+description = "A payday-aware checkout that sometimes says \"not yet\""
+requires-python = ">=3.11"
+dependencies = []            # stdlib only, deliberately
+
+[project.optional-dependencies]
+dev = ["ruff>=0.4"]
+
+[project.scripts]
+secondthought = "secondthought.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["secondthought*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

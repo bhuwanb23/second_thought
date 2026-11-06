@@ -1,0 +1,63 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Second Thought//V6 durability//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Second Thought — V6 durability
+X-WR-TIMEZONE:Asia/Kolkata
+BEGIN:VEVENT
+UID:v6-repeat-1@secondthought
+DTSTAMP:20261104T025000Z
+DTSTART:20261201T043000Z
+DTEND:20261201T060000Z
+SUMMARY:V6 repeat — public URL durability check (30 min)
+DESCRIPTION:1. Open the URL COLD in a fresh browser profile. Time it — 
+ under 1s means it did not sleep.\n2. python3 scripts/v6_cold_check.py --
+ url https://<app>.onrender.com --record (then --compare afterwards).\n3.
+  All three personas render: Ada OFFER, Ben DEFER, Cleo DECLINE.\n4. /hea
+ lthz reads SANDBOX + LLM. If either says SIMULATED or LLM-MOCK, a key ha
+ s fallen off the service.\n5. Save a profile in one browser; check a sec
+ ond browser still sees the untouched personas.\n6. Create one invoice fr
+ om the URL, find the INV2- in the PayPal sandbox dashboard.\n7. POST a w
+ ebhook with a bad signature; confirm 400 and that it appears at /diagnos
+ tics.\n8. Note the boot id. It must be the same one recorded last time, 
+ or explain why it restarted.\n9. Log the result in docs/plan/V6_deployme
+ nt.md §results with the date and the boot id.
+LOCATION:https://second-thought.onrender.com
+BEGIN:VALARM
+TRIGGER:-PT60M
+ACTION:DISPLAY
+DESCRIPTION:V6 durability check — the contest requires the demo to stay
+  up
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:v6-repeat-2@secondthought
+DTSTAMP:20261104T025000Z
+DTSTART:20261210T043000Z
+DTEND:20261210T060000Z
+SUMMARY:V6 repeat 2 — durability + final submission freeze check (30 mi
+ n)
+DESCRIPTION:1. Open the URL COLD in a fresh browser profile. Time it — 
+ under 1s means it did not sleep.\n2. python3 scripts/v6_cold_check.py --
+ url https://<app>.onrender.com --record (then --compare afterwards).\n3.
+  All three personas render: Ada OFFER, Ben DEFER, Cleo DECLINE.\n4. /hea
+ lthz reads SANDBOX + LLM. If either says SIMULATED or LLM-MOCK, a key ha
+ s fallen off the service.\n5. Save a profile in one browser; check a sec
+ ond browser still sees the untouched personas.\n6. Create one invoice fr
+ om the URL, find the INV2- in the PayPal sandbox dashboard.\n7. POST a w
+ ebhook with a bad signature; confirm 400 and that it appears at /diagnos
+ tics.\n8. Note the boot id. It must be the same one recorded last time, 
+ or explain why it restarted.\n9. Log the result in docs/plan/V6_deployme
+ nt.md §results with the date and the boot id.\n10. This is the last che
+ ck before 15 Dec 08:00 PT. After this, nothing changes: main stays as ta
+ gged.
+LOCATION:https://second-thought.onrender.com
+BEGIN:VALARM
+TRIGGER:-PT60M
+ACTION:DISPLAY
+DESCRIPTION:V6 durability check — the contest requires the demo to stay
+  up
+END:VALARM
+END:VEVENT
+END:VCALENDAR

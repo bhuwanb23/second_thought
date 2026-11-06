@@ -1,0 +1,373 @@
+secure25/moltmoney | TypeScript | MIT | https://moltmoneydashboard-production.up.railway.app/ | Elio × MoltMoney — banking for AI agents. A chat agent that shops and pays through PayPal (sandbox) with human-approval policy gates. Agentic commerce
+dav9fulldev/sika-agent | Python | MIT | - | SIKA Pay — AI payment agent with PayPal (Orders v2 sandbox) + Gemini. PayPal AI Hackathon 2026
+archipelagoing/bartr | None | Apache-2.0 | - | BARTr: PayPal AI Hackathon ft archipelagoing. Trade what you want !
+asantosh666/checkout-agent | Python | MIT | - | AI shopping assistant that finds products and checks out with PayPal — PayPal AI Hackathon entry
+mihirargulkar/haggle | Python | MIT | - | Two AI agents haggle. PayPal holds the money. PayPal AI Hackathon 2026 entry.
+gajit9147-dev/scam-shield-paypal | JavaScript | MIT | https://scam-shield-paypal.onrender.com/pay | ScamShield with PayPal sandbox checkout: AI checks a payment request before you can pay (PayPal AI Hackathon)
+blanco1er/mandat | JavaScript | MIT | https://mandat-qb77.onrender.com | Mandat — an AI agent you give a budget to: it finds, negotiates, books and pays with PayPal, inside a mandate you sign once. PayPal AI Hackathon 2026.
+ceedot-rock/riderpay | Python | MIT | - | RiderPay: an AI agent with a PayPal wallet — spending bounds, exact integer-cents math, signed receipts. PayPal AI hackathon entry.
+ssaglin19/agent-commerce-sandbox | Python | MIT | - | Haggle Court: two heckling bots haggle a group buy, PayPal sandbox holds the funds, a judge bot rules capture or void and splits payouts. PayPal AI ha
+ezekiellemana/sarafupay-ai | TypeScript | MIT | https://sarafupay-ai.onrender.com | AI agent in WhatsApp that runs group collections (michango) with PayPal and pays out transparently. PayPal AI Hackathon 2026.
+Parithosh-Varma/paypal-ai-hackathon | HTML | MIT | - | ShopGenie — AI storefront builder + agentic PayPal checkout. PayPal AI Hackathon 2026.
+impactvelocity/resell-store | TypeScript | MIT | https://resell.store | Resell.Store: An AI Agent That Sells Your Stuff for You | PayPal AI Hackathon
+asimsajjad047/paypal-ai-hackathon | Python | MIT | - | 
+dcontessa/paypal-ai-hackathon | None | MIT | - | 
+Bowen1314/paceline | TypeScript | MIT | https://paceline.gotclass.xyz | Milestone billing where 'invoice paid' is a real dependency in the plan. PayPal Invoicing (sandbox) + Nemotron on Nebius. PayPal AI Hackathon entry.
+zhoujie0420/payroute | Go | None | - | PayRoute: AI-powered smart payment routing gateway for PayPal AI Hackathon 2026
+michaelwoolum50-cmyk/paypal-agentic-commerce | None | None | - | AI agentic-commerce agent: natural-language PayPal invoicing and payments (PayPal AI Hackathon entry)
+brandon-makes/paypal-webhook-simulator | Python | MIT | - | Offline simulator + verifier for PayPal webhook events: HMAC signature verification, idempotent delivery handling, and a CLI demo. Built for the PayPa
+fexx301/witness | TypeScript | MIT | - | Witness answers PayPal disputes with evidence, including disputes over AI-agent purchases. PayPal AI Hackathon 2026.
+Pr1meGG/paypal-ai-hackathon | Python | MIT | - | PayPal AI Hackathon: Agentic commerce — AI agents that pay and get paid via PayPal. RTO reduction + lead conversion via payment-aware agents.
+fernandogarzaaa/paypilot | Python | MIT | - | PayPilot: an agentic commerce operator for PayPal. Natural language in, PayPal operations out: invoices, payment chasing, and refunds through the PayP
+iancuileana83-lab/caresplit | TypeScript | MIT | - | CareSplit: siblings split a parent's pharmacy costs. AI reads receipts, PayPal invoices. PayPal AI Hackathon entry.
+RwTraylor/subscription-killer | Python | MIT | - | Find the subscriptions you forgot. Kill them in one tap. PayPal AI Hackathon entry.
+rohith1005H/AgentBaazar | TypeScript | Apache-2.0 | - | Agent-ready commerce for every small store, on PayPal. PayPal AI Hackathon 2026.
+devilking7x/vendorapay | TypeScript | MIT | - | Vendora Pay AI — AI storefront builder for freelancers & creators worldwide. Chat to build a payment page, get paid via PayPal, AI salesperson runs yo
+ma-za-kpe/stood | TypeScript | MIT | https://ma-za-kpe.github.io/stood/ | Money does not move until someone stood there. Open-source evidence-gated release gate for staged payments, built on PayPal + AI (PayPal AI Hackathon 
+greatgeekgrace/ledgerbird | Python | MIT | https://ledgerbird.onrender.com | AI accounts-receivable agent for freelancers, built on PayPal Invoicing (PayPal AI Hackathon)
+SebAustin/steward-merchant-copilot | TypeScript | MIT | - | AI ops copilot for PayPal merchants: approve-first agent for disputes, invoices and refunds (PayPal AI Hackathon 2026)
+Mike-Demo/outcomepay | TypeScript | MIT | - | OutcomePay — a market where AI agents buy verified results, settled by PayPal. PayPal AI Hackathon 2026 entry.
+Jeremiah-Sakuda/harambee | JavaScript | MIT | - | Harambee — PayPal AI Hackathon project
+Jeremiah-Sakuda/cover | JavaScript | MIT | - | Cover — PayPal AI Hackathon project
+Jeremiah-Sakuda/walkthrough | JavaScript | MIT | - | Walkthrough — PayPal AI Hackathon project
+kalai2006priya-art/PayPilot-AI | JavaScript | MIT | - | Agentic AI payment safety and decision assistant built for the PayPal AI Hackathon.
+howdycarter/paypal-ai-hackathon-2026 | None | MIT | - | Chris Carter's entry for the PayPal AI Hackathon 2026 — agentic commerce on the PayPal sandbox.
+vansyson1308/shopvoice-pay | TypeScript | MIT | - | Voice-first purchasing agent for independent grocers — pays suppliers via PayPal, only within owner-set rules. PayPal AI Hackathon 2026.
+michaelbarkovskis/rain-day-cover | TypeScript | MIT | https://rain-day-cover.vercel.app | Parametric rain-day income cover for UK roofers. PayPal Subscriptions + Payouts, Claude AI, Open-Meteo. PayPal AI Hackathon 2026.
+Jacob-Met/ledgerly | Python | MIT | https://jacobmetoyer.com/ledgerly/ | Agentic invoice + payout copilot for freelancers with a human approval gate. PayPal AI Hackathon entry.
+fokrulanthro16-eng/milestonepay-ai | TypeScript | NOASSERTION | - | Autonomous Bryntum Gantt escrow & headless PayPal Orders v2 milestone payout engine powered by Gemini 2.5 Flash. Built for PayPal AI Hackathon 2026.
+vladimirjoseph36-png/paypal-ai-checkout-agent | Python | MIT | - | Conversational AI that creates real PayPal orders from natural language — PayPal AI Hackathon 2026
+faraz999shah/Haven | TypeScript | MIT | - | Voice-first payments for older adults with scam protection and family approval. (PayPal AI Hackathon)
+KML0505/Refy | TypeScript | None | - | Paypal AI Hackathon
+jayblast-spec/negotiator-payments | Python | Apache-2.0 | - | Agentic-commerce extension of AI-NEGOTIATOR: settles an agreed negotiation by paying the vendor via PayPal Payouts, with an AI-drafted payment memo. B
+Sakthisadhana/PayPilot | None | None | - | Chat-first AI billing agent. Describe an invoice in plain language, approve it, and PayPilot creates and sends a PayPal invoice, tracks payment via we
+Noahstark23/nortex-paypal-ai | TypeScript | MIT | - | AI-powered PayPal checkout and collections agent for Nortex merchants — PayPal AI Hackathon 2026 entry
+atrip0305/PayRythm-AI | TypeScript | MIT | - | AI-powered financial operator built for the PayPal AI Hackathon.
+atleekumaar/paypilot | Python | MIT | - | PayPilot - AI-Powered Commerce Agent for PayPal AI Hackathon
+AndreSierraM/payguard-agent | TypeScript | MIT | - | PayPal AI Hackathon — NL payouts + risk policies via PayPal Agent Toolkit/MCP (sandbox)
+arindewangan/invoicepilot | Python | MIT | - | InvoicePilot — AI agentic invoicing copilot (PayPal + AI), built for the PayPal AI Hackathon
+xexpertai/dispute-defender | TypeScript | MIT | - | Dispute Defender: an honest AI agent that helps small online sellers win the PayPal disputes worth fighting and settle the rest fairly. Built for the 
+3414423574anhuln-tech/saypay | TypeScript | MIT | - | Say it. Review it. Pay it. — State a payment intent in one sentence; an AI agent drafts the PayPal order, a human confirms, then it pays. Entry for th
+arc585/breakpoint | Python | MIT | - | A PayPal-sandbox security test bench for AI-enabled checkout: tests whether a shop's AI assistant can be manipulated into violating the merchant's pri
+manalijaz111-pixel/hayapay-ai | None | None | - | HayaPay AI - PayPal AI Hackathon
+PostOakLabs/paypal-agent-shop | JavaScript | MIT | - | The merchant's agent — everyone's agent can check out; ours handles the whole sale. PayPal AI Hackathon entry: Orders, Pay Later/Venmo buttons, tracki
+rockpld-droid/errand | None | MIT | https://errand-5pw6.onrender.com | A shopping agent you chat or talk to. It searches 25,000 real stores, you choose, and it pays with PayPal on the spot. PayPal AI Hackathon.
+habib-analyst/PayPilot | Python | MIT | - | PayPilot — agentic commerce copilot: chat to PayPal checkout. Built for the PayPal AI Hackathon.
+manishwvn/rebuttal | Python | MIT | - | Dispute-prevention agent for small PayPal merchants (PayPal AI Hackathon)
+QuincyGB/guardianpay | JavaScript | MIT | - | GuardianPay - AI scam shield protecting seniors' PayPal accounts from romance scams, fake charities and phishing. PayPal AI Hackathon entry.
+swapnilchaudhari007/fairshake | JavaScript | MIT | - | Hold the money with PayPal, let AI check the work line by line, pay only for what was delivered. Built for the PayPal AI Hackathon 2026.
+Akshit-Singh-00/scopepay | JavaScript | MIT | - | Evidence-backed scope reviews and PayPal sandbox invoices for freelancers — PayPal AI Hackathon 2026.
+Akshit-Singh-00/restockpilot | JavaScript | MIT | - | AI-assisted inventory restocking with reviewed budgets and PayPal Orders sandbox checkout. PayPal AI Hackathon.
+ntoledo319/paypal-frontdesk | Python | MIT | https://ntoledo319.github.io/paypal-frontdesk/ | AI front-desk agent that books appointments and collects deposits via PayPal — agentic commerce (PayPal AI Hackathon)
+CryptoPrince9/paygroq-ai-smart-payments | TypeScript | None | - | PayPal AI Hackathon Submission: Smart AI Checkout with Groq and PayPal
+its-bzak/buyguy | Python | MIT | - | Repository for AI Shopping Agent built by Ryan Barczak for the PayPal AI Hackathon 2026.
+Sohamdhumal7/paypal-ai-hackathon | None | None | - | 
+NoBanks/shelf-paypal | Python | MIT | - | SHELF x PayPal: an agent crew that lists your stuff, prices it honestly, and closes the sale through PayPal. PayPal AI Hackathon 2026.
+Noah-zipit/trustlock | TypeScript | MIT | - | TrustLock — AI escrow for freelancers. PayPal AI Hackathon 2026 entry.
+venkatkrish98/paypilot-ai | TypeScript | MIT | - | Your AI agent for getting paid, paying safely, and managing every transaction — PayPal AI Hackathon 2026
+jmvidal2024/vidal-booking-ai | JavaScript | MIT | - | AI booking agent that takes PayPal deposits — PayPal AI Hackathon
+Talal-ah-cloud/invoicepilot | Python | MIT | - | AI payment-collection agent for WhatsApp — turns a chat message into a PayPal invoice, sends the payment link, confirms on payment, and auto-follows-u
+Sarcastic-Soul/milestone | TypeScript | MIT | https://milestone-l8rx.onrender.com/ | Gantt schedules that move with PayPal payments. PayPal AI Hackathon 2026.
+AryanP3208/plainpay | JavaScript | MIT | - | Medical bills explained by AI and paid through PayPal (PayPal AI Hackathon 2026)
+Nawkoch/haggle | JavaScript | MIT | - | AI agents negotiate a price for you; PayPal sandbox pays only after you approve. PayPal AI Hackathon.
+Fu93/tradeos | Python | MIT | - | PayPal moves the money. TradeOS moves the work. — AI operational bridge for cross-border merchants (PayPal AI Hackathon)
+yijigao/proofpay | Python | MIT | - | ProofPay — escrow for AI work: PayPal funds frozen first, captured only when nine objective checks pass (PayPal AI Hackathon)
+vigohan95/chaser | TypeScript | MIT | https://chaser-six.vercel.app | Chaser: accounts-receivable agent on PayPal Agent Toolkit + Vercel AI SDK (PayPal AI Hackathon entry)
+ruslanpavliichuk/dispute-radar-paypal | Python | MIT | - | Predicts which PayPal orders will turn into disputes and acts before the buyer files. Calibrated LIghtGBM models with SHAP explanations, PayPal Agent 
+Ejicode/dispute-autopilot | Go | MIT | - | AI agent that handles PayPal disputes for sellers (PayPal AI Hackathon 2026)
+faizanmohiuddin482/holdfast | TypeScript | MIT | https://holdfast-6ws6.onrender.com | Pay only for what was delivered: PayPal holds the payment, an AI checks the work, you release the delivered share. PayPal AI Hackathon.
+VIKAS9793/AgentCoSign | Python | AGPL-3.0 | https://agentcosign-demo.onrender.com | Dual control for AI agents that move money on PayPal: the AI proposes, independent AI checks read the customer's own words, deterministic rules decide
+midnightmichigan/paypilot | Python | MIT | - | PayPilot — AI invoice generator for casual sellers. PayPal AI Hackathon entry.
+Dang420/Suitor | JavaScript | MIT | - | AI dating where ladies chat free. Gentlemen buy token packs via PayPal and spend 10 tokens per message; ladies join by invite and chat free forever. N
+ttimesai-star/disputedesk | TypeScript | MIT | - | AI copilot for PayPal sellers: triages disputes and chargebacks, drafts evidence, recommends accept or fight. PayPal AI Hackathon.
+rayhannajla-hash/procure-agent | JavaScript | MIT | - | AI purchasing agent for small factories: Channel3 product search, spend policy enforced in code, payment only after a human approves in PayPal. PayPal
+FetchDoge/permit-hackathon | Python | Apache-2.0 | - | Judge package for Permit's PayPal AI Hackathon entry: one-command mock demo, video storyboard and claims that match the source tree.
+RyanDev1st/settlesight | JavaScript | MIT | https://settlesight.vercel.app | SettleSight — AI reconciliation desk for PayPal sellers: deterministic match engine, AG Studio dashboard, supervised agent (PayPal AI Hackathon)
+nikolas-sapa/scope-to-deposit-paypal-ai-2026 | TypeScript | MIT | - | Scope to Deposit: sandbox-only PayPal AI Hackathon entry, genuine integration acceptance pending.
+Vens-i/plainbill | TypeScript | MIT | https://plainbill.onrender.com/ | Clear, visual patient bills for small medical practices: AI-read EOBs, PayPal invoices and plans, an AI bill helper. PayPal AI Hackathon.
+aaravbodla/PAYPAL-AI-HACKATHON | None | None | - | PAYPAL AI HACKATHON Sai and Aarav 
+Techfrontiers/judgepay-paypal | Python | MIT | - | Financial judgment for AI agents — conditional PayPal escrow with AI evaluation. PayPal AI Hackathon 2026 entry.
+OkyWoww/aegismandate | TypeScript | MIT | - | A mandate-based control plane for agentic commerce: AI agents propose purchase intents under strict spending mandates, evaluated deterministically bef
+ironblade-droid/paypal-ai-hackathon | JavaScript | MIT | - | 
+StuartYo/subguard | TypeScript | MIT | https://subguard-plum.vercel.app | AI agent that stops subscription chargebacks before they happen — PayPal + Claude (PayPal AI Hackathon)
+Elthiero/paypilot-shield | Python | MIT | - | AI agent that pays supplier invoices via PayPal Payouts, but only inside an owner-signed spending policy and after an invoice fraud check. The AI prop
+Aditya251610/SafePayAI | Python | MIT | - | SafePayAI — buyer-signed Mandate + bounded shopping agent + deterministic refund-protection loop on PayPal sandbox (PayPal AI Hackathon 2026)
+dcain2336/payagent-mesh | Python | MIT | - | Policy-governed payment rails for AI agents — PayPal AI Hackathon 2026 entry
+tbd-hackathons/mandate | TypeScript | MIT | - | An AI buyer for small businesses that pays with PayPal only inside spending rules you write in plain words, and never pays twice. PayPal AI Hackathon 
+Benito3262/handover | TypeScript | None | - | Handover: AI money assistant for small sellers. PayPal holds the payment and releases it only after both buyer and seller confirm delivery. PayPal AI 
+Ritesh-Root/pulsepay-paypal | JavaScript | MIT | - | Pay at any shop with your fingerprint or face plus a PIN. Funded with PayPal Checkout, merchants paid out with PayPal Payouts, plus an AI merchant ass
+Speedyzyzz/sentinel-prooflayer | Python | MIT | https://sentinel-prooflayer-web.onrender.com | The Unified Agent Mandate Control Plane & Causal Pre-Dispute Evidence Graph for Autonomous B2B Commerce on PayPal (PayPal AI Hackathon 2026)
+qinheyi/dispute-steward | TypeScript | MIT | https://dispute-steward.vercel.app | DisputeSteward — AI steward for PayPal disputes & invoices (PayPal AI Hackathon 2026)
+solanaminter/procurepilot | TypeScript | MIT | - | ProcurePilot — conversational AI procurement agent for small businesses (PayPal AI Hackathon entry)
+dzaffren/kincart | TypeScript | MIT | https://kincart.vercel.app | An older relative asks for something, AI explains the options, a family helper taps OK, and PayPal pays. PayPal AI Hackathon entry.
+zuemen/agent-tab | TypeScript | Apache-2.0 | - | AgentTab — a PayPal-authorized spending tab for AI agents: approve a budget once; every paid tool call is checked against your rules, recorded, and ca
+tatsuya7899/preflight-for-paypal | HTML | MIT | - | Preflight for PayPal — pre-shipment Seller Protection checker (PayPal AI Hackathon 2026). Chrome extension + local backend; fixture mode runs in ~2 mi
+DinhJDev/paypal-ai-hackathon-2026 | Java | Apache-2.0 | - | AI-powered salon suite tenant support system with churn risk detection, optimized suite matching, and PayPal rent collection for salon suite owners.
+jeroenzwiers/gouden-korst-webshop | HTML | MIT | - | Demo webshop for a fictional bakery – deliverable used to demo Milestone Escrow (PayPal AI Hackathon)
+jeroenzwiers/milestone-escrow | TypeScript | MIT | - | AI escrow agent for freelancers: milestone payments that release when the work is verified. PayPal AI Hackathon.
+sharugesh2303/paypal-ai-hackathon | None | MIT | - | 
+hacky-man/PayPal_AI_Hackathon-2026 | None | MIT | - | PayPal AI Hackathon
+Zhiyilang/paypilot | Python | MIT | https://github.com/Zhiyilang/paypilot | PayPilot - an AI shopping agent with policy guardrails that executes real PayPal sandbox checkouts. Zero-dependency Python, transparent reasoning, evi
+antonytampubolon2-cell/paypal-ai-trust-engine-v2 | Python | MIT | https://antonytampubolon2-cell.github.io/paypal-ai-trust-engine-v2/dashboard_v2.html | Multi-layered security gate for AI agent transactions. Features KYAPay token verification, JTI anti-replay, DPoP binding, and Fraud Risk Engine. Built
+OlsOls4/sorted | TypeScript | MIT | https://sorted-paypal.vercel.app | AI agent for UK sole traders: turns messy job notes into PayPal invoices, tracks who owes what, and chases late payers. Built for the PayPal AI Hackat
+keshavloma1081-ctrl/Cascade | Python | None | - | Autonomous agent payment network — PayPal AI Hackathon
+jr04ball-byte/little-makers-market | Python | MIT | - | Kids' drawings become plush 3D toys, stickers & prints that family (and AI agents) can buy with PayPal. PayPal AI Hackathon entry.
+HusseinAdeiza/amanah-paypal | TypeScript | MIT | - | Autonomous, auditable treasury agent for charities — PayPal + AI (PayPal AI Hackathon 2026)
+Kbfox/gofer | TypeScript | MIT | - | Tell it what you need. It finds it, you approve, it pays. — PayPal AI Hackathon 2026
+JasonColapietro/suede-shelf | TypeScript | MIT | https://suede-shelf.vercel.app | Let AI assistants check out at your store with PayPal. MCP storefront + PayPal Orders + Claude. PayPal AI Hackathon.
+vickaul-ai/quiet-check | Python | Apache-2.0 | https://quietcheck-web.onrender.com | Private fraud check for agent payments: AP3 PSI + PayPal Orders v2 (PayPal AI Hackathon)
+LawrenceMelvin/PaperTales | TypeScript | MIT | - | The Premier Agentic Story & Coloring Studio - Built for PayPal AI Hackathon 2026
+yash112005/WePay | JavaScript | MIT | https://we-pay-iota.vercel.app | 🤖 Voice-driven cross-border family ledger for PayPal AI Hackathon 2026. Speak naturally in Hinglish/vernacular text—our Gemini AI parses intents, maps
+zerokali20/ArbiterPay | TypeScript | MIT | - | Protecting freelancers and clients with AI-driven escrow funds are secured via PayPal, deliverables are verified against criteria, and payouts move au
+anaivi1960/homeward | TypeScript | MIT | - | Pay for what family at home needs, and see proof it arrived. PayPal AI Hackathon 2026.
+DucPhamNgoc08/paypal-ai-hackathon | TypeScript | MIT | - | PayPal AI Hackathon 2026 entry (WIP)
+muriithiKabogo/paypal-budget-agent | JavaScript | MIT | https://allowance-pi38.onrender.com | Autonomous PayPal Sandbox budget agent — PayPal AI Hackathon 2026 (Best Use of Agentic Commerce)
+Thanatos9404/leash | Python | MIT | - | Leash: enforceable spending mandates for AI shopping agents. Plain-language rules compiled into a signed policy, a PayPal Orders v2 authorization as t
+Hemanth0627/Theervu | TypeScript | MIT | - | Theervu (தீர்வு): consumer issue-resolution assistant.  prototype; PayPal Sandbox + AI resolution agent in development for the PayPal AI Hackathon.
+jacman1988-super/ordernest | JavaScript | MIT | - | Read-only PayPal Sandbox order review with a local AI agent. Built for the PayPal AI Hackathon.
+Sebazzz88/paypal-ai-hackathon | None | None | - | 
+okoryem/invoice-guard | TypeScript | MIT | - | An agent that pays the PayPal invoices you can trust and stops the ones you cannot. PayPal AI Hackathon entry.
+itzbnny/paypal-budget-agent | TypeScript | MIT | - | Conversational banking agent for PayPal users — PayPal AI Hackathon 2026
+ChrisTu117/paypal-webmcp-shop | JavaScript | MIT | https://paypal-webmcp-shop.sandbricks.workers.dev | One script tag turns a small PayPal shop into an AI-agent-orderable store via Chrome WebMCP + PayPal Orders API (sandbox). PayPal AI Hackathon 2026.
+vatsal-agra/repairbrake | Python | MIT | - | Quoted amount is the only money that can be captured. PayPal AI Hackathon.
+Straya-United/docket | JavaScript | MIT | - | Quote to paid for tradies: AI-drafted quotes, PayPal invoices and PayPal Checkout deposits, with an agent that chases what's owing. PayPal AI Hackatho
+kaustubh9306-git/PayPilot | None | None | - | PayPilot – AI agent built for PayPal AI Hackathon 2026. Automates invoicing, tracks payments, and sends smart reminders using PayPal APIs. Built with 
+yashvishah1706/allowance | Python | MIT | - | AI agents earn their budget, and their freedom. Built for the PayPal AI Hackathon.
+Yoh5/paypal-mandat | Python | Apache-2.0 | - | A spending mandate agents cannot step past, and proof of what they did inside it. PayPal AI Hackathon.
+annarose14/sahaya | Python | MIT | - | Voice first shopping agent that pays safely with PayPal. PayPal AI Hackathon 2026.
+btcbarbie/routewell | TypeScript | MIT | https://routewell-production.up.railway.app | Pay contractors and staff expenses anywhere. AI checks every payment; PayPal or PYUSD delivers it. PayPal AI Hackathon entry.
+RAK2315/shopfront-agent | TypeScript | MIT | - | Turn a social-only seller's product photos into a PayPal-backed store that AI shopping agents can buy from. PayPal + AI hackathon.
+poowa-gg/shiporhold | JavaScript | MIT | - | Chat order to PayPal invoice to clear " safe to deliver or hold" answer. PayPal AI Hackathon project, sandbox only.
+ctmakc/uamarket-paypal | Python | MIT | https://uamarket-paypal.agintent.com | UA Market: a Ukrainian makers' shop for Canada with PayPal checkout (JS SDK v6, Orders v2), an AI shopping concierge and a PayPal Agent Toolkit desk. 
+atul-upadhyay-7/scopepay | Java | MIT | - | PayPal AI hackathon prototype. Sandbox payment core; final product scope pending.
+AndreSierraM/mandado-agent | JavaScript | MIT | - | Mandado — buyer & store AI agents negotiate; PayPal authorize then capture after human approval (PayPal AI Hackathon)
+jojocaw/kioku-paypal | Python | MIT | https://youtu.be/t6RO3S7tj-M | Kioku × PayPal — an AI secretary that bills your customers, checked against PayPal. Built for the PayPal AI Hackathon.
+poowa-gg/claimguard-pay | TypeScript | MIT | https://claimguard-pay.vercel.app | AI Spend Authority for Healthcare Claims- Ghost enrolments evaporate. Built with Paypal MCP + NHIA verification- PayPal AI Hackathon 2026
+fadhilmuhaimin/panjar | TypeScript | MIT | - | Ubah chat WhatsApp turis menjadi invoice deposit PayPal dengan batal otomatis dan pengingat pelunasan (PayPal AI Hackathon)
+Blop77/allowance | TypeScript | MIT | https://allowance-trqr.onrender.com | AI buying agents for your team: they find the best deal and pay with PayPal, inside the budgets and approval rules you set. PayPal AI Hackathon 2026.
+Mzoratto/nonna-mode | TypeScript | MIT | https://nonna-mode.onrender.com/demo | PayPal sandbox app that holds suspicious sends as authorizations until the payer and a trusted contact approve. PayPal AI Hackathon 2026.
+clickwise-maker/creatorsettle-ai | Python | MIT | - | Self-healing PayPal settlement agent for creators. Reads failed transactions, decides retry-route-alert, logs every decision in a tamper-proof audit c
+yadunandan22022006-06/Monetra | Java | MIT | https://monetra-tgjl.onrender.com | Monetra: Your AI Financial Guardian that thinks before you pay. Java-powered rules assess spending limits, EMIs, savings goals and payment risks befor
+shro-2002/countersign | Python | MIT | - | Lets AI agents move money with PayPal only within what the merchant authorized: deterministic mandate checks against PayPal's live record, exactly-onc
+poferraz/allowagent-mcp | TypeScript | MIT | - | A payment-control demo for AI assistants: spending limits, verified records, and human approval. Built for the PayPal AI Hackathon.
+shloknarvekar/undo | TypeScript | MIT | https://undo-1c56.onrender.com | Ctrl+Z for AI agent purchases, built on PayPal: signed mandates, held payments, and a fault engine that makes the agent's operator pay. PayPal AI Hack
+freshBakedPie314/project-pilot | Java | None | - | for the PayPal AI Hackathon
+sarasakeena/PropLock-AI | None | None | - | Autonomous real estate visit escrow: AI agents use PayPal Authorize/Void/Capture holds to turn property inquiries into committed, verified site visits
+skcache/waypoint | Go | MIT | - | PayPal AI Hackathon submission
+Pradhyut21/proofpay | TypeScript | MIT | https://proofpay-pradhyut21.vividdaisy16.chatgpt.site | ProofPay: AI-assisted delivery reviews, version-bound client approval, and PayPal sandbox milestone invoicing. PayPal AI Hackathon 2026.
+RuphakVarmaa/answertab | TypeScript | MIT | - | Ask live, pay only for answers. Fans hold one PayPal authorization per stream; Claude checks spoken answers; PayPal settles once per fan. PayPal AI Ha
+Raghav-06/SIAgentBazaar | None | None | - | Paypal Ai hackathon
+JordiBen/agenttab | Python | MIT | https://agenttab.onrender.com | PayPal-funded spending tabs for AI agents, guarded by AI (Gemini). PayPal AI Hackathon entry by WebIntel Tools.
+theluckystrike/paid-tonight | TypeScript | MIT | https://paid-tonight.lipmichal.workers.dev | Describe the job, send a PayPal invoice before you leave. Built by Michael Lip for the PayPal AI Hackathon.
+btcbarbie/standby | TypeScript | MIT | - | AI that buys for you only when two independent checks agree. PayPal AI Hackathon.
+Evoarislan/payday-agent | TypeScript | MIT | - | Payday Agent: autonomous micro-bounty board — the agent verifies submissions and pays winners via PayPal Payouts. PayPal AI Hackathon entry.
+deaabie/skuuy-agent-checkout | JavaScript | MIT | https://checkout.skuuy.com | AI agent buys API quota with PayPal - autonomous machine-to-machine commerce on fiat rails. Built for the PayPal AI Hackathon 2026.
+jackhu24-ship-it/phantom-grid-titanpay | Python | NOASSERTION | - | PHANToM GRID :: TitanPay Autonomous Financial Agent Clearing Engine (PayPal AI Hackathon 2026)
+ruukiepunk/brigpay | TypeScript | MIT | https://brigpay.vercel.app | AI invoice collector: chat to create & send real PayPal invoices, auto-chase late payers. PayPal AI Hackathon entry.
+parth181-oss/paypal-hackathon | None | MIT | - | AI-powered app built with the PayPal sandbox for the PayPal AI Hackathon
+AR-dev804/paypal-pulse-ai | Python | MIT | - | PayPal Pulse AI — the payment agent that can't be tricked. PayPal AI Hackathon 2026.
+jainkushagra54/PricePilot | JavaScript | MIT | - | AI price watcher with a spending policy: Gemini reads your rules, plain code enforces your budget, and PayPal Sandbox checkout is ready the moment a t
+OmkarD09/Docket | JavaScript | MIT | - | Controlled Evidence Reconciliation & Decision Engine for PayPal Disputes (PayPal AI Hackathon 2026)
+Will413028/tidehold | Python | MIT | - | Weather-cancellation deposits for dive operators: cited policy rules, official warnings, PayPal authorization holds (PayPal AI Hackathon)
+AP3008/agent-guard | TypeScript | None | - | Submission for PayPal AI Hackathon
+satwik1sharma/paypal-ai-hackathon | Python | MIT | - | PayPal AI Hackathon 2026: PayPal developer platform + Claude
+JacobEGarcia/allowance | JavaScript | MIT | - | Give your AI agent a budget, not your card. Agentic commerce with a spending mandate - LLM plans, Channel3 searches, PayPal pays. PayPal AI Hackathon 
+jlhpacheco/solvia | C# | MIT | - | Solvia — a student pays what is due for her vehicle, with PayPal. PayPal AI Hackathon 2026.
+usmanmateen/ebb | TypeScript | MIT | - | AI household agents bid electricity flexibility to the grid; deterministic code clears, settles and pays via PayPal Payouts. PayPal AI Hackathon.
+antonmareo10/supplora-pay | TypeScript | MIT | https://supplora-pay.vercel.app | Supplora Pay: an accounts-payable agent that reads supplier invoices with Claude, verifies them against the signed delivery note and price history, an
+AnshulPatil2005/hearthline-paypal-apimatic | Python | MIT | - | PayPal Transaction Search on APIMatic's generated PayPal Python SDK, built with APIMatic's PayPal Context Plugin (excerpt from Hearthline, PayPal AI H
+Chinmoy-04/ShopCrew-PayPal | TypeScript | MIT | - | ShopCrew: autonomous agents that refund customers and pay suppliers via PayPal, with every decision reviewed in an AG Grid + AG Studio control room. B
+meenakshisatpathy20-del/sudhaar-paypal | TypeScript | MIT | https://sudhaar-mm59.onrender.com/ | doorstep repair marketplace for local karigars: AI repair quotes, PayPal-held payments released on delivery OTP, instant payouts. PayPal AI Hackathon 
+icey4826/clippay | TypeScript | MIT | https://clippay.productivityappsforwindows.com | AI-graded damage claims that settle with a partial PayPal refund instead of a full return. PayPal AI hackathon entry.
+JuSmz/holdline | TypeScript | MIT | - | AI phone agent for trades businesses: answers the call, books the job, secures the payment with PayPal (sandbox). Built for the PayPal AI Hackathon.
+RavishkaB2003/Paypal-AI-Hackathon- | TypeScript | None | - | 
+chrono-motz/Mossaic | TypeScript | MIT | - | PayPal AI Hackathon
+muriithiKabogo/allowance-sites | HTML | None | - | Demo websites built and deployed by the Allowance agent (PayPal AI Hackathon 2026). One folder per site, each served as its own Render static site.
+timothyorsmth/bumass_paypal_hackathon | None | None | - | For the paypal AI hackathon
+TanmayShah29/milestone-ai-escrow | TypeScript | MIT | https://milestone-ai-escrow.onrender.com | Pay-on-proof payments on PayPal: money is held until a PR passes tests both sides signed. AI writes the tests; only code moves money. PayPal AI Hackat
+KushnerykPavel/recoveryos | Go | MIT | - | PayPal AI Hackathon
+mathuryashash/duespilot | TypeScript | MIT | - | AR agent that negotiates payment terms with a client's AP agent and settles them as PayPal sandbox invoices (PayPal AI Hackathon)
+silentify5672/safesend | Python | MIT | - | AI scam shield that holds risky payments from elderly users until a trusted contact approves, or a cooling-off period passes. PayPal AI Hackathon.
+zachhhhh/64types-paypal-ai | TypeScript | MIT | - | PayPal checkout (Orders v2) and Workers AI personal insight for the 64 Types Deep Report. PayPal AI Hackathon 2026 entry.
+coo001/scopediff | HTML | MIT | https://scopediff-alpha.vercel.app | Turn "one small change" into an evidence-backed change order: Gemini cites both texts, the freelancer sets prices, the client pays with PayPal (sandbo
+A-Koomson/paypilot | Python | MIT | - | PayPilot — AI revenue recovery agent (PayPal AI Hackathon 2026)
+rudransh0708/Paypal-AI-Hackathon | None | None | - | 
+anuarovalihan6-cmyk/fairdeal-ai | TypeScript | MIT | - | Freelance agreements, AI risk checks, milestones and verified PayPal Sandbox payments. PayPal AI Hackathon prototype with EN/RU support.
+andreyalchin/Mandate-Agentic-Ecommerce-PayPal-AI-Hackathon-2026 | TypeScript | MIT | https://mandate-etwi.onrender.com | Mandate: an AI shopping agent that pays with PayPal only within rules you sign. PayPal AI Hackathon 2026.
+chatbotchatbot692/payguard | Python | MIT | - | Spending-policy guardrail between an AI shopping agent and PayPal: rules plus an AI reviewer that can only say no. PayPal AI Hackathon entry. AI-assis
+Awais-Asghar/paypal-ai-hackathon | TypeScript | MIT | - | PayPal AI Hackathon 2026 entry: PayPal + AI project (ideation stage)
+FerLpz55/PayPalAIHackathon- | JavaScript | MIT | - | Proyecto, para paypal AI hackathon 
+tmk202/guardian-ai | TypeScript | Apache-2.0 | - | Guardian — Your AI Employee Inside PayPal: creates & sends invoices from one sentence, watches disputes and drafts evidence for your approval, reports
+mohanprasath-dev/returngate | TypeScript | MIT | - | Merchant‑controlled, pre‑label, keep‑it partial refunds on PayPal, with AI‑assisted evidence triage. PayPal AI Hackathon 2026.
+manuvamp/rentabot | TypeScript | MIT | https://rentabot.tech | Agents hire specialist bots; PayPal holds the money as an authorization until checks prove the work. MCP + REST, AI mediator. PayPal AI Hackathon.
+Chen931222/mi-espanol-paypal | HTML | MIT | https://mi-espanol-paypal.vercel.app | Mi Español Plus: five minutes of Spanish a day, with an AI conversation partner and PayPal sandbox payments. PayPal AI Hackathon 2026.
+midas-png/paypal-agent-firewall | TypeScript | MIT | https://paypalaihackathon.devpost.com | PayPal AI Hackathon 2026 entry. A payment firewall for AI agents: every payment an agent tries is checked against your rules before it reaches PayPal,
+AhmedOsamaAli/walk-in-paypal | Python | MIT | https://walkin-app.pages.dev/founders | Neighbors back the business an empty storefront is missing, before the lease is signed: each pledge is a PayPal hold, collected only if enough neighbo
+mariahwaslie/agentshelf | Python | MIT | - | Agent-readiness copilot for small PayPal merchants: measure, fix, and prove AI-agent visibility with a real PayPal checkout. PayPal AI Hackathon 2026.
+ledger-scout1/paidcheck | Python | MIT | - | PaidCheck — an AI agent that verifies 'I paid you' claims against real PayPal transactions and issues an evidence-backed verdict memo. Built for the P
+Onwuagba/ajo-agent | Python | MIT | - | A savings circle with an AI treasurer: the model interprets, the rules engine decides. PayPal AI Hackathon.
+morganwhite-dev/recall-runner | TypeScript | MIT | - | AI agent that matches CPSC product recalls to a merchant's PayPal orders and settles refunds, replacements and repairs. PayPal AI Hackathon 2026.
+jiezantech-max/ai-order-agent | Python | MIT | - | Chat-driven ordering agent: natural-language orders fulfilled via PayPal sandbox (orders, capture, refunds). PayPal AI Hackathon 2026 entry; Nebius x 
+lionel509/SplitSlip | None | MIT | - | Snap a Costco receipt; an AI agent splits it and sends each friend a PayPal invoice. PayPal AI Hackathon 2026.
+cannnn1108-prog/carestock-agent | JavaScript | MIT | - | Human-approved supply ordering agent for care homes, paid with PayPal (PayPal AI Hackathon 2026)
+muhammedidris004/agentcheck | JavaScript | MIT | - | Tests whether AI shopping agents can actually pay with PayPal on a store, verifies it against the PayPal sandbox, and generates tested fixes. PayPal A
+jamesparser/paypal-commerce-mcp | TypeScript | MIT | - | OmegaCommerce: PayPal + AI agentic commerce. Dual rails: x402 USDC between agents, PayPal to the human economy. Fund provenance dashboard with AG Grid
+rosh2525/refundpilot | Python | MIT | - | Evidence-backed, merchant-approved PayPal sandbox refunds. Built with React, FastAPI, PostgreSQL, and Gemini for the PayPal AI Hackathon.
+ShabanEjupi/spacekasa | JavaScript | MIT | https://kasa.spacecode.tech | Talk to your till: a language-model till assistant that takes PayPal payments (PayPal AI Hackathon). Mirror of git.spacecode.tech/shaban/spacekasa
+sonevibegrok/sonevibe-paypal-ai-agent | TypeScript | MIT | - | SoneVibe AI sales agent using PayPal (sandbox) - PayPal AI Hackathon 2026
+muskan-wagh/paypal-ai-hackathon | None | None | - | 
+cnaveen2027-crypto/Paypilot-AI | TypeScript | None | - | Paypal AI Hackathon Prototype 
+sujith-kamme/keel | TypeScript | MIT | - | Paypal AI Hackathon
+levellerlabs/chase-copilot | TypeScript | MIT | https://chase-copilot.vercel.app | AI collections copilot for freelancers: aging-bucketed invoices, escalation-ladder chase drafts with a human approval gate, cashflow forecast. PayPal 
+U4AR/RewardLoop | TypeScript | MIT | - | PayPal AI Hackathon prototype: goal-based rewards with a controlled Sandbox storefront.
+a252937166/recart | TypeScript | MIT | https://recart.axiqo.xyz | When one part of an order goes missing, ReCart rebuilds the whole order, asks the buyer again, and settles the money once on PayPal. PayPal AI Hackath
+OscarAzalea/fairsplit | TypeScript | MIT | - | FairSplit: Fintech rev-share web app with SHA-256 Trust Ledger & PayPal APIs for PayPal AI Hackathon 2026
+cloudy070/doorway-paypal-ai-hackathon-2026 | TypeScript | MIT | - | Owner-reviewed catalogs, MCP shopping tools and verified PayPal sandbox checkout. Hackathon development build; live-provider acceptance pending.
+CARLEELTECH0/payback-ai | JavaScript | None | - | PayBack AI: Autonomous Chargeback Defense & Retention Copilot (PayPal AI Hackathon 2026)
+hibi89/hibi89-paypal-ai-hackathon | None | None | - | 
+tanDivina/daccord | TypeScript | MIT | https://daccord.hero-apps.com | AI-verified freelance milestone payments: funds held with PayPal, released when Claude verifies the work against agreed criteria. PayPal AI Hackathon 
+jram-neo/paypal-ai-arena | None | MIT | - | Repo for the PayPal AI Hackathon.
+KhaleelxRahman/InvoicePilot | TypeScript | None | https://invoicepilot-beryl.vercel.app | AI-powered invoicing and payment management for freelancers and small businesses (PAYPAL AI HACKATHON)
+obsoleteuzer/ai-invoice-assistant | Python | MIT | - | Paste messy IT job notes; AI turns them into a PayPal invoice. Built for the PayPal AI Hackathon 2026.
+nancy-shaw/AgentPact-AI | Python | MIT | - | An Autonomous Agent-to-Agent (A2A) procurement layer with automated SLA verification and PayPal Sandbox Payout settlement. Built for the PayPal AI Hac
+nguyenhuulong2222/aloha-relief | TypeScript | MIT | - | Supervised disaster micro-grants on PayPal: rules check, AI explains, people decide. PayPal + AI hackathon demo (sandbox, fictional data).
+muhammad-jawad-ali/agentstall | TypeScript | MIT | - | Make social-only sellers buyable by any AI shopping agent, paid through PayPal. PayPal AI Hackathon 2026.
+Eman2123/Shelf-Ready | TypeScript | MIT | - | Make small online stores buyable by AI shopping agents: audit product data, fix it with evidence, and open a rule-guarded PayPal checkout. Built for t
+theposwizz-cmd/The-Debt-Collector | TypeScript | MIT | - | The Collector — an agentic AI that splits group bills, reads receipts, settles up in the fewest payments, and autonomously issues and chases PayPal re
+AsAsu3/ask2bill | Python | MIT | - | ReceiptDesk Agent — an owner-approved invoicing agent for small businesses, built for the PayPal AI Hackathon. Estimate drafts only; invoices are issu
+jarsmypa/snagwise | TypeScript | AGPL-3.0 | - | An AI shopping agent that respects your budget: finds deals, watches prices, and you approve every purchase in PayPal. Built for the PayPal AI Hackath
+nisantasrmh/PayPulse-AI | JavaScript | MIT | https://paypulse-ai-oq2y.onrender.com | Autonomous Merchant Transaction Recovery & Risk Mitigation Engine built for PayPal & AI Hackathon.
+heat0206/spendsage | TypeScript | MIT | - | Festival-aware AI money planner — PayPal AI Hackathon
+asiyetajwa/pawzoo-paypal | TypeScript | MIT | - | Pawzoo PayPal edition - PayPal AI Hackathon 2026 entry: agentic pet-care commerce with PayPal checkout
+Joshuamathewj2/rebuttal | JavaScript | MIT | - | AI dispute defense for PayPal sellers: triage, grounded evidence packets, one-click responses via the PayPal Disputes API. PayPal AI Hackathon 2026.
+Kunleadegbie/voicebridge-pay-hackathon-public | JavaScript | MIT | - | VoiceBridge AI Pay — PayPal AI Hackathon 2026 sandbox payment and voice accessibility prototype
+Nenzy10/proofreceipt-checkout | HTML | MIT | - | ProofReceipt Checkout — SHA-256 delivery receipts verified inside PayPal Sandbox checkout (PayPal AI Hackathon entry)
+sunithasudhagar/modelforge-ai | None | None | - | paypal ai hackathon
+vibedatascience/paypal-ai-hackathon-oct-2026 | Python | MIT | - | 
+papi-knomic/pay-on-delivery | TypeScript | MIT | - | Pay-on-delivery payment layer: PayPal authorizes at checkout, an AI agent verifies proof of delivery before capture, riders are paid via Payouts. PayP
+DavidFox998/zerobeacon-trust-harness-demo | HTML | Apache-2.0 | - | ZeroBeacon Trust Harness - PayPal gate demo: an AI agent's purchase is audited and certified before PayPal moves money. PayPal AI Hackathon entry.
+klat58688-ui/refundgpt | Python | MIT | - | RefundGPT — AI-powered refund processing assistant for PayPal (PayPal AI Hackathon 2026)
+kazoya/payguard-agent | TypeScript | Apache-2.0 | - | PayGuard Agent: a safe AI operator for PayPal (sandbox) with policy, human approvals and a tamper-evident audit log. PayPal AI Hackathon 2026.
+Priyanshi-Modanwal/payagent-escrow | None | MIT | - | PayPal AI Hackathon project
+Chinorab/mandate | TypeScript | MIT | - | Signed purchase mandates for shopping agents: a consent gate before every PayPal payment, and dispute evidence for merchants. PayPal AI Hackathon, san
+mandar-1dev/payout-rescue | Go | MIT | - | Post-send control room for PayPal Payouts: tracks stuck, failed and unclaimed items, proposes safe fixes, and never pays twice. PayPal AI Hackathon 20
+Surajss11/paypal-payoutpilot | Python | MIT | - | PayoutPilot: AI judge-and-pay agent for bounties and creator campaigns, built on PayPal Payouts (PayPal AI Hackathon)
+Meeks1978/clipsplit | TypeScript | MIT | - | ClipSplit — agent that turns messy clipping-campaign exports into rule-checked PayPal Payouts batches (PayPal AI Hackathon)
+Woligin/cartguard | JavaScript | MIT | - | AI shopping agent that can only spend inside your rules, paying via PayPal (PayPal AI Hackathon)
+J-sterling/gig-money | JavaScript | Apache-2.0 | - | PayPal money assistant for gig workers: ledger, tax set-aside estimate, AI-drafted invoices you approve before PayPal sends them. PayPal AI Hackathon 
+akaydin23/paypal-ai-hackathon | None | None | - | Placeholder description til I get things set up
+matiasluparia-star/scopepay | TypeScript | MIT | - | Local AI scope checks and human-approved PayPal sandbox invoice drafts. PayPal AI Hackathon 2026.
+firstanswerhq/first-answer-deposits | JavaScript | MIT | - | AI front desk that answers new leads in seconds, books the job and collects a PayPal deposit. Built for the PayPal AI Hackathon.
+Daaksh05/trustmesh-ai-agent-security | None | None | - | TrustMesh is an AI agent security and trust layer for commerce, validating agent identity, user intent, spending permissions, and transaction risk bef
+AaronGrace978/consensus-commerce | Python | MIT | - | Multi-agent AI negotiation for agentic commerce: Buyer, Seller, and Fairness-referee agents haggle in visible rounds (Jain index), then settled deals 
+leex0x0/invoice-chaser | Python | MIT | - | Autonomous AI agent that chases unpaid invoices and settles them via the PayPal Invoicing API. Built for PayPal AI Hackathon 2026.
+nicksteinersales-lab/countersign | JavaScript | MIT | - | AI agent that runs a shop storefront and PayPal backoffice, with human approval on every money movement.PayPal AI Hackathon 2026.
+0xzahra/chat-to-invoice | JavaScript | MIT | https://chat-to-invoice.vercel.app | Paste a WhatsApp/Telegram order chat → AI (Gemini) extracts the order → PayPal Invoicing v2 invoice + multilingual reminders. PayPal AI Hackathon entr
+sahilsaeidkhan/payguard-ai | Python | MIT | - | PayGuard AI — AI payment-risk copilot for small sellers (PayPal AI Hackathon 2026)
+phyllicai/jaga-bersama | JavaScript | MIT | https://phyllicai.github.io/jaga-bersama/ | AI care-cost agent for Malaysian families: reads the family chat (EN/BM/中文), splits eldercare costs fairly with caregiving credit, settles via PayPal 
+HONGKONGBALL/quorum | Python | MIT | - | Quorum — PayPal AI Hackathon
+Jasonsu22/firstreply | TypeScript | MIT | - | AI dispute prevention + resolution agent for PayPal merchants (PayPal AI Hackathon 2026)
+Suyash-Kolhe/Aura-AI-Agentic-Commerce | HTML | None | https://aura-ai-beryl-phi.vercel.app | An Agentic Commerce bot that integrates Google Gemini and the PayPal REST API to autonomously recommend products and generate secure checkouts mid-con
+edilsonsantos-co-za/owed | TypeScript | MIT | - | AI collections copilot for PayPal invoices: Claude agents + AG Studio dashboard. PayPal AI Hackathon 2026.
+kimdooo-a/leash-agentic-checkout | JavaScript | MIT | - | An AI shopping agent that can only spend inside a mandate you set — it builds the cart, PayPal moves the money, you hold the leash. (PayPal AI Hackath
+taswarshah/scout-pay | Python | MIT | - | AI relocation agent that plans your move and pays via PayPal/Braintree (PayPal AI Hackathon)
+alfonsodg/paypal-ai-prototype | Python | MIT | - | PayPal AI Hackathon prototype: smart invoice & cashflow copilot
+margins-me/kitoko-receptionist | TypeScript | AGPL-3.0 | https://demo.kitoko.page | AI front desk for independent stylists: books in the chat, takes the deposit with PayPal. PayPal AI Hackathon.
+JiawenZhu/little-fridge-split | JavaScript | MIT | - | Split a grocery bill and get paid back with Venmo or PayPal. Little Fridge × PayPal AI Hackathon.
+rodriguescarson/refundly | HTML | Apache-2.0 | https://rodriguescarson.github.io/refundly/ | An AI agent that refunds and cancels through PayPal, and never says done until PayPal's own ledger agrees. PayPal AI Hackathon.
+UnknownHacker1/leash | JavaScript | MIT | - | A spending firewall between AI agents and your PayPal. PayPal AI Hackathon 2026.
+KiranFiles/DisputeDesk | TypeScript | None | https://dispute-desk-pi.vercel.app | AI dispute triage for PayPal merchants. Built for the PayPal AI Hackathon ("Build What's Next with PayPal and AI"). The project was created during the
+skye-cqu/churnsave | TypeScript | MIT | - | AI agent that rescues at-risk PayPal subscriptions before they churn — PayPal AI Hackathon entry
+minasami/rx-cart-agent | TypeScript | MIT | - | Agentic prescription-to-cart checkout with PayPal Agent Toolkit + Gemini. Pharmacist-gated, synthetic data only. PayPal AI Hackathon 2026.
+MateiS2002/paypal-ai-hackathon-2026 | Java | MIT | - | Agentic B2B commerce: AI buyer and seller agents that discover suppliers, negotiate, and settle through PayPal invoicing.
+Akshara-muthu-pm/BilBud | None | MIT | - | AI accounts-payable agent that reads vendor invoices, checks them against deterministic rules, and pays via PayPal Payouts, escalating or rejecting an
+mapulimapuli782-cloud/Majismart | None | None | - | MajiSmart - AI water leak detection for Mwanza. PayPal AI Hackathon 2026 - TensorFlow + PayPal Checkout & Payouts
+bgrubbs1/splitmate-paypal-ai | Python | MIT | - | SplitMate: paste a messy group plan → AI-parsed fair split → one PayPal Orders v2 sandbox order per person. Zero-dependency Python app. PayPal AI Hack
+Agenticpirate/automatepal | JavaScript | MIT | - | AutomatePal - AI billing and revenue copilot for indie founders, on PayPal sandbox + Gemini (PayPal AI Hackathon 2026). automatepal.com
+jacopogonzales-cloud/shiftly | TypeScript | MIT | https://shiftly-r26a.onrender.com | Book the crew. Run the job. Pay everyone the same day. AI agent for on-call crews: Bryntum Scheduler planning, availability links, hours reconciliatio
+arifinskansal-oss/immangrdh-ai-shop | HTML | MIT | - | immangRDH AI Shop - PayPal AI Hackathon prototype: plain-words product recommendations plus PayPal sandbox checkout
+KomatikAI/rummage | TypeScript | Apache-2.0 | - | Rummage: one community sale, one map, one PayPal checkout. AI prices items from a photo; buyers pay several sellers at once. PayPal AI Hackathon entry
+harsharajkumar-273/Paypal-AI-hackathon- | TypeScript | MIT | - | ProofPay: verified AI-agent work, buyer-approved payment rules, agreement change review, and PayPal sandbox payments.
+LuisRz1/paypal-ai-hackathon-2026 | TypeScript | MIT | - | Research vault and build notes for the PayPal AI Hackathon 2026
+dumplingdeveloper/tranche-paypal-bryntum | TypeScript | MIT | - | PayPal AI Hackathon: PayPal invoice tranches drive a Bryntum Gantt. An AI agent on the GitHub Copilot SDK proposes schedule changes and PayPal reminde
+koztechie/paypal-recon-agent | TypeScript | MIT | https://paypal-recon-agent.onrender.com | Cross-border reconciliation agent for PayPal — AI Hackathon 2026
+Dinario-App/corso-topup-agent | JavaScript | MIT | - | PayPal AI Hackathon entry: AI top-up agent on PayPal sandbox (separate from Corso production code)
+faketut/gatekeeper | Python | None | - | Gatekeeper: risk-scored payments for AI agents — a trust layer that approves, holds, or blocks agentic payments before money moves (PayPal AI Hackatho
+Thomas-Wood-Eng/sightline | Python | MIT | - | Voice- and keyboard-first shopping for blind and low-vision people, with PayPal checkout that reads back every dollar before it moves. PayPal AI Hacka
+dumplingdeveloper/tillwise-paypal-money-desk | TypeScript | GPL-2.0 | - | PayPal AI Hackathon: an AI money desk for WooCommerce owners. AG Studio dashboards built by an agent, PayPal sandbox money tools behind preview, confi
+Renudeepya/CheckoutPilot | HTML | MIT | - | AI copilot that upgrades a merchant's PayPal checkout: scans the store, writes the fix from PayPal docs, verifies it with a real sandbox payment. PayP
+RishzG/TripPilot-app | Python | MIT | - | TripPilot: an AI co-pilot that plans, books and splits group trips with PayPal (PayPal AI Hackathon)
+luochan1028/paypal-ai-assistant | Python | MIT | - | AI assistant for appointment-based small businesses: chat booking plus PayPal sandbox deposit checkout. Built for PayPal AI Hackathon 2026.
+zhangjames01/offset | TypeScript | MIT | - | Offset: purchase-linked giving at checkout. PayPal AI Hackathon 2026.
+jiabeiliu/mediquery-agent | Java | MIT | https://devpost.com/software/mediquery-agent | PayPal AI Hackathon team submission: pay-per-query medical Q&A with sandbox payment gating, local RAG, source chunks and receipts. Java 17, Spring Boo
+hassaanraja282-lgtm/invoicepilot | JavaScript | MIT | https://invoicepilot-exnp.onrender.com | AI invoice assistant: upload an invoice, Gemini extracts the details, pay it with PayPal Checkout. Built for the PayPal AI Hackathon.
+run58669-maker/dispute-copilot | TypeScript | MIT | https://dispute-copilot-7vbm.onrender.com | AI copilot that triages PayPal disputes and drafts the response (fight / offer / accept), with a human approval gate. PayPal AI Hackathon 2026.
+zopik-dev/dealroom | HTML | MIT | - | Two AI agents negotiate, PayPal holds funds, AI arbiter releases by evidence. PayPal AI Hackathon 2026.
+Nomanriaz786/settle | Python | MIT | - | AI agent that fights chargebacks for small online shops, built on Braintree (PayPal) with a human approval step. PayPal AI Hackathon.
+DesignMaster-Solutions/past-due-desk | JavaScript | MIT | - | AI collections desk for small businesses: plans each overdue invoice within the owner's policy and sends it as a PayPal invoice. PayPal AI Hackathon.
+kevin9327/pausepay | JavaScript | MIT | - | PausePay — an AI cooling-off layer for PayPal payments: authorize-and-hold, AI risk analyst, trusted-contact review, MCP server (PayPal AI Hackathon)
+swellstackco/every-rep | JavaScript | MIT | - | Pay for every rep: pay-per-rep fundraising with PayPal authorize, capture, void and Payouts. PayPal AI Hackathon.
+lottolove5131-lang/incoterm-desk | JavaScript | MIT | - | AI agent for exporters: buyer request -> Incoterm-aware landed-cost breakdown -> PayPal invoice, with cancel & re-issue on Incoterm change. PayPal AI 
+longtt-marketing/paid-signal | JavaScript | MIT | https://paid-signal.thelongmarketing.workers.dev | PayPal payments matched to the ad clicks behind them; a Claude agent inside AG Studio drafts the next move, a person approves. PayPal AI Hackathon.
+Amag101/Living-invoice- | Python | MIT | - | An invoice that negotiates for you: PayPal + Claude, built for the PayPal AI Hackathon
+sohamk312006-commits/playflow-ai | JavaScript | None | - | PayFlow AI is an AI-powered payment scheduler built for the PayPal AI Hackathon. It connects an AI frontend to automate payouts, automatically logs tr
+successaje/proofhold | TypeScript | MIT | - | A PayPal payment that is held until the agreed proof arrives. Built for the PayPal AI Hackathon.
+predestinator/sellerpilot | TypeScript | MIT | - | SellerPilot — AI seller cockpit for the PayPal AI Hackathon (MIT)
+Jerryszz02/paypal-ai-hackathon | TypeScript | MIT | - | PayPal AI Hackathon 2026 workspace: rules research, project planning, and sandbox prototype
+NotArnav03/keepwell | TypeScript | MIT | - | Honest AI retention agent for PayPal Subscriptions: pause, downgrade, recover, win back, with one-click cancel always. PayPal AI Hackathon 2026.
+AuthorsWisdom/platequote | TypeScript | MIT | - | PlateQuote: quote-and-pay page for a one-person 3D print shop (PayPal AI Hackathon entry)
+VenokM05/paypal-ai-hackathon | TypeScript | MIT | - | 
+PrimeT3ch/quickpal-paypal-ai | HTML | MIT | - | AI-powered quotations with PayPal checkout (PayPal AI hackathon)
+MrChenfafafa/till-northline | TypeScript | MIT | - | Till / Northline — PayPal AI Hackathon (Agentic Commerce)
+ifrazie/flow-paypal-ai | TypeScript | MIT | - | Flow: an AI money copilot for freelancers and agencies — PayPal + Amazon Bedrock + AG Studio + Bryntum (PayPal AI Hackathon)
+Abdelmohaymn/dry-run-tutor-paypal | Dart | MIT | - | Dry Run tutor with Pro Plus via PayPal sandbox subscriptions — PayPal AI Hackathon entry
+RoniAbravaya/agentshelf | TypeScript | MIT | - | Sell anything to people and AI agents, paid through PayPal. PayPal AI Hackathon 2026 (sandbox).
+SHauny1122/pact-verify | TypeScript | MIT | https://pact-verify-preview.vercel.app/verify | Independent PayPal AI Hackathon proof-before-payment demo using Sandbox authorizations and Gemini video analysis
+abhinavganesh09/StraightMoney | Python | MIT | - | Fundraising where the organizer never holds the money. Donors fund budget lines through PayPal, vendors upload invoices and proof, an AI flags mismatc
+Lainholic/CareFree | Python | None | - | CareFree (PainFree CarePay AI) - Surprise Medical Bill Vision Intelligence with PayPal Pay in 4 & Family Caregiver Checkout (PayPal AI Hackathon 2026)
+barnabas47/ResolveAI | JavaScript | MIT | https://paypalaihackathon.devpost.com/ | PayPal ResolveAI — Autonomous Dispute, Zero-Carbon Return & Instant Settlement Copilot (PayPal AI Hackathon 2026)
+landonking0808/wrenly-agent-checkout | Python | MIT | - | AI agent that quotes home cleanings, takes payment with PayPal Orders v2 and pays cleaning crews with PayPal Payouts — behind a margin check and an au
+ahafarag/vouch | TypeScript | MIT | - | AI escrow for freelance work on PayPal: agents draft milestone contracts, verify delivery, and settle payouts, refunds and disputes. PayPal AI Hackath
+Youssef123ya/invoicepilot-paypal-ai | None | MIT | - | AI invoice assistant for freelancers: work notes → human-reviewed PayPal sandbox invoices. PayPal AI Hackathon.
+kamalkatul92kk-sudo/agentaisle | TypeScript | MIT | https://agentaisle-demo.kamalkatul92-kk.workers.dev | Agent-ready storefront with PayPal (sandbox) checkout and an AG Grid merchant console. PayPal AI Hackathon entry.
+gino6178/join | JavaScript | MIT | - | Agent-ready marketplace for group plans: AI agents find who's free, negotiate with the venue, split the bill and settle it with PayPal. PayPal AI Hack
+harshkumarsingh12/proof-of-intent | TypeScript | Apache-2.0 | - | Verify an AI agent's purchase against the shopper's signed intent before PayPal captures, and use that record to defend or fairly concede disputes. Pa
+chatgptkrguide/tollgate | TypeScript | MIT | - | Catch scope creep in client messages and bill it with PayPal before you do the extra work. PayPal AI Hackathon 2026.
+natrajexplore/paywarden | Python | MIT | - | Zero-trust payment firewall for AI agents on PayPal (sandbox) — PayPal AI Hackathon
+Kuang-xianxin/scopepay | Python | MIT | - | AI-assisted service scoping, human-approved quotes and recoverable PayPal Sandbox payments. PayPal AI Hackathon project.
+DhyeyPatel007/phalanx | TypeScript | MIT | https://phalanx-five.vercel.app | PHALANX — adversarial dispute-defense swarm for PayPal chargebacks (PayPal AI Hackathon). Webhook ingest, evidence checklist, prosecutor vs red-team d
+Abm32/errand | TypeScript | MIT | - | Errand — an autonomous shopping agent that spends money only within a mandate you grant. PayPal AI Hackathon 2026.
+sanskar2008-hp/Paypal-AI-Hackathon | TypeScript | None | - | this for hackathon which is I applied
+hgreco85/paypal-payment-guardian | Python | MIT | - | PayPal Sandbox reconciliation & anomaly review agent with human approvals and a hash-chained audit log (PayPal AI Hackathon)
+W1nnnd/paypilot-escrow | Python | MIT | - | AI-audited milestone escrow on PayPal: Orders v2 AUTHORIZE → Gemini deliverable review → capture/void + Invoicing v2. FastAPI + AG Grid. PayPal AI Hac
+Sriharsan/clearwake | Python | MIT | - | Shared refund workroom for finance operations: exact approval, no blind retries, and every refund checked against the payment provider's record. PayPa
+rishilifts/paypal-payment-review-copilot | JavaScript | MIT | - | AI review copilot for PayPal sandbox payments (PayPal AI Hackathon entry). WIP.
+mrvk64/trustpay-ai | TypeScript | MIT | - | Review before you pay: Claude checks a seller's terms before PayPal Sandbox checkout, and code-owned rules decide whether payment can proceed. PayPal 
+UCTuba/trippilot-paypal-hackathon | TypeScript | MIT | https://web-uct-uba.vercel.app | TripPilot — group travel planning and PayPal-powered commitments for the PayPal AI Hackathon
+abidhussain19932-stack/shoppal | Python | MIT | - | ShopPal: AI sales agent on Telegram with PayPal checkout (PayPal AI Hackathon)
+daefery/jastip | JavaScript | MIT | https://jastip.feryyp-work.workers.dev | Shop abroad for friends: PayPal holds a max price, AI reads one receipt, each friend pays their exact line. PayPal AI Hackathon 2026.
+JWHaan/trustee | Python | Apache-2.0 | - | Escrow + arbitration layer for agent-to-agent payments on PayPal (PayPal AI Hackathon)
+suhail39ahmed/agentic-procurement | TypeScript | MIT | - | AI agents that negotiate, buy and pay on PayPal: an agentic procurement and payables platform for small businesses. PayPal AI Hackathon 2026.
+A-Tao990/tourpay-copilot | Python | MIT | - | AI payment assistant for tourists in Vietnam: understands a VND bill in Chinese/English/Vietnamese, creates and tracks PayPal (sandbox) orders, refund
+edmundzen/mandipay | Python | MIT | - | AI selling agent for small farmers: photo → grade → fair price → PayPal payment → farmer-approved refund. PayPal AI Hackathon 2026
+OHURU-IAN/kazipay | TypeScript | MIT | - | AI billing agent for freelancers: bill, chase and forecast by chat on PayPal Invoicing. PayPal AI Hackathon 2026.
+dEURIan/argonpay-token-engine | TypeScript | None | - | ArgonPay / PayPrune AI & Token Optimization Engine for PayPal AI Hackathon
+PrathikshaVasudevan/RescueCart-ai | TypeScript | None | - | AI-powered checkout reliability and revenue recovery platform built for the PayPal AI Hackathon, featuring PayPal integration and intelligent payment 
+mkumar-svg/disputeguard | Java | MIT | - | AI agent for PayPal merchant disputes: builds the evidence pack, scores the win chance, and submits the response via the PayPal Disputes API after mer
+TMoreMaker/fren | TypeScript | MIT | - | Fren asks your users for a PayPal tip at the right moment. PayPal AI Hackathon.
+Hobie1Kenobi/agent-checkout-steward | TypeScript | MIT | - | Agent Checkout Steward: an AI agent that negotiates a spending policy and checks out via PayPal sandbox, with guardrails enforced in code. PayPal AI H
+thiagopari/pierside | Python | MIT | - | AI agent that scopes an underwater ROV inspection, prices it from a fixed rate card, and books it with a PayPal deposit (PayPal AI Hackathon)
+kmt9967/fundcart-ai | TypeScript | MIT | https://fundcart-ai.vercel.app | FundCart AI — AI shopping research + community funding with PayPal Sandbox and human-approved purchases (PayPal AI Hackathon 2026)
+thernak07/refund-runner | JavaScript | None | - | PAYPAL AI HACKATHON PROJECT
+KaraAliOsman/paylet | TypeScript | MIT | https://paylet.onrender.com | Fair limited drops for the agent era: one PayPal hold per account, agents welcome via MCP, AI-collapsed reseller networks, verifiable draw. PayPal AI 
+niu602/mandatepay | Python | MIT | - | MandatePay - Give AI agents a cage for spending: constraint-gated autonomous purchasing with auditable three-layer Mandate records (Intent/Cart/Paymen
+tareqmelfi/ensidex-invoice-agent | TypeScript | MIT | - | AI chat agent that turns Arabic/English requests into PayPal invoices — PayPal AI Hackathon 2026 (ENSIDEX Team)
+jorge-asenjo/liveproof | TypeScript | MIT | - | Live proof of possession for stranger trades: PayPal payments locked to the seller who proved it on camera. PayPal AI Hackathon 2026.
+SACHIN-619/film-to-export | TypeScript | MIT | - | Film-to-Export: AI customs broker for makers (PayPal AI Hackathon)
+4Gaige/geoforge-watch | None | MIT | - | GeoForge Watch, PayPal AI Hackathon entry
+DevDaring/PayPal_Hackatahon | Python | MIT | https://quoteguard.koushikdeb.com | QuoteGuard — from supplier PDF to an approved PayPal Sandbox purchase, with evidence for every decision (PayPal AI Hackathon).
+nikhilraghav018/Paypal-AI-Hackathon | TypeScript | MIT | - | A shopping assistive application built on Multi-Agent workflows which could be accurate and work in parallel to search, audit, sort, and recommend bes
+hengliu63-stack/shopagent | Python | MIT | - | ShopAgent - conversational shopping agent for the PayPal AI Hackathon 2026
+Abhinay2244/proofpay | JavaScript | MIT | - | AI-verified escrow for freelance work. Funds are held with PayPal, an AI checks the delivery against agreed criteria, then the money is released or re
+Mattbusel/agenttab | JavaScript | MIT | - | A PayPal tab for AI agents: paid APIs answer HTTP 402, agents pay inside a PayPal Vault mandate, an AI guard checks every purchase. PayPal AI Hackatho
+guannan1031/paypal-bill-agent | Python | MIT | - | AI Bill & Invoice Agent - PayPal AI Hackathon 2026: parse bills, flag risks, pay & get paid, human-in-the-loop

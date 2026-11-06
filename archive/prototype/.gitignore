@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.example
+ledger.json
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.DS_Store
+profiles.json

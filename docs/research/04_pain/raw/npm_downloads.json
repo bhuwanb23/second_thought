@@ -1,0 +1,10 @@
+{
+ "@paypal/paypal-js": 3320751,
+ "@paypal/react-paypal-js": 1938825,
+ "@paypal/checkout-server-sdk": 234050,
+ "@paypal/paypal-server-sdk": 618851,
+ "@paypal/agent-toolkit": 5121,
+ "@paypal/mcp": 2912,
+ "@paypal/sdk-client": 5140,
+ "@paypal/payouts-sdk": 128536
+}

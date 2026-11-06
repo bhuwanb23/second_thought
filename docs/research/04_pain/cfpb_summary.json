@@ -1,0 +1,150 @@
+{
+ "harvested_on": "2026-11-01",
+ "company": "Paypal Holdings, Inc",
+ "complaints_all_time": 44036,
+ "complaints_since_2025_01_01": 18296,
+ "complaints_2025_full_year": 7412,
+ "complaints_2026_ytd": 10884,
+ "yoy_growth_2026_vs_2025_pct": 46.8,
+ "top_issues_2025plus": [
+  {
+   "issue": "Unauthorized transactions or other transaction problem",
+   "count": 3509,
+   "share_pct": 19.2
+  },
+  {
+   "issue": "Trouble accessing funds in your mobile or digital wallet",
+   "count": 3153,
+   "share_pct": 17.2
+  },
+  {
+   "issue": "Fraud or scam",
+   "count": 2536,
+   "share_pct": 13.9
+  },
+  {
+   "issue": "Managing an account",
+   "count": 1688,
+   "share_pct": 9.2
+  },
+  {
+   "issue": "Managing, opening, or closing your mobile wallet account",
+   "count": 1611,
+   "share_pct": 8.8
+  },
+  {
+   "issue": "Other transaction problem",
+   "count": 1282,
+   "share_pct": 7.0
+  },
+  {
+   "issue": "Problem with a purchase shown on your statement",
+   "count": 605,
+   "share_pct": 3.3
+  },
+  {
+   "issue": "Money was not available when promised",
+   "count": 568,
+   "share_pct": 3.1
+  },
+  {
+   "issue": "Problem with a lender or other company charging your account",
+   "count": 485,
+   "share_pct": 2.7
+  },
+  {
+   "issue": "Other service problem",
+   "count": 309,
+   "share_pct": 1.7
+  }
+ ],
+ "top5_issues_share_pct": 68.3,
+ "money_access_or_unauthorised_share_pct": 57.3,
+ "products_2025plus": [
+  {
+   "product": "Money transfer, virtual currency, or money service",
+   "count": 13817
+  },
+  {
+   "product": "Checking or savings account",
+   "count": 2539
+  },
+  {
+   "product": "Credit card",
+   "count": 870
+  },
+  {
+   "product": "Debt collection",
+   "count": 396
+  },
+  {
+   "product": "Prepaid card",
+   "count": 311
+  },
+  {
+   "product": "Payday loan, title loan, personal loan, or advance loan",
+   "count": 207
+  },
+  {
+   "product": "Credit reporting or other personal consumer reports",
+   "count": 120
+  },
+  {
+   "product": "Debt or credit management",
+   "count": 36
+  }
+ ],
+ "response_mix_pct": {
+  "monetary_relief": 17.1,
+  "closed_with_explanation": 61.4,
+  "closed_with_non_monetary_relief": 19.8
+ },
+ "top_states": [
+  {
+   "state": "CA",
+   "count": 2315
+  },
+  {
+   "state": "TX",
+   "count": 1502
+  },
+  {
+   "state": "FL",
+   "count": 1434
+  },
+  {
+   "state": "NY",
+   "count": 1214
+  },
+  {
+   "state": "PA",
+   "count": 718
+  },
+  {
+   "state": "GA",
+   "count": 651
+  },
+  {
+   "state": "IL",
+   "count": 578
+  },
+  {
+   "state": "NC",
+   "count": 537
+  }
+ ],
+ "trend": {
+  "2015": 1040,
+  "2016": 1157,
+  "2017": 870,
+  "2018": 987,
+  "2019": 1628,
+  "2020": 2497,
+  "2021": 5411,
+  "2022": 3381,
+  "2023": 3834,
+  "2024": 4143,
+  "2025": 7412,
+  "2026": 10884
+ }
+}

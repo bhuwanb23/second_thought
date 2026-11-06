@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: second-thought
+    runtime: docker
+    plan: starter          # NOT free: free instances sleep and a cold start
+                           # inside a judge's 3-minute window is a lost score
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: PAYPAL_CLIENT_ID
+        sync: false
+      - key: PAYPAL_CLIENT_SECRET
+        sync: false
+      - key: PAYPAL_WEBHOOK_ID
+        sync: false
+      - key: LLM_API_KEY
+        sync: false        # if unset the AI badge reads LLM-MOCK, not LLM
+      - key: LLM_MODEL
+        value: gpt-4o-mini
+      - key: APPROVAL_SECRET
+        generateValue: true
+      - key: DIAG_TOKEN
+        generateValue: true   # keeps /diagnostics closed on the public URL
