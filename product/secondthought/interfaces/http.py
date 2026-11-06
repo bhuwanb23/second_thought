@@ -28,6 +28,7 @@ from ..domain import InvalidRequest, Policy
 from ..domain.engine import decide
 from ..infra.db import Database, LedgerRepo, ProfileRepo, ReservationRepo
 from ..infra.gateway import SimulatedGateway
+from ..infra.paypal_live import PayPalLiveGateway
 from .badge import badges, health_payload
 from .plumbing import cookie, ip, json_body, raw_body
 from .screens import explain, render_page
@@ -94,8 +95,8 @@ class App:
         self.clock = clock or time.time
         self.sessions = sessions or SessionStore(
             (settings.approval_secret or "dev-only-change-me").encode())
-        self.gateway = gateway or SimulatedGateway()
-        self.db = Database(":memory:")
+        self.gateway = gateway or self._gateway_for(settings)
+        self.db = Database(settings.db_path)
         self.defaults = ProfileRepo(self.db)          # read-only persona store
         self.reservations = ReservationRepo(self.db)
         self.ledger = LedgerRepo(self.db)
@@ -106,6 +107,13 @@ class App:
                                    cert_lookup=cert_lookup)
         for key, persona in PERSONAS.items():
             self.defaults.save(key, persona["profile"], datetime(2026, 11, 1, 9, 0))
+
+    @staticmethod
+    def _gateway_for(settings):
+        """Use the sandbox adapter only when sandbox credentials are configured."""
+        if settings.paypal.configured:
+            return PayPalLiveGateway(settings.paypal)
+        return SimulatedGateway()
 
     # -- the service, rebuilt per request so nothing can be shared by accident
     def service(self, session) -> CheckoutService:

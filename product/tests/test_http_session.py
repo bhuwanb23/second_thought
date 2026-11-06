@@ -8,7 +8,9 @@ browsers are.
 
 import io
 import json
+import tempfile
 import unittest
+from pathlib import Path
 
 from secondthought.config import AppSettings, LLMSettings, PayPalSettings
 from secondthought.interfaces.http import App
@@ -264,6 +266,18 @@ class Restart(unittest.TestCase):
             self.assertFalse(body["session"]["has_profile"])
         finally:
             app_.close()
+
+
+class DatabaseConfiguration(unittest.TestCase):
+    def test_http_app_uses_the_configured_database_path(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = str(Path(tmp) / "secondthought.sqlite3")
+            app_ = app(db_path=path)
+            try:
+                self.assertEqual(app_.db.path, path)
+                self.assertTrue(Path(path).exists())
+            finally:
+                app_.close()
 
 
 if __name__ == "__main__":

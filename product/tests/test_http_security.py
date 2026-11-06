@@ -11,7 +11,8 @@ import json
 import unittest
 
 from secondthought.app.approvals import ApprovalGate
-from secondthought.config import AppSettings
+from secondthought.config import AppSettings, PayPalSettings
+from secondthought.infra.paypal_live import PayPalLiveGateway
 from secondthought.interfaces.http import App
 
 
@@ -194,6 +195,18 @@ class OtherSurface(unittest.TestCase):
         self.assertNotIn(b"hunter2", payload)
         self.assertNotIn(b"/home/user", payload)
         self.assertIn(b"internal error", payload)
+
+
+class GatewaySelection(unittest.TestCase):
+    def test_configured_paypal_uses_the_sandbox_adapter(self):
+        app_ = App(AppSettings(
+            approval_secret="test-secret",
+            paypal=PayPalSettings(client_id="client", client_secret="secret",
+                                  env="sandbox")))
+        try:
+            self.assertIsInstance(app_.gateway, PayPalLiveGateway)
+        finally:
+            app_.close()
 
 
 if __name__ == "__main__":
