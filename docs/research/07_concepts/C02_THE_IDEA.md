@@ -179,8 +179,8 @@ Two implementations, same rule:
   merchant can ship under its normal policy.
 
 Every instrument carries this in code — `paylater.describe_instrument()[fulfilment]` and
-`risk_bearer` — and there is a test asserting that **no instrument puts credit risk on the
-merchant** (`tests/test_profile.py::test_risk_bearer_label_never_names_the_merchant`).
+`risk_bearer` — and the checkout tests assert that **no instrument puts credit risk on the
+merchant** (`product/tests/test_checkout.py`).
 
 ### The mechanic that makes it commercially sane
 
@@ -261,8 +261,8 @@ Three things make that credible:
 presented as a feature.
 
 **Privacy commitments:** no bureaus, no open banking today, no cross-merchant profile, no data
-sold, no adverse action, every verdict overridable, profile deletable. Full detail in
-`../../../product/DATA_AND_PRIVACY.md`.
+sold, no adverse action, every verdict overridable, profile deletable. The active product
+keeps profile data session-scoped; see `product/README.md`.
 
 ---
 

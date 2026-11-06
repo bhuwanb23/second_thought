@@ -83,7 +83,8 @@ class TheVerifier(unittest.TestCase):
 
 class TheRoute(unittest.TestCase):
     def setUp(self):
-        self.app = App(AppSettings(approval_secret="test-secret", diag_token="diag-123",
+        self.app = App(AppSettings(approval_secret="test-secret", db_path=":memory:",
+                                   diag_token="diag-123",
                                    paypal=__import__("secondthought.config",
                                                      fromlist=["PayPalSettings"])
                                    .PayPalSettings(client_id="a", client_secret="b",
@@ -133,13 +134,15 @@ class TheRoute(unittest.TestCase):
         self.assertEqual(public["webhooks"]["rejected"], 1, "a visitor cannot see the refusal")
         self.assertNotIn("last", public["webhooks"], "transmission ids leaked publicly")
 
-    def test_a_good_signature_gets_200(self):
+    def test_a_verified_payment_without_a_reservation_is_retryable(self):
         status, body = self.post(BODY, headers(body=BODY))
-        self.assertEqual(status, "200 OK", body)
-        self.assertTrue(body["received"])
+        self.assertEqual(status, "503 Service Unavailable", body)
+        self.assertFalse(body["received"])
+        self.assertIn("retry", body["note"])
 
     def test_diagnostics_is_404_without_a_configured_token(self):
-        app_ = App(AppSettings(approval_secret="x"), cert_lookup=lambda _u: CERT_PEM)
+        app_ = App(AppSettings(approval_secret="x", db_path=":memory:"),
+                   cert_lookup=lambda _u: CERT_PEM)
         try:
             environ = {"REQUEST_METHOD": "GET", "PATH_INFO": "/diagnostics",
                        "QUERY_STRING": "", "CONTENT_LENGTH": "0",
@@ -151,7 +154,8 @@ class TheRoute(unittest.TestCase):
             app_.close()
 
     def test_diagnostics_needs_the_right_token(self):
-        app_ = App(AppSettings(approval_secret="x", diag_token="secret-token"),
+        app_ = App(AppSettings(approval_secret="x", diag_token="secret-token",
+                               db_path=":memory:"),
                    cert_lookup=lambda _u: CERT_PEM)
         try:
             for supplied, expected in (("wrong", "200 OK"),

@@ -51,15 +51,27 @@ class WebhookAPI:
             return ({"received": False, "reason": "event has no id",
                      "note": "a webhook without an event id cannot be replay-protected"},
                     "400 Bad Request", headers)
-        if self.event_repo and self.event_repo.seen(event_id):
+        claimed = bool(self.event_repo and self.event_repo.claim(
+            event_id, event.get("event_type", ""), datetime.now().replace(microsecond=0)))
+        if self.event_repo and not claimed:
             return ({"received": True, "event_type": event.get("event_type"),
                      "event_id": event_id, "applied": False,
                      "note": "idempotent — a repeat changes nothing"},
                     "200 OK", headers)
-        outcome = self.apply(event, service_for)
-        if self.event_repo:
-            self.event_repo.mark(event_id, event.get("event_type", ""),
-                                 datetime.now().replace(microsecond=0))
+        try:
+            outcome = self.apply(event, service_for)
+        except Exception:
+            if self.event_repo:
+                self.event_repo.release(event_id)
+            raise
+        if (event.get("event_type") == "INVOICING.INVOICE.PAID"
+                and not outcome.get("applied")):
+            if self.event_repo:
+                self.event_repo.release(event_id)
+            return ({"received": False, "event_type": event.get("event_type"),
+                     "event_id": event_id, **outcome,
+                     "note": "reservation is not ready; PayPal should retry"},
+                    "503 Service Unavailable", headers)
         return ({"received": True, "event_type": event.get("event_type"),
                  "event_id": event.get("id"), **outcome}, "200 OK", headers)
 

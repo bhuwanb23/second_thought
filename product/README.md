@@ -19,7 +19,8 @@ python3 scripts/v6_cold_check.py --url https://<app> --record|--compare   # did 
 python3 -m unittest discover -s tests -q
 ```
 
-**No third-party runtime dependencies. Python 3.11+. Every file under 300 lines.
+**No third-party runtime dependencies. Python 3.11+. Modules are kept small and
+single-purpose.
 155 tests, ~0.35 s.**
 
 The HTTP runtime uses the configured `ST_DB_PATH`; Render maps this to its

@@ -56,7 +56,7 @@ The README is read by a machine as well as a human — automated analysis is exp
 - [ ] The approval-gate test named explicitly (`test_forged_amount_token_is_rejected`)
 - [ ] Every statistic carries a source and a date; the 1.83% charge-off counterweight is present
 - [ ] Screenshot of the real sandbox invoice from P3.3
-- [ ] Data & privacy line, linking `DATA_AND_PRIVACY.md`
+- [ ] Data & privacy line, linking the session-scoped profile policy in `product/README.md`
 
 ---
 

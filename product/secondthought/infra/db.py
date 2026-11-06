@@ -199,6 +199,11 @@ class WebhookRepo:
                 " VALUES(?,?,?)", (event_id, kind, now.isoformat()))
         return cur.rowcount == 1
 
+    def release(self, event_id: str) -> None:
+        """Release a claim when application failed before the event was handled."""
+        with self.db.tx() as c:
+            c.execute("DELETE FROM webhook_events WHERE event_id=?", (event_id,))
+
 
 def iso_now() -> datetime:
     return datetime.now().replace(microsecond=0)

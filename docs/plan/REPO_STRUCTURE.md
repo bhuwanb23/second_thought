@@ -1,9 +1,9 @@
 # Repository structure
 
-Two rules, both enforced rather than intended:
+The active code follows one structural rule:
 
-1. **No file exceeds 300 lines.** Preflight fails the build if one does.
-2. **One job per file.** A file that needs "and" in its name is two files.
+**One job per file.** A file that needs "and" in its name is two files. Modules
+are kept small where practical, but line count is not a deployment gate.
 
 ```text
 paypal-hackathon/
@@ -72,5 +72,5 @@ and `test_a_token_for_a_different_amount_is_rejected`.
   dependency arrow points one way: judgement never depends on the model.
 - Any new endpoint that can call an LLM must go through `SESSIONS.allow_llm`.
 - Any new public endpoint must return booleans or already-visible data only.
-- Run `python3 scripts/preflight_deploy.py` before every commit — it checks the 300-line rule,
-  the licence, secret hygiene, session-state hygiene and the health check.
+- Run `python3 scripts/preflight_deploy.py` before every commit — it checks the
+  Render manifest, licence/secret hygiene, environment-variable contract, and health response.

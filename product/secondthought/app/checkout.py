@@ -184,9 +184,9 @@ class CheckoutService:
         inv = self.gateway.create_invoice(
             amount_minor=args["amount_minor"], currency=args["currency"],
             due_date=due, reference=rid)
-        self.gateway.send_invoice(inv.id)
         r.attach_invoice(inv.id, now)
         self.reservations.save(r, now)
+        self.gateway.send_invoice(inv.id)
         self.ledger.add(args["shopper_id"], args["merchant_id"],
                         args["amount_minor"], "reservation", rid, now)
         return {"state": r.state.value, "reservation": r.to_dict(),

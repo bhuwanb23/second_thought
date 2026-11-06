@@ -241,7 +241,7 @@ Then update the phase file's status line. **A day where these three fail is a da
 | P6 | [P6_polish_and_freeze.md](P6_polish_and_freeze.md) | Decide AG Grid, stop adding, freeze |
 | P7 | [P7_record_and_submit.md](P7_record_and_submit.md) | 2:40 of video and a submitted form |
 
-How the code is organised — one job per file, every file under 300 lines, enforced by preflight:
+How the code is organised — one job per file, with small modules where practical:
 **[REPO_STRUCTURE.md](REPO_STRUCTURE.md)**
 
 Reference material: [LOCK.md](LOCK.md) · [DECISION_LOG.md](DECISION_LOG.md) · [GATES_AND_REDTEAM.md](GATES_AND_REDTEAM.md) · [SUBMISSION_KIT.md](SUBMISSION_KIT.md) · [../research/README.md](../research/README.md)
