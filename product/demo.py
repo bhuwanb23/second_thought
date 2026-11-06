@@ -269,7 +269,8 @@ def main(argv=None) -> int:
 
     out = rec.write({"amount": money(args.amount_minor), "currency": args.currency,
                      "checks_run": wanted, "gateway_calls": len(gw.log)})
-    (out / "calls.json").write_text(json.dumps(gw.log, indent=2, default=str))
+    (out / "calls.json").write_text(
+        json.dumps(gw.log, indent=2, default=str), encoding="utf-8")
 
     print(f"\n{RULE}")
     for name in wanted:

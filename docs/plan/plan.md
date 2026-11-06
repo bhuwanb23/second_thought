@@ -34,7 +34,7 @@ The five questions I asked went unanswered, so I made these calls rather than st
 | # | Assumption | Why I chose it | Reversal cost |
 |---|---|---|---|
 | **A1** | All research and concept docs now live under `../research/`; decisions, submission kit and phases under `` | Matches the structure requested. 117 references rewritten and verified — 103 resolve, 0 broken | Nil; moving back is the same script in reverse |
-| **A2** | The code stays at `../../product/`, and **that folder is the public submission repo** | It already has `git init`, `LICENSE`, `Dockerfile`, `render.yaml` and a passing preflight. Moving it breaks the deploy config for cosmetic gain | Medium — P6.4 covers promotion to repo root if we decide the presentation is worth it |
+| **A2** | The active code stays at `../../product/`, inside one root repository | The product build is the current source of truth; the earlier implementation is archived separately | Closed by repository consolidation |
 | **A3** | Credential status is **unknown**, so P3/P4/P5 each open with a 30-second possession check and carry the acquisition steps inline | Cheapest assumption to be wrong about; costs one check, not a rewrite | Nil |
 | **A4** | Conversations may not happen, so P2 defines pre-agreed wording for n = 5, n = 3 and n = 0 | The claim is the thing that must not be improvised on 10 Nov | Nil |
 | **A5** | Video is **self-recorded**; generated narration exists as a fallback | Own voice is stronger on Presentation; the fallback protects a bad recording day | Nil |
@@ -66,7 +66,7 @@ either passes or stops the build.
 | **[V6](V6_deployment.md)** | **Deployment & durability** | 4 Nov | **2.0** | 🔴 **No public URL — nothing deployed.** Webhook verification built (P5.6, 24 tests), deploy config green (17 checks), cold-check instrument works, calendar filed |
 | **[V7](V7_human_validation.md)** | **Human validation** | 4 Nov | **1.5** | 🔴 **Not run — n = 0.** Cannot be delegated. Capture + verdict scripts built and tested; the pre-commitment is now mechanical |
 | **[V0](V0_preconditions.md)** | **Preconditions — do once** | 2 Nov | **0.75** | **`python3 scripts/v0_check.py` exits 0**, and the four manual rows are confirmed | Tech Impl + Stage 1 |
-| **[P0](P0_lock_and_foundation.md)** | Lock & foundation | 1 Nov | ✅ 0 | Concept frozen; 119 tests; preflight passes; repo committed | all |
+| **[P0](P0_lock_and_foundation.md)** | Lock & foundation | 1 Nov | ✅ 0 | Concept frozen; canonical product build and root repository established | all |
 | **[P1](P1_paylater_probe.md)** | Tripwire 1 — Pay Later probe | 2 Nov | 0.5 | A sandbox verdict recorded in the results table; OFFER wording chosen | Tech Impl |
 | **[P2](P2_five_conversations.md)** | Tripwire 2 — five conversations | 2–4 Nov | 1.5 | Table has rows; decision rules applied **as written**; claim wording updated | Impact |
 | **[P3](P3_live_paypal.md)** | Live PayPal credentials | 2–3 Nov | 1.5 | `demo.py --live` creates a real `INV2-…` invoice on sandbox | Tech Impl |
@@ -132,13 +132,13 @@ filesystems are ephemeral anyway: a redeploy or spin-down wipes them.
 |---|---|
 | `session.py` — cookie-scoped `Session` per visitor | Judge A's profile, ledger and eligibility cannot leak to judge B |
 | Personas are **read-only** | The three demo verdicts are reproducible for everyone, forever |
-| State is **in-memory only** | Nothing depends on a filesystem a redeploy will wipe |
+| Durable state is SQLite; sessions and approvals are **in-memory** | Reservations and webhook state survive a process restart when the configured database path is durable; session cookies are invalidated on restart |
 | Bounded to 400 sessions, oldest evicted | Memory cannot grow without limit |
-| **Three limit gates**: 30/session, **90/IP**, 1500/day global | A cookie-scoped limit alone is bypassable by clearing cookies, so the IP gate survives that; the global gate is the in-app bill backstop. **The provider-side spend cap is the real protection** — confirm it in P5.4 |
+| **Two session/network limit gates**: 30/session and **90/IP**, plus the provider budget | A cookie-scoped limit alone is bypassable by clearing cookies, so the IP gate survives that; the provider-side budget is the real spend backstop |
 | `test_one_visitor_cannot_change_anothers_verdict` | The defect cannot silently return |
-| **`/healthz` returns only `{ok, paypal_live, ai_live}`** | No session counts, no config, no internal flags on a public unauthenticated URL |
+| **`/healthz` returns booleans and status words only** | No paths, keys, versions, session counts, or internal details on a public unauthenticated URL |
 | **`/diagnostics` is operator-only** | Returns 404 without a matching `DIAG_TOKEN`, so it does not advertise itself |
-| `119 tests` | Up from 103 |
+| `154 tests` | Canonical product suite, no network required |
 
 Verified over HTTP with two cookie jars: judge B sees `DEFER` while judge A, who saved a profile,
 sees `DECLINE`.
@@ -158,7 +158,7 @@ If the schedule slips, cut **downward**. Do not improvise.
 | 5. Nice extras (webhook demo, extra personas) | Tech Impl depth | Only after 4 |
 
 **Never cut:** the live LLM key · the deploy · the video · the README checklist · the probe ·
-the 119 tests · the honest mode badge.
+the canonical test suite · the honest mode badge.
 
 > **Correction (review):** this ladder said "never cut the live LLM key" while **U6** allowed shipping
 > `LLM-MOCK`. Those contradicted each other. Stage 1 requires AI that is genuinely used, and a mock is
@@ -181,13 +181,14 @@ The submission is done when every row is true. Items marked ✅ are already sati
 | 4 | Demo video, public, ≤3:00 | ⬜ P7 |
 | 5 | **Public repo with license visible in the About section** (17% of scanned repos fail this) | ⬜ P5.4 |
 | 6 | PayPal tools + AI tools written out explicitly | ✅ §1 |
-| 7 | **Sandbox-only confirmation**, no live credentials | ⬜ P6.5 |
+| 7 | **Sandbox-only confirmation**, no live credentials | ✅ adapter refuses `PAYPAL_ENV=live` |
 | 8 | New vs existing project stated | ⬜ P7.4 |
 | 9 | Setup/run instructions that work on a clean clone | ✅ README, re-tested P6.3 |
 | 10 | **Available until 15 Dec 08:00 PT** | ⬜ P5.3 + read-only re-verify 1 Dec |
 | 11 | **Submitted commit tagged; `main` frozen until 15 Dec** — the rules bar changes after the deadline | ⬜ P7.6 |
 
-Plus the internal bar: `python3 -m unittest discover -s tests` → **OK**, `bash scripts/preflight.sh` → **ALL CHECKS PASSED**, no secrets in git.
+Plus the internal bar: `python3 -m unittest discover -s tests -q` → **OK**,
+`python3 scripts/preflight_deploy.py` → **ALL CHECKS PASSED**, no secrets in git.
 
 ---
 
@@ -210,9 +211,9 @@ Plus the internal bar: `python3 -m unittest discover -s tests` → **OK**, `bash
 
 ```bash
 cd product
-python3 -m unittest discover -s tests -q     # must say OK (119 tests)
-bash scripts/preflight.sh                     # must say ALL CHECKS PASSED
-git status                                    # nothing uncommitted, no .env
+python3 -m unittest discover -s tests -q     # must say OK (154 tests)
+python3 scripts/preflight_deploy.py          # must say ALL CHECKS PASSED
+git -C .. status                              # nothing uncommitted, no .env
 ```
 
 Then update the phase file's status line. **A day where these three fail is a day that does not get recorded.**

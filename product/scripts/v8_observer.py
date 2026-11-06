@@ -184,12 +184,12 @@ def write_block(rows: list[dict]) -> None:
     lines += ["", MARK_END]
     block = "\n".join(lines)
     if DOC.exists():
-        text = DOC.read_text()
+        text = DOC.read_text(encoding="utf-8")
         if MARK_START in text and MARK_END in text:
             text = text.split(MARK_START)[0] + block + text.split(MARK_END)[1]
         else:
             text = text.rstrip() + "\n\n" + block + "\n"
-        DOC.write_text(text)
+        DOC.write_text(text, encoding="utf-8")
 
 
 def main(argv=None) -> int:
