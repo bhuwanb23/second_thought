@@ -9,3 +9,5 @@ was the earlier implementation used to shape the product concept and is retained
 under [`prototype/`](prototype/).
 
 The prototype's original Git history is preserved in `prototype-history.bundle`.
+Its scripts and tests are historical and may assume a Unix-like shell; use
+`product/` for the supported cross-platform workflow.

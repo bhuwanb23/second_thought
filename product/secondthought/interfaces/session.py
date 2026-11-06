@@ -72,7 +72,7 @@ class SessionStore:
         self.window = window
         self.boot = secrets.token_hex(6)      # invalidates every cookie on restart
         self._sessions: dict[str, Session] = {}
-        self._ip_calls: dict[str, list] = {}
+        self._ip_calls: dict[tuple[str, str], list] = {}
         self.swept = 0
 
     # -- sessions ----------------------------------------------------------
@@ -146,11 +146,12 @@ class SessionStore:
         if len(session_calls) >= self.per_session:
             return False, (f"session limit: {self.per_session} {label} requests per "
                            f"{self.window // 60} minutes")
-        calls = [t for t in self._ip_calls.get(ip, []) if t > cutoff]
+        bucket = (label, ip)
+        calls = [t for t in self._ip_calls.get(bucket, []) if t > cutoff]
         if len(calls) >= self.per_ip:
             return False, (f"network limit: {self.per_ip} {label} requests per "
                            f"{self.window // 60} minutes from this address")
         session_calls.append(now)
         calls.append(now)
-        self._ip_calls[ip] = calls
+        self._ip_calls[bucket] = calls
         return True, f"{self.per_session - len(session_calls)} {label} requests left"

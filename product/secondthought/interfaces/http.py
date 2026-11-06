@@ -237,17 +237,19 @@ class App:
             raw_amount = body.get("amount_minor")
             if raw_amount is None:
                 raw_amount = (persona or {}).get("amount_minor", 24_900)
-            amount = self._amount(raw_amount)
+            amount = self._amount(raw_amount, strict=True)
             out = svc.propose(Checkout(key, "Northwind Audio", amount, "USD"), date(2026, 11, 1))
         except InvalidRequest as exc:
             return {"error": str(exc)}, "400 Bad Request", headers
         return out, "200 OK", headers
 
     @staticmethod
-    def _amount(value) -> int:
+    def _amount(value, strict: bool = False) -> int:
         if isinstance(value, bool):
             raise InvalidRequest("amount_minor must be an integer")
         if isinstance(value, float):
+            raise InvalidRequest("amount_minor must be an integer")
+        if strict and not isinstance(value, int):
             raise InvalidRequest("amount_minor must be an integer")
         try:
             amount = int(value)

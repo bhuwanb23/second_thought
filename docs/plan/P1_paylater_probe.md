@@ -64,7 +64,7 @@ rather than debugging it alone. This is listed in [plan.md §2b](plan.md) as a t
 
 The page tries the SDK v6 path (`createInstance` → `findEligibleMethods` → `isEligible("paylater")`
 → `getDetails`), falls back to a v5-style call, and logs which step failed. It never guesses: no SDK
-answer is treated as "not eligible", the same position `paylater.py` takes.
+answer is treated as "not eligible", matching the canonical checkout policy.
 
 ---
 

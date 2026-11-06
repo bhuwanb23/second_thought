@@ -32,7 +32,7 @@ Both suites pass. Neither needs a network, a key, or a credential.
 | Approval token rejects a mismatched amount | `prototype/tests/test_ai.py` + `product/tests/test_checkout.py` | ✅ both | ✅ **Strong.** Signs $249, asserts $999 is rejected **and** $249 is accepted — both directions |
 | `test_one_visitor_cannot_change_anothers_verdict` | `prototype/tests/test_session.py` | ✅ | ✅ **Strong.** Hostile profile saved by judge A; judge B's profile is `None` and the verdict is byte-identical |
 | `test_no_instrument_makes_the_merchant_carry_credit_risk` | `prototype/tests/test_profile.py` | ✅ | ❌ **Weak — see finding 1.** Renamed |
-| Idempotency: same `PayPal-Request-Id` never creates two orders | `prototype/tests/test_paypal.py` | ✅ | ✅ **Strong.** Same id → same order; different ids → different orders; and *every* POST carries the header |
+| Idempotency: same `PayPal-Request-Id` never creates two orders | `product/tests/test_paypal_live.py` | ✅ | ✅ **Strong.** Same id → same order; different ids → different orders; and *every* POST carries the header |
 
 **Not yet in the product:** the rogue-explainer and session-isolation tests. Those layers (AI, HTTP
 sessions) do not exist in `product/` yet — they are ported in the phases that add them, not forgotten.

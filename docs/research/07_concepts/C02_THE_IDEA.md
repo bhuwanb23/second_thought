@@ -2,7 +2,7 @@
 
 **The checkout that tells you the truth about your next four weeks.**
 
-PayPal AI Hackathon 2026 · concept C02 · **researched, built and tested (99 tests)** · not yet user-validated — see `VALIDATION_CONVERSATIONS.md`
+PayPal AI Hackathon 2026 · concept C02 · **researched, built and tested (155 tests)** · not yet user-validated — see `VALIDATION_CONVERSATIONS.md`
 
 ---
 
@@ -371,18 +371,14 @@ cluster of **3**, and none of the twelve highest-depth repos in the field touche
 
 ## 10. What exists today, and what does not
 
-**Built and tested — 99 tests, all passing, no dependencies:**
+**Built and tested — 155 tests, all passing, no third-party runtime dependencies:**
 
 ```
-engine.py     deterministic integer-cent decision engine   (32 tests)
-agentic.py    extraction + tool loop with HMAC approval gate
-llm.py        real tool-calling model, or a labelled scripted stand-in
-paylater.py   resolves OFFER into paylater | authorize_hold | invoice, with the fulfilment rule
-profile.py    the payday profile: set up once, applied silently at checkout
-paypal.py     sandbox REST or simulated transport, one interface, always labelled
-ledger.py     every plan we originated — the answer to "what can you actually see?"
-server.py     stdlib API: /decide /profile /extract /agent /approve /execute /paylater
-web/          one self-contained page: verdict, calendar, balance curve, approve step
+secondthought/domain/    deterministic calendar, verdict, and reservation rules
+secondthought/ai/        validated extraction and model isolation
+secondthought/app/       checkout orchestration and HMAC approval
+secondthought/infra/     SQLite, simulated/sandbox PayPal, and webhook verification
+secondthought/interfaces/ WSGI API, sessions, and the self-contained browser page
 ```
 
 Three demo shoppers produce the three branches: **Maya → DECLINE** (instalment 3 lands on rent,

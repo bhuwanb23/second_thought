@@ -47,13 +47,19 @@ class WebhookAPI:
                      "note": "rejection logged and visible at /diagnostics"},
                     "400 Bad Request", headers)
         event_id = event.get("id", "")
-        if self.event_repo and not self.event_repo.claim(
-                event_id, event.get("event_type", ""), datetime.now().replace(microsecond=0)):
+        if not isinstance(event_id, str) or not event_id.strip():
+            return ({"received": False, "reason": "event has no id",
+                     "note": "a webhook without an event id cannot be replay-protected"},
+                    "400 Bad Request", headers)
+        if self.event_repo and self.event_repo.seen(event_id):
             return ({"received": True, "event_type": event.get("event_type"),
                      "event_id": event_id, "applied": False,
                      "note": "idempotent — a repeat changes nothing"},
                     "200 OK", headers)
         outcome = self.apply(event, service_for)
+        if self.event_repo:
+            self.event_repo.mark(event_id, event.get("event_type", ""),
+                                 datetime.now().replace(microsecond=0))
         return ({"received": True, "event_type": event.get("event_type"),
                  "event_id": event.get("id"), **outcome}, "200 OK", headers)
 

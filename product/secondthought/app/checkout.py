@@ -180,6 +180,7 @@ class CheckoutService:
             due_date=due, hold_until=datetime.combine(due + timedelta(days=2),
                                                      datetime.min.time()),
             now=now)
+        self.reservations.save(r, now)
         inv = self.gateway.create_invoice(
             amount_minor=args["amount_minor"], currency=args["currency"],
             due_date=due, reference=rid)

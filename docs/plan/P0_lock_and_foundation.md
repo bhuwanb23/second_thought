@@ -51,17 +51,15 @@ Then open a browser at the demo server (`python3 scripts/serve.py`).
 
 | File | Job | Tests |
 |---|---|---|
-| `engine.py` | Deterministic decision engine, integer minor units | 32 |
-| `personas.py` | Three shoppers, three month shapes | — |
-| `agentic.py` | Extraction + tool loop + HMAC approval gate | ✓ |
-| `llm.py` | Real tool-calling model; labelled scripted stand-in | ✓ |
-| `paylater.py` | Resolves OFFER/DEFER/DECLINE → instrument, **with fulfilment rule** | ✓ |
-| `profile.py` | Payday profile, set up once, `answer_quality` | ✓ |
-| `paypal.py` | Sandbox REST or simulated transport, always labelled | ✓ |
-| `ledger.py` | Every plan we originated | ✓ |
-| `server.py` | `/decide /profile /extract /agent /approve /execute /paylater` | ✓ |
-| `web/index.html` | Verdict, calendar, balance curve, approve step, disclaimer | manual |
-| `paylater_probe.html` | The P1 tripwire tool | manual |
+| `secondthought/domain/engine.py` | Deterministic decision engine, integer minor units | ✓ |
+| `secondthought/domain/reservation.py` | Pay-before-ship lifecycle | ✓ |
+| `secondthought/ai/agent.py` and `extract.py` | Facts, confidence, and model isolation | ✓ |
+| `secondthought/app/approvals.py` | HMAC approval gate | ✓ |
+| `secondthought/infra/paypal_live.py` and `gateway.py` | Sandbox REST and simulated gateways | ✓ |
+| `secondthought/infra/db.py` | SQLite reservations, ledger, and webhook state | ✓ |
+| `secondthought/interfaces/http.py` | WSGI routes and session isolation | ✓ |
+| `secondthought/interfaces/screens.py` | Self-contained browser page | manual |
+| `probe/v1_probe.html` | The P1 tripwire tool | manual |
 
 ---
 

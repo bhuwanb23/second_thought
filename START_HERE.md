@@ -83,7 +83,7 @@ C01 scores higher on paper but is a smaller version of a product PayPal's CTO de
 1. **Today:** read the four files and the architecture overview.
 2. **Run locally:** `cd product && python3 -m unittest discover -s tests -q`.
 3. **Deploy from:** `render.yaml` (with `rootDir: product`) using `python3 scripts/serve.py`.
-4. **Follow `docs/plan/archive/BUILD_PLAN.md`** backwards from a recorded video on 10 Nov.
+4. **Follow `docs/plan/plan.md`** and the current gate documents backwards from a recorded video on 10 Nov.
 5. **Take the easy money:** AG Grid ($10,000, 5 slots) and APIMatic (3 slots, under an hour). See `docs/research/06_sponsors/SPONSOR_STRATEGY.md`.
 6. **Walk the gates** in `docs/plan/GATES_AND_REDTEAM.md`. A failed gate means falling back, not pushing on.
 
