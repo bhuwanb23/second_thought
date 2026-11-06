@@ -94,7 +94,7 @@ Go through every judge-visible word. **Any claim without a source gets deleted, 
 Then:
 
 ```bash
-cd product && bash scripts/preflight.sh && python3 -m unittest discover -s tests -q
+cd product && python3 scripts/preflight_deploy.py && python3 -m unittest discover -s tests -q
 ```
 
 ---

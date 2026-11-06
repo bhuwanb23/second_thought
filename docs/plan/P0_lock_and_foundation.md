@@ -31,7 +31,7 @@ verify the foundation in sixty seconds without trusting a summary.
 ```bash
 cd product
 python3 -m unittest discover -s tests -q     # expect: Ran 103 tests … OK
-bash scripts/preflight.sh                     # expect: ALL CHECKS PASSED
+python3 scripts/preflight_deploy.py                     # expect: ALL CHECKS PASSED
 python3 demo.py                               # expect: three personas, three verdicts
 ```
 

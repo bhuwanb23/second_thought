@@ -13,8 +13,8 @@
 
 ```bash
 cd product
-python3 -m unittest discover -s tests -v     # Ran 119 tests … OK   (116 matched "… ok" on one line)
-bash scripts/preflight.sh                    # ALL CHECKS PASSED   (10 checks)
+python3 -m unittest discover -s tests -v     # Ran 154 tests … OK
+python3 scripts/preflight_deploy.py                    # ALL CHECKS PASSED   (10 checks)
 
 cd product
 python3 -m unittest discover -s tests -v     # Ran 30 tests … OK
@@ -109,7 +109,7 @@ exactly that regression and could not.
 ## 6. Repeat this before the freeze (9 Nov)
 
 ```bash
-cd product && python3 -m unittest discover -s tests -v && bash scripts/preflight.sh
+cd product && python3 -m unittest discover -s tests -v && python3 scripts/preflight_deploy.py
 cd product            && python3 -m unittest discover -s tests -v
 ```
 

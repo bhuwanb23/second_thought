@@ -12,7 +12,7 @@ tested; verification and submission in progress.
 | **[`docs/plan/plan.md`](docs/plan/plan.md)** | The master plan: eight phases, exit conditions, unverified register |
 | **[`docs/plan/LOCK.md`](docs/plan/LOCK.md)** | What is frozen, and the two tripwires |
 | **[`docs/plan/REPO_STRUCTURE.md`](docs/plan/REPO_STRUCTURE.md)** | How the code is laid out, and why |
-| **[`product/`](product/)** | The active application — 152 tests, no third-party runtime dependencies |
+| **[`product/`](product/)** | The active application — 154 tests, no third-party runtime dependencies |
 
 ---
 
@@ -49,7 +49,7 @@ This workspace has three parts, and they do not overlap:
 
 ```bash
 cd product
-python3 -m unittest discover -s tests -q     # 152 tests … OK
+python3 -m unittest discover -s tests -q     # 154 tests … OK
 python3 scripts/preflight_deploy.py          # deployment configuration checks
 python3 -m secondthought.cli                # three shoppers, three verdicts
 ```

@@ -93,7 +93,7 @@ use the draft, not a remembered checklist, and note anything it asks for that is
 2. `curl https://<app>.onrender.com/healthz` → `ok:true, paypal:live, ai:llm`
 3. Clean clone in `/tmp` → tests pass with no credentials
 4. Every claim on the listing page has a source, or is gone
-5. `bash scripts/preflight.sh` → **ALL CHECKS PASSED**
+5. `python3 scripts/preflight_deploy.py` → **ALL CHECKS PASSED**
 6. Video is ≤3:00 (check the actual runtime, not the plan)
 7. Read the short description aloud — if it sounds like a pitch deck, rewrite it plainly
 

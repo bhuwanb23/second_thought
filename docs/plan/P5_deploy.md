@@ -29,7 +29,7 @@ Serves: **Presentation**, **Technological Implementation**, and rule compliance 
 ```bash
 cd product
 python3 -m unittest discover -s tests -q     # OK
-bash scripts/preflight.sh                     # ALL CHECKS PASSED
+python3 scripts/preflight_deploy.py                     # ALL CHECKS PASSED
 docker build -t second-thought . 2>&1 | tail -3   # optional: catches Dockerfile errors locally
 ```
 

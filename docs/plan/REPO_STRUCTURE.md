@@ -60,7 +60,7 @@ to exceed the code limit — it is the deliverable, not a module.
 
 ## Tests — `../../product/tests/`
 
-**152 tests, no third-party runtime dependencies, no network.**
+**154 tests, no third-party runtime dependencies, no network.**
 
 | File | Covers |
 |---|---|
@@ -85,5 +85,5 @@ and `test_a_token_for_a_different_amount_is_rejected`.
   dependency arrow points one way: judgement never depends on the model.
 - Any new endpoint that can call an LLM must go through `SESSIONS.allow_llm`.
 - Any new public endpoint must return booleans or already-visible data only.
-- Run `bash scripts/preflight.sh` before every commit — it checks the 300-line rule,
+- Run `python3 scripts/preflight_deploy.py` before every commit — it checks the 300-line rule,
   the licence, secret hygiene, session-state hygiene and the health check.

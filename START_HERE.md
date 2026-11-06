@@ -42,7 +42,7 @@ You need to make **one decision** — what to build — and then eleven days of 
 > then route the sale to an instrument that actually fits.
 
 **Validated and built.** Spec: `docs/research/07_concepts/C02_PRD.md`. Validation: `docs/research/07_concepts/C02_VALIDATION_REPORT.md`.
-Canonical application (**152 tests passing**): `product/.env.example`.
+Canonical application (**154 tests passing**): `product/.env.example`.
 
 **Read the idea itself: `docs/research/07_concepts/C02_THE_IDEA.md`** — customer, data provenance and the
 pay-before-ship DEFER rule, all resolved.

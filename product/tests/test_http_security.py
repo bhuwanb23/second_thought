@@ -72,7 +72,8 @@ class NoUnauthenticatedMoneyAction(unittest.TestCase):
         self.assertEqual(out["error"], "approval required")
 
     def test_a_made_up_token_is_forbidden(self):
-        for token in ("deadbeef", "0" * 32, self.plan["token"][:-1] + "f",
+        changed_last = "0" if self.plan["token"][-1] != "0" else "1"
+        for token in ("deadbeef", "0" * 32, self.plan["token"][:-1] + changed_last,
                       " " + self.plan["token"]):
             status, out = self._execute({"tool": self.plan["tool"],
                                          "args": self.plan["proposal"], "token": token})

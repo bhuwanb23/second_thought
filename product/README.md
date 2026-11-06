@@ -20,7 +20,7 @@ python3 -m unittest discover -s tests -q
 ```
 
 **No third-party runtime dependencies. Python 3.11+. Every file under 300 lines.
-152 tests, ~0.35 s.**
+154 tests, ~0.35 s.**
 
 The HTTP runtime uses the configured `ST_DB_PATH`. It selects the simulated
 gateway without PayPal credentials and the sandbox adapter when credentials are
