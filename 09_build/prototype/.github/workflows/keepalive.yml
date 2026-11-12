@@ -1,0 +1,23 @@
+name: keepalive
+# The submission must stay available until 15 Dec 2026 08:00 PT.
+# GitHub's scheduler is best-effort and can be delayed or disabled on inactive
+# repos, so this is a BACKSTOP. Use a paid instance, or UptimeRobot on a 5-minute
+# interval, as the primary mechanism.
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ping healthz
+        run: |
+          URL="${{ vars.DEMO_URL }}"
+          if [ -z "$URL" ]; then echo "set repo variable DEMO_URL"; exit 1; fi
+          code=$(curl -s -o /tmp/body -w "%{http_code}" --max-time 30 "$URL/healthz")
+          echo "status=$code body=$(cat /tmp/body)"
+          test "$code" = "200"
+      - name: fail loudly if the demo is down
+        if: failure()
+        run: echo "::error::demo is not answering /healthz — fix before 15 Dec"

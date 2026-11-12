@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Second Thought — payday-aware checkout</title>
+<style>
+  :root{
+    --ink:#12161c; --muted:#5b6672; --line:#e3e7ec; --bg:#f6f8fa; --card:#fff;
+    --offer:#0f7b4f; --defer:#8a5a00; --decline:#a3242b; --accent:#1d4ed8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:1120px;margin:0 auto;padding:24px 20px 64px}
+  header{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+  .logo{font-weight:700;font-size:17px;letter-spacing:-.2px}
+  .logo span{color:var(--accent)}
+  .tag{color:var(--muted);font-size:13px}
+  .badge{margin-left:auto;font-size:11px;font-weight:700;letter-spacing:.06em;
+         padding:5px 9px;border-radius:999px;border:1px solid var(--line);background:#fff}
+  .badge.live{color:var(--offer);border-color:#bfe3d1;background:#effaf4}
+  .badge.sim{color:#7a5a00;border-color:#ecd9a8;background:#fdf7e6}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+  @media(max-width:880px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .card h2{margin:0 0 12px;font-size:13px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+  .row{display:flex;gap:8px;flex-wrap:wrap}
+  button{font:inherit;cursor:pointer;border-radius:9px;border:1px solid var(--line);
+         background:#fff;padding:8px 12px;color:var(--ink)}
+  button:hover{border-color:#c9d1da}
+  button.sel{border-color:var(--accent);background:#eef2ff;color:var(--accent);font-weight:600}
+  button.primary{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+  button.ghost{color:var(--muted)}
+  input[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:9px;width:120px}
+  .product{display:flex;gap:14px;align-items:center}
+  .thumb{width:64px;height:64px;border-radius:12px;flex:none;
+         background:linear-gradient(135deg,#1f2937,#4b5563);position:relative}
+  .thumb:after{content:"";position:absolute;inset:18px 14px;border:3px solid #e5e7eb;border-radius:999px}
+  .pname{font-weight:600}
+  .pprice{color:var(--muted);font-size:13px}
+  .verdict{margin-top:16px;border-radius:12px;padding:14px 16px;border-left:5px solid}
+  .verdict.OFFER{background:#effaf4;border-color:var(--offer)}
+  .verdict.DEFER{background:#fdf7e6;border-color:var(--defer)}
+  .verdict.DECLINE{background:#fdf0f0;border-color:var(--decline)}
+  .vlabel{font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+  .OFFER .vlabel{color:var(--offer)} .DEFER .vlabel{color:var(--defer)} .DECLINE .vlabel{color:var(--decline)}
+  .vhead{font-size:17px;font-weight:650;margin:6px 0 6px;line-height:1.35}
+  .vwhy{color:#39424d;font-size:14px}
+  .valt{margin-top:10px;font-size:14px;background:#fff;border:1px dashed var(--line);
+        border-radius:9px;padding:9px 11px}
+  .actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+  .meta{margin-top:12px;font-size:12px;color:var(--muted)}
+  svg{display:block;width:100%;height:auto}
+  .legend{display:flex;gap:16px;font-size:12px;color:var(--muted);margin-top:6px;flex-wrap:wrap}
+  .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  td{padding:6px 0;border-bottom:1px solid #f1f4f7}
+  td.amt{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .neg{color:var(--decline)}
+  .pill{display:inline-block;font-size:11px;padding:2px 7px;border-radius:999px;background:#eef2ff;color:var(--accent)}
+  pre{background:#0f1420;color:#d6e2f0;padding:12px;border-radius:10px;overflow:auto;
+      font-size:12px;line-height:1.45;max-height:220px}
+  .empty{color:var(--muted);font-size:13px}
+  .kpi{display:flex;gap:18px;flex-wrap:wrap;margin-top:4px}
+  .kpi div{font-size:12px;color:var(--muted)}
+  .kpi b{display:block;font-size:17px;color:var(--ink)}
+  h3{margin:18px 0 8px;font-size:13px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">Second <span>Thought</span></div>
+    <div class="tag">the checkout that tells you the truth about your next four weeks</div>
+    <div class="badge" id="mode">…</div>
+  </header>
+
+  <div class="row" style="margin-bottom:16px">
+    <button data-p="sam" class="persona">Sam — has headroom</button>
+    <button data-p="dev" class="persona">Dev — paid on Thursday</button>
+    <button data-p="maya" class="persona sel">Maya — rent is due</button>
+    <button class="ghost" id="reset">reset ledger</button>
+  </div>
+
+  <div class="grid">
+    <div>
+      <div class="card">
+        <h2>Checkout</h2>
+        <div class="product">
+          <div class="thumb"></div>
+          <div>
+            <div class="pname">Northwind Studio Headphones</div>
+            <div class="pprice">Northwind Audio · ships in 2 days</div>
+          </div>
+        </div>
+        <div class="row" style="margin-top:14px;align-items:center">
+          <span class="pprice">Price</span>
+          <input type="number" id="amount" value="249.00" step="0.01" min="1">
+          <button id="apply">Apply</button>
+          <button class="ghost" data-amt="158.00">cheaper option $158</button>
+        </div>
+        <div id="verdict"></div>
+        <div class="actions" id="actions"></div>
+        <div class="meta" id="meta"></div>
+      </div>
+      <div class="card" style="margin-top:18px">
+        <h2>Your payday profile — set up once <span class="pill" id="aibadge">AI</span></h2>
+        <textarea id="month" rows="3" placeholder="rent 1450 on the 28th, car loan 312 on the 20th, mum's meds about 40"
+          style="width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:9px;resize:vertical"></textarea>
+        <div class="row" style="margin-top:8px">
+          <button class="primary" id="extract">Save my payday profile</button>
+          <button class="ghost" id="agent">Show the agent working</button>
+        </div>
+        <div id="aiout" class="meta">Set this up once, in your own time. Every checkout after that just applies it — we never ask you a question at the till.</div>
+      </div>
+      <div class="card" style="margin-top:18px">
+        <h2>What happened on PayPal</h2>
+        <pre id="out">Nothing executed yet.</pre>
+      </div>
+    </div>
+
+    <div>
+      <div class="card">
+        <h2>Projected balance · next 45 days</h2>
+        <div id="chart"></div>
+        <div class="legend">
+          <span><i class="sw" style="background:#1d4ed8"></i>balance</span>
+          <span><i class="sw" style="background:#a3242b"></i>your cushion</span>
+          <span><i class="sw" style="background:#c9d1da"></i>income</span>
+        </div>
+        <div class="kpi" id="kpi"></div>
+      </div>
+      <div class="card" style="margin-top:18px">
+        <h2>What we can see</h2>
+        <div id="cal"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+let state = { persona: "maya", amount: null };
+
+const money = (m, cur="USD") => {
+  const sym = {USD:"$",EUR:"€",GBP:"£",INR:"₹"}[cur] || "";
+  const neg = m < 0; m = Math.abs(m);
+  return (neg?"−":"") + sym + Math.floor(m/100).toLocaleString() + "." + String(m%100).padStart(2,"0");
+};
+const shortDate = iso => {
+  const d = new Date(iso + "T00:00:00");
+  return d.toLocaleDateString(undefined,{month:"short",day:"numeric"});
+};
+
+function drawChart(curve, buffer, events){
+  const w = 640, h = 190, pad = {l:8,r:8,t:12,b:22};
+  if(!curve || !curve.length) return "";
+  const vals = curve.map(p=>p.balance).concat([buffer,0]);
+  let lo = Math.min(...vals), hi = Math.max(...vals);
+  if(hi===lo){ hi = lo+1; }
+  const padY = (hi-lo)*0.12; lo -= padY; hi += padY;
+  const x = i => pad.l + (w-pad.l-pad.r) * (i/(curve.length-1));
+  const y = v => pad.t + (h-pad.t-pad.b) * (1 - (v-lo)/(hi-lo));
+  const line = curve.map((p,i)=>`${i?"L":"M"}${x(i).toFixed(1)},${y(p.balance).toFixed(1)}`).join(" ");
+  const area = `${line} L${x(curve.length-1).toFixed(1)},${h-pad.b} L${pad.l},${h-pad.b} Z`;
+  const bY = y(buffer).toFixed(1), zY = y(0).toFixed(1);
+  // income markers
+  const inc = (events||[]).filter(e=>e.kind==="income");
+  const idx = d => curve.findIndex(p=>p.date===d);
+  const markers = inc.map(e=>{const i=idx(e.date); return i<0?"":`<line x1="${x(i)}" y1="${pad.t}" x2="${x(i)}" y2="${h-pad.b}" stroke="#c9d1da" stroke-dasharray="2 3"/>`}).join("");
+  // trough label
+  let mi=0; curve.forEach((p,i)=>{ if(p.balance<curve[mi].balance) mi=i; });
+  const breach = curve[mi].balance < buffer;
+  return `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="projected balance">
+    <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1d4ed8" stop-opacity=".18"/>
+      <stop offset="100%" stop-color="#1d4ed8" stop-opacity="0"/>
+    </linearGradient></defs>
+    ${markers}
+    <line x1="${pad.l}" y1="${bY}" x2="${w-pad.r}" y2="${bY}" stroke="#a3242b" stroke-width="1.4" stroke-dasharray="5 4"/>
+    <line x1="${pad.l}" y1="${zY}" x2="${w-pad.r}" y2="${zY}" stroke="#9aa5b1" stroke-width="1"/>
+    <path d="${area}" fill="url(#g)"/>
+    <path d="${line}" fill="none" stroke="#1d4ed8" stroke-width="2.2" stroke-linejoin="round"/>
+    <circle cx="${x(mi)}" cy="${y(curve[mi].balance)}" r="4.5"
+            fill="${breach?'#a3242b':'#1d4ed8'}" stroke="#fff" stroke-width="1.5"/>
+    <text x="${Math.min(x(mi)+8, w-90)}" y="${y(curve[mi].balance)-8}"
+          font-size="11" fill="${breach?'#a3242b':'#1d4ed8'}" font-weight="600">
+      lowest ${money(curve[mi].balance)} · ${shortDate(curve[mi].date)}
+    </text>
+    <text x="${pad.l}" y="${h-6}" font-size="10" fill="#5b6672">${shortDate(curve[0].date)}</text>
+    <text x="${w-pad.r}" y="${h-6}" font-size="10" fill="#5b6672" text-anchor="end">${shortDate(curve[curve.length-1].date)}</text>
+  </svg>`;
+}
+
+function render(d){
+  const ai = d.ai || {};
+  $("#mode").textContent = "SANDBOX · " + (d.mode||"").toUpperCase()
+      + "   ·   AI · " + (ai.engine||"rules").toUpperCase();
+  $("#aibadge").textContent = (ai.engine||"rules").toUpperCase();
+  $("#mode").className = "badge " + (d.mode==="live" ? "live" : "sim");
+  const dec = d.decision, e = d.explanation;
+  $("#verdict").innerHTML = `
+    <div class="verdict ${dec.verdict}">
+      <div class="vlabel">${dec.verdict}</div>
+      <div class="vhead">${e.headline}</div>
+      <div class="vwhy">${e.why}</div>
+      <div class="valt"><b>What we'd do instead.</b> ${e.alternative}</div>
+      <div class="meta" style="margin-top:10px">
+        <b>${label}.</b> ${d.fulfilment||""}<br>
+        <span style="color:var(--muted)">credit risk sits with: ${d.risk_bearer||"nobody"}</span>
+      </div>
+      <div class="meta" style="margin-top:8px;border-top:1px solid #223;padding-top:8px">
+        Decision support, not financial advice. You can always override this.
+      </div>
+    </div>`;
+
+  const inst = d.instrument;
+  const label = (d.instrument_doc && d.instrument_doc.label) || inst;
+  let btn;
+  if (inst === "paylater")
+    btn = `<button class="primary" onclick="act(null)">Create the Pay Later order</button>`;
+  else if (inst === "authorize_hold" || inst === "invoice")
+    btn = `<button class="primary" onclick="approve()">Approve &amp; execute</button>`;
+  else
+    btn = `<button class="ghost" onclick="override()">Buy anyway (nothing is blocked)</button>`;
+  $("#actions").innerHTML = btn +
+    `<span class="meta" style="align-self:center">instrument: <b>${label}</b></span>`;
+
+  $("#meta").textContent =
+    `cushion ${d.buffer_display} · safe amount ${money(dec.safe_amount)} · ` +
+    `${d.ledger.plans_open} live plan(s) we originated · ${d.ledger.overrides} override(s)` +
+    (d.profile
+      ? ` · profile: ${d.profile.obligations} bill(s)${d.profile.unconfirmed?`, ${d.profile.unconfirmed} to confirm`:""}`
+      : " · profile: not set up (using a demo persona)");
+
+  $("#chart").innerHTML = drawChart(d.curve, d.buffer, d.events);
+
+  const lows = d.curve.reduce((a,p)=>p.balance<a.balance?p:a, d.curve[0]);
+  $("#kpi").innerHTML = `
+    <div><b>${money(lows.balance)}</b>lowest balance</div>
+    <div><b>${shortDate(lows.date)}</b>when</div>
+    <div><b>${d.buffer_display}</b>cushion</div>
+    <div><b>${money(d.amount)}</b>purchase</div>`;
+
+  const ev = (d.events||[]).filter(x=>x.kind!=="income")
+      .sort((a,b)=>a.date.localeCompare(b.date)).slice(0,7);
+  const focus = (d.focus_debits||[]).map(x=>({...x, label:`${d.focus} ${x.date===d.today?"today":""}`.trim(), kind:"plan"}));
+  const rows = [...ev, ...focus].sort((a,b)=>a.date.localeCompare(b.date)).slice(0,9)
+    .map(x=>`<tr><td>${shortDate(x.date)}</td>
+      <td>${x.label} ${x.kind==="plan"?'<span class="pill">this purchase</span>':''}</td>
+      <td class="amt ${x.amount<0?"neg":""}">${money(x.amount)}</td></tr>`).join("");
+  $("#cal").innerHTML = rows
+    ? `<table>${rows}</table>
+       <div class="meta">Our own plan ledger, plus what the shopper declared.
+       PayPal does not expose a buyer's other BNPL plans to a merchant — so we say what we can see.</div>`
+    : `<div class="empty">Nothing scheduled.</div>`;
+}
+
+async function load(){
+  const q = new URLSearchParams({persona: state.persona});
+  if (state.amount) q.set("amount", state.amount);
+  const r = await fetch("/api/decide?" + q);
+  const d = await r.json();
+  if (d.error) { $("#out").textContent = d.error; return; }
+  window.__d = d; render(d);
+}
+
+async function approve(){
+  const a = await (await fetch("/api/approve", {method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({persona: state.persona, amount: window.__d?.decision?.amount})})).json();
+  $("#out").textContent = "APPROVED BY HUMAN\n" + JSON.stringify(a, null, 2);
+  if(!a.ok) return;
+  // the token is bound to this exact tool and these exact arguments
+  await act(a.token);
+}
+
+async function extractMonth(){
+  const text = $("#month").value.trim();
+  if(!text){ $("#aiout").textContent = "Type a few bills first."; return; }
+  const r = await (await fetch("/api/profile", {method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({persona: state.persona, text})})).json();
+  if(r.error){ $("#aiout").textContent = r.error; return; }
+  const ex = r.extraction || {obligations: (r.entries||{}).obligations||[], warnings:[]};
+  const rows = ex.obligations.map(o=>
+    `<tr><td>${o.label}</td><td>${money(o.amount_minor)}</td><td>${o.due||"—"}</td>
+     <td class="amt">${(o.confidence*100).toFixed(0)}%</td></tr>`).join("");
+  $("#aiout").innerHTML =
+    `<div class="meta">extracted by <b>${ex.engine}</b> · ${r.ai.model}</div>
+     <table>${rows}</table>` +
+    (ex.warnings.length ? `<div class="meta">${ex.warnings.join(" · ")}</div>` : "") +
+    `<div class="meta">These now feed the calendar. Re-run the decision to see it.</div>`;
+  $("#aibadge").textContent = (r.profile && r.profile.setup_source) === "extracted"
+      ? (r.ai ? (r.ai.engine||"ai").toUpperCase() : "AI") : "AI";
+  load();   // every later checkout now uses the saved profile
+}
+
+async function runAgent(){
+  const r = await (await fetch("/api/agent", {method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({persona: state.persona, amount: window.__d?.decision?.amount})})).json();
+  const steps = (r.steps||[]).map((s,i)=>
+    `${i+1}. ${s.tool} -> ${s.status}`).join("\n");
+  $("#aiout").innerHTML = `<pre>${steps}\n\n` +
+    (r.pending_approval
+      ? `PENDING APPROVAL: ${r.pending_approval.tool}\nThe agent stops here. Nothing has moved.`
+      : (r.final||"")) + `</pre>`;
+}
+
+async function act(token){
+  const r = await fetch("/api/execute", {method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({persona: state.persona, amount: window.__d?.decision?.amount,
+                          token: token || null})});
+  const j = await r.json();
+  $("#out").textContent = JSON.stringify(j, null, 2);
+  load();
+}
+
+async function override(){
+  const r = await fetch("/api/override", {method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({persona: state.persona, amount: window.__d?.decision?.amount,
+                          reason:"shopper chose to proceed"})});
+  $("#out").textContent = JSON.stringify(await r.json(), null, 2);
+  load();
+}
+
+document.querySelectorAll(".persona").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".persona").forEach(x=>x.classList.remove("sel"));
+  b.classList.add("sel"); state.persona = b.dataset.p; state.amount = null; load();
+});
+document.querySelectorAll("[data-amt]").forEach(b=>b.onclick=()=>{
+  state.amount = b.dataset.amt; $("#amount").value = b.dataset.amt; load();
+});
+$("#apply").onclick = () => {
+  const v = parseFloat($("#amount").value);
+  if (!isNaN(v) && v > 0) { state.amount = v.toFixed(2); load(); }
+};
+$("#extract").onclick = extractMonth;
+$("#agent").onclick = runAgent;
+$("#reset").onclick = async () => {
+  await fetch("/api/reset", {method:"POST"}); $("#out").textContent="Ledger cleared."; load();
+};
+load();
+</script>
+</body>
+</html>
