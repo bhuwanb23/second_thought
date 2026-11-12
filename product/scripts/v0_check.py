@@ -24,9 +24,6 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-if hasattr(sys.stdout, "reconfigure"):
-    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
-
 ROOT = Path(__file__).resolve().parent.parent
 PKG = ROOT / "secondthought"
 ENV_EXAMPLE = ROOT / ".env.example"
@@ -44,18 +41,12 @@ def load_env() -> dict[str, str]:
     """Real environment wins; .env fills the gaps. Values are never printed."""
     env = dict(os.environ)
     if ENV_FILE.exists():
-        for line in ENV_FILE.read_text(encoding="utf-8").splitlines():
+        for line in ENV_FILE.read_text().splitlines():
             line = line.strip()
             if not line or line.startswith("#") or "=" not in line:
                 continue
             k, _, v = line.partition("=")
-            k = k.strip()
-            v = v.strip()
-            if k.startswith("export "):
-                k = k[7:].strip()
-            if v[:1] in ("'", '"') and v[-1:] == v[:1]:
-                v = v[1:-1]
-            env.setdefault(k, v)
+            env.setdefault(k.strip(), v.strip())
     return env
 
 
@@ -65,13 +56,13 @@ def load_env() -> dict[str, str]:
 def gate_env_contract(env: dict[str, str]) -> None:
     declared = set()
     if ENV_EXAMPLE.exists():
-        for line in ENV_EXAMPLE.read_text(encoding="utf-8").splitlines():
+        for line in ENV_EXAMPLE.read_text().splitlines():
             line = line.strip()
             if line and not line.startswith("#") and "=" in line:
                 declared.add(line.split("=", 1)[0].strip())
 
     # the contract is declared in config.py
-    contract_src = (PKG / "config.py").read_text(encoding="utf-8")
+    contract_src = (PKG / "config.py").read_text()
     m = re.search(r"ENV_CONTRACT = \((.*?)\)", contract_src, re.S)
     contract = set(re.findall(r'"([A-Z0-9_]+)"', m.group(1))) if m else set()
 
@@ -81,7 +72,7 @@ def gate_env_contract(env: dict[str, str]) -> None:
         if py.name == "config.py":
             continue
         for hit in re.finditer(r"(?:os\.environ(?:\.get)?[\[(]|getenv\()\s*[\"']([A-Z0-9_]+)",
-                               py.read_text(encoding="utf-8")):
+                               py.read_text()):
             strays.append(f"{py.relative_to(ROOT)}:{hit.group(1)}")
 
     problems = []

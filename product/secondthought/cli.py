@@ -14,9 +14,6 @@ from __future__ import annotations
 import sys
 from datetime import datetime
 
-if hasattr(sys.stdout, "reconfigure"):
-    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
-
 from .app.approvals import ApprovalError
 from .app.checkout import Checkout, CheckoutService
 from .app.ports import GatewayError

@@ -81,8 +81,11 @@ class CheckoutService:
             "safe_amount_minor": self._safe(d),
             # the date a DEFER invoice would fall due — the screen needs it, and so does
             # anyone asking "pay on what day?". None for the other verdicts.
+            # Only a DEFER has a "pay on" date a shopper needs. An OFFER's option
+            # carries an invoice_due too (the first instalment), and printing that as
+            # "pay on" would tell someone to wait when they do not have to.
             "pay_on": (d.recommended.invoice_due.isoformat()
-                       if getattr(d, "recommended", None)
+                       if d.verdict == "DEFER" and getattr(d, "recommended", None)
                        and d.recommended.invoice_due else None),
             "instrument": self._instrument_for(d.verdict),
             "fulfilment": self._fulfilment(d.verdict),
@@ -162,11 +165,9 @@ class CheckoutService:
 
     # -- executing an approved action -------------------------------------
     def execute(self, tool: str, args: dict, token: str,
-                now: datetime | None = None,
-                approval_now: datetime | None = None) -> dict:
+                now: datetime | None = None) -> dict:
         now = now or datetime.now().replace(microsecond=0)
-        approval_now = approval_now or now
-        self.approvals.redeem(tool, args, token, now=approval_now.timestamp())
+        self.approvals.redeem(tool, args, token, now=now.timestamp())
         if tool == "create_reservation":
             return self._create_reservation(args, now)
         if tool == "authorise_hold":
@@ -182,13 +183,11 @@ class CheckoutService:
             due_date=due, hold_until=datetime.combine(due + timedelta(days=2),
                                                      datetime.min.time()),
             now=now)
-        self.reservations.save(r, now)
         inv = self.gateway.create_invoice(
             amount_minor=args["amount_minor"], currency=args["currency"],
             due_date=due, reference=rid)
         r.attach_invoice(inv.id, now)
         self.reservations.save(r, now)
-        self.gateway.send_invoice(inv.id)
         self.ledger.add(args["shopper_id"], args["merchant_id"],
                         args["amount_minor"], "reservation", rid, now)
         return {"state": r.state.value, "reservation": r.to_dict(),

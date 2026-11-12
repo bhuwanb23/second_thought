@@ -26,42 +26,22 @@ from ..app.checkout import Checkout, CheckoutService
 from ..app.ports import GatewayError
 from ..domain import InvalidRequest, Policy
 from ..domain.engine import decide
-from ..infra.db import Database, LedgerRepo, ProfileRepo, ReservationRepo, WebhookRepo
+from ..infra.db import Database, LedgerRepo, ProfileRepo, ReservationRepo
 from ..infra.gateway import SimulatedGateway
-from ..infra.paypal_live import PayPalLiveGateway
 from .badge import badges, health_payload
 from .plumbing import cookie, ip, json_body, raw_body
+from .proof import render as render_proof
 from .screens import explain, render_page
 from .session import SessionStore
 from .webhook_api import WebhookAPI
 
 COOKIE = "st_sid"
-DEMO_NOW = datetime(2026, 11, 1, 10, 0)
 # The two actions that can move money. Anything else is refused, not mapped.
 MONEY_TOOLS = ("create_reservation", "authorise_hold")
 
-PERSONAS = {
-    "ada": {"label": "Ada — comfortable month", "amount_minor": 24_900,
-            "profile": {"opening_balance": 210_000,
-                        "paydays": [{"due": "2026-11-05", "amount_minor": 200_000},
-                                    {"due": "2026-11-19", "amount_minor": 200_000},
-                                    {"due": "2026-12-03", "amount_minor": 200_000}],
-                        "obligations": [{"label": "rent", "due": "2026-11-28",
-                                         "amount_minor": 145_000, "essential": True}]}},
-    "ben": {"label": "Ben — payday is in five days", "amount_minor": 24_900,
-            "profile": {"opening_balance": 30_000,
-                        "paydays": [{"due": "2026-11-07", "amount_minor": 260_000}],
-                        "obligations": [{"label": "car loan", "due": "2026-11-20",
-                                         "amount_minor": 31_200, "essential": True},
-                                        {"label": "rent", "due": "2026-11-28",
-                                         "amount_minor": 145_000, "essential": True}]}},
-    "cleo": {"label": "Cleo — genuinely squeezed", "amount_minor": 24_900,
-             "profile": {"opening_balance": 45_000,
-                         "paydays": [{"due": "2026-11-05", "amount_minor": 110_000}],
-                         "obligations": [{"label": "rent", "due": "2026-11-25",
-                                          "amount_minor": 130_000, "essential": True}]}},
-}
-# V5 asks after "Maya": the prototype's name for the DEFER persona. Same shape as ben.
+from .personas import personas, resolve as resolve_persona
+
+# Built per request from today's date, not pinned to a fixed month — see personas.py.
 PERSONA_ALIASES = {"maya": "ben"}
 
 
@@ -96,27 +76,19 @@ class App:
         self.clock = clock or time.time
         self.sessions = sessions or SessionStore(
             (settings.approval_secret or "dev-only-change-me").encode())
-        self.gateway = gateway or self._gateway_for(settings)
-        self.db = Database(settings.db_path)
+        self.gateway = gateway or SimulatedGateway()
+        self.db = Database(":memory:")
         self.defaults = ProfileRepo(self.db)          # read-only persona store
         self.reservations = ReservationRepo(self.db)
         self.ledger = LedgerRepo(self.db)
-        self.webhook_events = WebhookRepo(self.db)
         self.boot = self.sessions.boot
         self.attempts: list = []                      # refused money calls, for tests
         self.webhooks = WebhookAPI(settings.paypal.webhook_id,
                                    diag_token=settings.diag_token,
-                                   cert_lookup=cert_lookup,
-                                   event_repo=self.webhook_events)
-        for key, persona in PERSONAS.items():
-            self.defaults.save(key, persona["profile"], datetime(2026, 11, 1, 9, 0))
-
-    @staticmethod
-    def _gateway_for(settings):
-        """Use the sandbox adapter only when sandbox credentials are configured."""
-        if settings.paypal.configured:
-            return PayPalLiveGateway(settings.paypal)
-        return SimulatedGateway(today=DEMO_NOW.date())
+                                   cert_lookup=cert_lookup)
+        for key, persona in personas().items():
+            self.defaults.save(key, persona["profile"],
+                               datetime.combine(date.today(), datetime.min.time()))
 
     # -- the service, rebuilt per request so nothing can be shared by accident
     def service(self, session) -> CheckoutService:
@@ -156,11 +128,9 @@ class App:
         if session is None:
             session = self.sessions.new()
             new_cookie = self.sessions.issue_cookie(session)
-        cookie_flags = "Path=/; HttpOnly; SameSite=Lax"
-        if self.settings.env == "production":
-            cookie_flags += "; Secure"
-        headers = [("Set-Cookie", f"{COOKIE}={new_cookie}; {cookie_flags}")] \
-            if new_cookie else [("Set-Cookie", "")]
+        headers = [("Set-Cookie", f"{COOKIE}={new_cookie}; Path=/; HttpOnly; "
+                                  f"SameSite=Lax")] if new_cookie else [("Set-Cookie",
+                                                                        "")]
         headers = [h for h in headers if h[1]]
 
         if path in ("/api/webhook", "/diagnostics"):
@@ -170,7 +140,9 @@ class App:
             if routed is not None:
                 return routed
         if path == "/":
-            return render_page(self.settings, PERSONAS), "200 OK", headers
+            return render_page(self.settings, personas()), "200 OK", headers
+        if path == "/proof":
+            return render_proof(), "200 OK", headers
         if path == "/healthz":
             return health_payload(self.settings), "200 OK", headers
         if path == "/api/session":
@@ -179,7 +151,7 @@ class App:
         if path == "/api/personas":
             return {"personas": [{"id": k, "label": v["label"],
                                   "amount_minor": v["amount_minor"]}
-                                 for k, v in PERSONAS.items()]}, "200 OK", headers
+                                 for k, v in personas().items()]}, "200 OK", headers
         if path == "/api/quote":
             return self._quote(session, query, headers)
         if path == "/api/profile" and method == "POST":
@@ -194,23 +166,23 @@ class App:
 
     # -- routes ------------------------------------------------------------
     def _persona(self, key):
-        key = PERSONA_ALIASES.get(key, key)
-        if key != "me" and key not in PERSONAS:
+        key = resolve_persona(key)
+        if key != "me" and key not in personas():
             return None, None
-        return key, PERSONAS.get(key, {})
+        return key, personas().get(key, {})
 
     def _quote(self, session, query, headers):
         key = (query.get("persona") or ["maya"])[0]
         key, persona = self._persona(key)
         if key is None:
             return {"error": "unknown persona"}, "400 Bad Request", headers
+        amount = int((query.get("amount_minor") or [persona["amount_minor"]])[0])
         svc = self.service(session)
         try:
-            raw_amount = (query.get("amount_minor") or [persona["amount_minor"]])[0]
-            amount = self._amount(raw_amount)
-            out = svc.quote(Checkout(key, "Northwind Audio", amount, "USD"), date(2026, 11, 1))
+            out = svc.quote(Checkout(key, "Northwind Audio", amount, "USD"), date.today())
         except InvalidRequest as exc:
-            return {"error": str(exc)}, "400 Bad Request", headers
+            return {"error": str(exc), "verdict": "NO_DECISION",
+                    "hint": "save a profile first, or pick a named persona"}, "200 OK", headers
         out["profile"] = "session" if key == "me" and session.profile else (
             "persona-default" if key != "me" else None)
         out["explain"] = explain(out)          # the words a shopper actually reads
@@ -221,7 +193,7 @@ class App:
         profile = body.get("profile")
         if not isinstance(profile, dict):
             return {"error": "profile must be an object"}, "400 Bad Request", headers
-        allowed, why = self.sessions.allow_profile(session, ip(environ), self.clock())
+        allowed, why = self.sessions.allow_llm(session, ip(environ), self.clock())
         if not allowed:
             return {"error": "rate limit", "reason": why}, "429 Too Many Requests", headers
         session.profile = profile
@@ -233,32 +205,13 @@ class App:
         key, persona = self._persona(str(body.get("persona", "maya")))
         if key is None:
             return {"error": "unknown persona"}, "400 Bad Request", headers
+        amount = int(body.get("amount_minor") or (persona or {}).get("amount_minor", 24_900))
         svc = self.service(session)
         try:
-            raw_amount = body.get("amount_minor")
-            if raw_amount is None:
-                raw_amount = (persona or {}).get("amount_minor", 24_900)
-            amount = self._amount(raw_amount, strict=True)
-            out = svc.propose(Checkout(key, "Northwind Audio", amount, "USD"), date(2026, 11, 1))
+            out = svc.propose(Checkout(key, "Northwind Audio", amount, "USD"), date.today())
         except InvalidRequest as exc:
             return {"error": str(exc)}, "400 Bad Request", headers
         return out, "200 OK", headers
-
-    @staticmethod
-    def _amount(value, strict: bool = False) -> int:
-        if isinstance(value, bool):
-            raise InvalidRequest("amount_minor must be an integer")
-        if isinstance(value, float):
-            raise InvalidRequest("amount_minor must be an integer")
-        if strict and not isinstance(value, int):
-            raise InvalidRequest("amount_minor must be an integer")
-        try:
-            amount = int(value)
-        except (TypeError, ValueError):
-            raise InvalidRequest("amount_minor must be an integer") from None
-        if amount <= 0 or amount > 100_000_000:
-            raise InvalidRequest("amount_minor is outside the supported range")
-        return amount
 
     def _execute(self, session, environ, headers):
         body = json_body(environ)
@@ -281,8 +234,7 @@ class App:
                     "403 Forbidden", headers)
         svc = self.service(session)
         try:
-            done = svc.execute(tool, args, token, now=DEMO_NOW,
-                               approval_now=datetime.now().replace(microsecond=0))
+            done = svc.execute(tool, args, token)
         except ApprovalError as exc:
             self.attempts.append({"tool": tool, "reason": str(exc),
                                   "session": session.id[:8]})
@@ -302,6 +254,6 @@ class App:
         from ..ai.extract import LLMExtractor
         llm = LLMExtractor(self.settings.llm) if self.settings.llm.configured else None
         agent = Agent(self.service(session), llm=llm)
-        ext = agent.extract(str(body.get("text") or ""), date(2026, 11, 1))
+        ext = agent.extract(str(body.get("text") or ""), date.today())
         return {"extraction": ext.to_dict(), "budget": self.sessions.per_session
                 - len(session.llm_calls)}, "200 OK", headers

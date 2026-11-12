@@ -32,12 +32,12 @@ class Quiet(WSGIRequestHandler):
 
 
 def main() -> int:
-    settings = load()
     ap = argparse.ArgumentParser()
-    ap.add_argument("--port", type=int, default=settings.port)
+    ap.add_argument("--port", type=int, default=int(os.environ.get("PORT", 8000)))
     ap.add_argument("--pidfile", default="")
     args = ap.parse_args()
 
+    settings = load()
     app = App(settings)
     if args.pidfile:
         Path(args.pidfile).write_text(str(os.getpid()))

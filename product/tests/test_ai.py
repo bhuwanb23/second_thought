@@ -74,7 +74,8 @@ class Badge(unittest.TestCase):
     def test_payments_badge_tracks_paypal_credentials(self):
         self.assertEqual(payments_badge(AppSettings(paypal=PayPalSettings(
             client_id="a", client_secret="b"))), "PAYMENTS · SANDBOX")
-        self.assertEqual(payments_badge(AppSettings()), "PAYMENTS · SIMULATED")
+        self.assertEqual(payments_badge(AppSettings(paypal=PayPalSettings(
+            client_id="", client_secret=""))), "PAYMENTS · SIMULATED")
 
     def test_the_health_payload_carries_no_internals(self):
         payload = json.dumps(health_payload(AppSettings(

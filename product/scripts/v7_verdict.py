@@ -35,8 +35,7 @@ def load(path: Path) -> tuple[list[dict], list[str]]:
     problems = []
     if not path.exists():
         return [], []          # no log is n = 0, not a tamper alarm
-    records = [json.loads(line) for line in
-               path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    records = [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
     prev = "genesis"
     for i, r in enumerate(records, 1):
         if r.get("seq") != i:
@@ -205,15 +204,14 @@ def write_table(path: Path, records: list[dict], fired: list[str], claim_text: s
         "",
         MARK_END,
     ])
-    original = path.read_text(encoding="utf-8") if path.exists() else ""
+    original = path.read_text() if path.exists() else ""
     if MARK_START in original and MARK_END in original:
         head = original.split(MARK_START)[0]
         tail = original.split(MARK_END)[1]
-        path.write_text(head + block + tail, encoding="utf-8")
+        path.write_text(head + block + tail)
     else:
-        path.write_text(
-            original.rstrip() + "\n\n---\n\n## V7 — the table, as run\n\n"
-            + block + "\n", encoding="utf-8")
+        path.write_text(original.rstrip() + "\n\n---\n\n## V7 — the table, as run\n\n"
+                        + block + "\n")
 
 
 if __name__ == "__main__":

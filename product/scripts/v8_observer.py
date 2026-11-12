@@ -73,22 +73,9 @@ def precheck(url: str) -> int:
     check("it says the money is simulated", "Nothing is charged" in text)
 
     status, body = fetch(url, "/healthz")
-    if status != 200:
-        check("/healthz answers with booleans only", False, f"HTTP {status}")
-        print(f"\n  {ok} passed, {fail} failed\n")
-        return 1
-    try:
-        health = json.loads(body)
-    except (ValueError, UnicodeDecodeError):
-        check("/healthz answers with booleans only", False, "invalid JSON")
-        print(f"\n  {ok} passed, {fail} failed\n")
-        return 1
-    valid_health = (isinstance(health, dict)
-                    and set(health) == {"status", "ai_mode", "payments_mode", "checks"})
-    check("/healthz answers with booleans only", valid_health)
-    if not valid_health:
-        print(f"\n  {ok} passed, {fail} failed\n")
-        return 1
+    health = json.loads(body)
+    check("/healthz answers with booleans only",
+          set(health) == {"status", "ai_mode", "payments_mode", "checks"})
     print(f"\n  ai_mode     {health.get('ai_mode')}")
     print(f"  payments    {health.get('payments_mode')}")
     if health.get("ai_mode") == "llm-mock":
@@ -152,8 +139,7 @@ def report() -> int:
     if not LOG.exists():
         print("\nNo rehearsals recorded. V8 has not run.\n")
         return 0
-    rows = [json.loads(line) for line in
-            LOG.read_text(encoding="utf-8").splitlines() if line.strip()]
+    rows = [json.loads(line) for line in LOG.read_text().splitlines() if line.strip()]
     passed = [r for r in rows if r["pass"]]
     print(f"\nV8 report — {len(rows)} rehearsal(s), {len(passed)} passing\n")
     for r in rows:
@@ -198,12 +184,12 @@ def write_block(rows: list[dict]) -> None:
     lines += ["", MARK_END]
     block = "\n".join(lines)
     if DOC.exists():
-        text = DOC.read_text(encoding="utf-8")
+        text = DOC.read_text()
         if MARK_START in text and MARK_END in text:
             text = text.split(MARK_START)[0] + block + text.split(MARK_END)[1]
         else:
             text = text.rstrip() + "\n\n" + block + "\n"
-        DOC.write_text(text, encoding="utf-8")
+        DOC.write_text(text)
 
 
 def main(argv=None) -> int:

@@ -20,8 +20,9 @@ def cookie(environ, name: str) -> str | None:
 
 
 def ip(environ) -> str:
-    """Use the server-provided peer address for rate limiting."""
-    return environ.get("REMOTE_ADDR") or "unknown"
+    """Behind Render the client address is in X-Forwarded-For; trust the first hop."""
+    fwd = (environ.get("HTTP_X_FORWARDED_FOR") or "").split(",")[0].strip()
+    return fwd or environ.get("REMOTE_ADDR") or "unknown"
 
 
 def raw_body(environ, limit: int = 65536) -> bytes:

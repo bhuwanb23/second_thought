@@ -14,17 +14,14 @@ from __future__ import annotations
 
 import hmac
 import json
-from datetime import datetime
 
 from ..infra.webhook import Rejection, WebhookVerifier
 
 
 class WebhookAPI:
-    def __init__(self, webhook_id: str, *, diag_token: str = "",
-                 cert_lookup=None, event_repo=None):
+    def __init__(self, webhook_id: str, *, diag_token: str = "", cert_lookup=None):
         self.verifier = WebhookVerifier(webhook_id, cert_lookup=cert_lookup)
         self.diag_token = diag_token or ""
-        self.event_repo = event_repo
 
     # -- routes ------------------------------------------------------------
     def route(self, path: str, environ, raw_body: bytes, headers: list,
@@ -46,32 +43,7 @@ class WebhookAPI:
             return ({"received": False, "reason": rej.reason, "detail": rej.detail,
                      "note": "rejection logged and visible at /diagnostics"},
                     "400 Bad Request", headers)
-        event_id = event.get("id", "")
-        if not isinstance(event_id, str) or not event_id.strip():
-            return ({"received": False, "reason": "event has no id",
-                     "note": "a webhook without an event id cannot be replay-protected"},
-                    "400 Bad Request", headers)
-        claimed = bool(self.event_repo and self.event_repo.claim(
-            event_id, event.get("event_type", ""), datetime.now().replace(microsecond=0)))
-        if self.event_repo and not claimed:
-            return ({"received": True, "event_type": event.get("event_type"),
-                     "event_id": event_id, "applied": False,
-                     "note": "idempotent — a repeat changes nothing"},
-                    "200 OK", headers)
-        try:
-            outcome = self.apply(event, service_for)
-        except Exception:
-            if self.event_repo:
-                self.event_repo.release(event_id)
-            raise
-        if (event.get("event_type") == "INVOICING.INVOICE.PAID"
-                and not outcome.get("applied")):
-            if self.event_repo:
-                self.event_repo.release(event_id)
-            return ({"received": False, "event_type": event.get("event_type"),
-                     "event_id": event_id, **outcome,
-                     "note": "reservation is not ready; PayPal should retry"},
-                    "503 Service Unavailable", headers)
+        outcome = self.apply(event, service_for)
         return ({"received": True, "event_type": event.get("event_type"),
                  "event_id": event.get("id"), **outcome}, "200 OK", headers)
 

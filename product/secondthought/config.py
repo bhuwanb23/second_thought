@@ -16,43 +16,51 @@ import os
 from dataclasses import dataclass, field
 from pathlib import Path
 
+ENV_FILE = Path(__file__).resolve().parents[1] / ".env"
+
+
+def apply_dotenv(path=None, target=None) -> int:
+    """Fill unset variables from `product/.env`. Returns how many were applied.
+
+    `.env.example` tells you to copy it to `.env` and fill it in, so something has
+    to read the file. That thing is here, because this is the one module allowed
+    to touch the environment — putting the loader anywhere else would break the
+    contract `v0_check.py` enforces.
+
+    Rules, in order: a real environment variable always wins (a deployed service
+    is configured in its dashboard, not in a file); a missing file is not an
+    error; and in production we do not read it at all, so a stray `.env` on a
+    server can never quietly override the dashboard.
+    """
+    target = os.environ if target is None else target
+    path = Path(path) if path is not None else ENV_FILE
+    if (target.get("ST_ENV") or "").lower() in ("production", "prod"):
+        return 0
+    try:
+        text = path.read_text()
+    except OSError:
+        return 0
+    applied = 0
+    for line in text.splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        key, value = key.strip(), value.strip().strip('"').strip("'")
+        if key and key not in target:
+            target[key] = value
+            applied += 1
+    return applied
+
+
+apply_dotenv()
+
 SANDBOX_BASE = "https://api-m.sandbox.paypal.com"
 LIVE_BASE = "https://api-m.paypal.com"
 
 
-_DOTENV_VALUES: dict[str, str] | None = None
-
-
-def _load_dotenv() -> dict[str, str]:
-    """Load local `.env` values without overriding explicit process variables."""
-    global _DOTENV_VALUES
-    if os.environ.get("ST_ENV", "").strip().lower() == "production":
-        return {}
-    if _DOTENV_VALUES is not None:
-        return _DOTENV_VALUES
-    _DOTENV_VALUES = {}
-    path = Path(__file__).resolve().parent.parent / ".env"
-    if not path.exists():
-        return _DOTENV_VALUES
-    for line in path.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if not line or line.startswith("#") or "=" not in line:
-            continue
-        if line.startswith("export "):
-            line = line[7:].lstrip()
-        name, _, value = line.partition("=")
-        name, value = name.strip(), value.strip()
-        if value[:1] in ("'", '"') and value[-1:] == value[:1]:
-            value = value[1:-1]
-        if name:
-            _DOTENV_VALUES[name] = value
-    return _DOTENV_VALUES
-
-
 def _get(name: str, default: str = "") -> str:
-    values = _load_dotenv()
-    value = os.environ[name] if name in os.environ else values.get(name, default)
-    return (value or default).strip()
+    return (os.environ.get(name) or default).strip()
 
 
 def _get_int(name: str, default: int) -> int:

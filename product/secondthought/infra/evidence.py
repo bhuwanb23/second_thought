@@ -57,10 +57,8 @@ class Recorder:
         payload = {"mode": self.mode, "started": self.started,
                    "finished": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                    "checks": self.rows, "context": extra or {}}
-        (self.dir / "evidence.json").write_text(
-            json.dumps(payload, indent=2, default=str), encoding="utf-8")
-        (self.dir / "TRANSCRIPT.md").write_text(
-            self._transcript(payload), encoding="utf-8")
+        (self.dir / "evidence.json").write_text(json.dumps(payload, indent=2, default=str))
+        (self.dir / "TRANSCRIPT.md").write_text(self._transcript(payload))
         return self.dir
 
     def _transcript(self, payload: dict) -> str:

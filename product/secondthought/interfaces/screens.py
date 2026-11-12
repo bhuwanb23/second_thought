@@ -113,6 +113,7 @@ _TEMPLATE = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Second Thought - payday-aware checkout</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314181f'/%3E%3Ccircle cx='26' cy='32' r='11' fill='%23ffffff'/%3E%3Ccircle cx='44' cy='32' r='11' fill='none' stroke='%23ffffff' stroke-width='5'/%3E%3C/svg%3E">
 <style>
   :root { color-scheme: light; }
   * { box-sizing: border-box; }

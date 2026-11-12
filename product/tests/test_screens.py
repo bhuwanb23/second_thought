@@ -13,8 +13,9 @@ import json
 import re
 import unittest
 
-from secondthought.config import AppSettings
+from secondthought.config import AppSettings, LLMSettings, PayPalSettings
 from secondthought.interfaces.http import App
+from secondthought.interfaces.proof import render as render_proof
 from secondthought.interfaces.screens import (BANNED_IN_EXPLANATION, PLAIN_LABEL,
                                               explain, money, plain_collision)
 
@@ -109,7 +110,11 @@ class PlainCollision(unittest.TestCase):
 
 class ThePage(unittest.TestCase):
     def setUp(self):
-        self.app = App(AppSettings(approval_secret="test-secret"))
+        # explicit empty credentials: these assertions describe a clean machine,
+        # not whatever .env happens to hold
+        self.app = App(AppSettings(approval_secret="test-secret",
+                                   llm=LLMSettings(api_key=""),
+                                   paypal=PayPalSettings(client_id="", client_secret="")))
 
     def tearDown(self):
         self.app.close()
@@ -158,6 +163,44 @@ class ThePage(unittest.TestCase):
     def test_the_page_says_the_money_is_not_real(self):
         _s, _h, body = get(self.app, "/")
         self.assertIn(b"Nothing is charged", body)
+
+
+class ProofPage(unittest.TestCase):
+    """/proof is the page that has to be boring: it is the one that gets checked."""
+
+    def setUp(self):
+        self.app = App(AppSettings(approval_secret="test-secret", llm=LLMSettings(api_key=""),
+                                   paypal=PayPalSettings(client_id="", client_secret="")))
+
+    def tearDown(self):
+        self.app.close()
+
+    def test_it_is_served(self):
+        status, headers, body = get(self.app, "/proof")
+        self.assertEqual(status, "200 OK")
+        self.assertIn("text/html", headers["Content-Type"])
+        self.assertIn(b"Proof", body)
+
+    def test_it_shows_measured_numbers_when_there_are_some(self):
+        html = render_proof({"generated_at": "2026-11-12 15:40 UTC", "git": "abc1234",
+                             "summary": "all measured checks passed",
+                             "checks": [{"label": "Unit tests", "value": "165 tests OK in 0.73 s",
+                                         "command": "python3 -m unittest discover -s tests -q"}]})
+        self.assertIn("165 tests OK in 0.73 s", html)
+        self.assertIn("python3 -m unittest discover -s tests -q", html)
+        self.assertIn("abc1234", html)
+
+    def test_it_admits_when_nothing_has_been_measured(self):
+        self.assertIn("No measurement file", render_proof({}))
+
+    def test_it_never_calls_a_ready_gate_a_pass(self):
+        html = render_proof({})
+        self.assertIn("READY", html)
+        self.assertIn("OPEN", html)
+        self.assertNotIn('>PASS<', html)
+
+    def test_it_says_the_money_is_simulated(self):
+        self.assertIn("simulated", render_proof({}))
 
 
 class Money(unittest.TestCase):
