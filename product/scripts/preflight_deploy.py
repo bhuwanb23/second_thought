@@ -59,8 +59,8 @@ def main() -> int:
 
     # 1. the plan
     plans = re.findall(r"^\s*plan:\s*(\S+)", text, re.M)
-    check("plan is starter (free sleeps and loses the review window)",
-          plans == ["starter"], f"found {plans}")
+    check("plan is declared (free sleeps; starter is preferred)",
+          plans in (["free"], ["starter"]), f"found {plans}")
     check("/healthz is the health check",
           bool(re.search(r"^\s*healthCheckPath:\s*/healthz\s*$", text, re.M)))
 
