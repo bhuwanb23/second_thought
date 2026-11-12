@@ -188,15 +188,14 @@ Word the submission as **budgeting and timing transparency**, never as "responsi
 
 ## V12 — PASS: proven, not asserted
 
-A working prototype now exists in `../../../product/`: a deterministic integer-cents engine, a plan ledger, an invoice/authorize execution path with a live/simulated PayPal adapter, an agent layer that cannot alter the verdict, and a test suite including red-team cases.
+A working prototype now exists in `../../../09_build/prototype/.env.example`: a deterministic integer-cents engine, a plan ledger, an invoice/authorize execution path with a live/simulated PayPal adapter, an agent layer that cannot alter the verdict, and a test suite including red-team cases.
 
 Run it:
 
 ```bash
-cd ../../../product/
-python3 -m unittest discover -s tests -q
-python3 -m secondthought.cli                           # CLI end-to-end
-python3 scripts/serve.py                               # UI at :8000
+cd ../../../09_build/prototype/.env.example && python3 -m pytest tests -q   # or: python3 tests/run_tests.py
+python3 demo.py                                       # CLI end-to-end
+python3 server.py                                     # UI at :8000
 ```
 
 The engine, the verdicts, the calendar and the tests are real. The PayPal layer runs live when credentials are present and simulates otherwise, always labelled.

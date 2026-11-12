@@ -69,12 +69,12 @@ python3 demo.py --dry-run            # all five PayPal calls, on a fake transpor
 python3 demo_ai.py --offline         # messy text → DEFER → reservation → tampered approval REFUSED
 python3 scripts/serve.py             # the web page on :8000 — open / in a browser
 bash scripts/v5_two_jars.sh          # 22 live checks against a real socket: isolation, limits, tokens
-python3 scripts/preflight_deploy.py  # 18 checks on root render.yaml
-python3 -m unittest discover -s tests -q   # 155 tests, ~0.32 s
+python3 scripts/preflight_deploy.py  # 17 checks on render.yaml
+python3 -m unittest discover -s tests -q   # 152 tests, ~0.32 s
 ```
 
 All seven are green as of today except the two that need the outside world (`demo.py
---live` exits 2 without credentials; `preflight_deploy.py` passes 18/18 offline).
+--live` exits 2 without credentials; `preflight_deploy.py` passes 17/17 offline).
 
 The page is real and self-contained: three named months with amounts visible before any
 click, answers rendered as sentences ("Pay on Sat 7 Nov — and it ships once you've paid"),
@@ -102,7 +102,7 @@ This is the honest ledger. The right-hand column is what the next eight days are
 | AI decision isolation (model cannot move the verdict) | ✅ **Real** and tested — the invariant holds whatever the model says | — | done |
 | Sessions, rate limits, spend cap, token signing | ✅ **Real**, 22 checks over a live socket, per-session secrets | — | done |
 | The public URL | 🔴 **Does not exist** | deploy to Render | needs an account |
-| Version control for the workspace | 🟡 **Root git repo initialized** | Review and commit the consolidated tree | you |
+| Version control for `product/` | 🔴 **Not a git repo** — only the frozen prototype is | `git init`, push, tag the submission commit | you |
 | Human validation | 🔴 **n = 0** | 5 conversations, or accept n = 0 | only you |
 | Outside-eye rehearsal | 🔴 **n = 0**, page is ready | one stranger, 30 minutes, 9–10 Nov | only you |
 
@@ -122,7 +122,7 @@ whole thing has been reviewed only by the person who built it.
 |---|---|---|
 | **V0** preconditions (14 vars) | 🔴 4 failed | 3 credentials + a Render account |
 | **V1** Pay Later sandbox probe | 🔴 not started | the PayPal creds; confirms the band from the response, never assumed |
-| **V2** code correctness | ✅ 155 tests, preflight 18/18, mutation 14/3 | done |
+| **V2** code correctness | ✅ 152 tests, preflight 17/17, mutation 14/3 | done |
 | **V3** five live PayPal calls | 🔴 instrument ready, exits 2 | `PAYPAL_CLIENT_ID` + `PAYPAL_CLIENT_SECRET`, then `demo.py --live` |
 | **V4** live AI | 🔴 safety half proven offline, quality half blocked | `LLM_API_KEY`, then `demo_ai.py --live` |
 | **V5** session isolation & security | 🟢 22/22, one item pending deploy | a redeploy to prove it in production |
@@ -191,8 +191,7 @@ which exist and can be tightened.
 | `product/` | The real build. `secondthought/domain/` decides, `app/` orchestrates, `ai/` reads, `infra/` talks to PayPal, `interfaces/` is the outside |
 | `product/secondthought/interfaces/screens.py` | The page a stranger sees — and `explain()`, the plain-language layer |
 | `product/scripts/` | The instruments: V0 check, V5 two jars, V6 cold check, V7 capture/verdict, V8 observer, preflight |
-| `product/` | **Canonical active build.** 155 tests, root Git repository |
-| `archive/prototype/` | **Frozen reference.** Original prototype files and history bundle |
+| `09_build/prototype/` | **Frozen.** 119 tests, HEAD `04ec7e6`. Reference only — not the submission |
 
 ---
 
@@ -212,7 +211,7 @@ which exist and can be tightened.
 5. **The 3-of-5 contradiction** between `VALIDATION_CONVERSATIONS.md` and
    `P2_five_conversations.md` is unresolved by design. If conversations do run, resolve it
    *before* the first one, not after.
-6. **The root repository is now initialized.** Review and commit the consolidated tree before publishing.
+6. **`product/` is not a git repo.** No history, no tag, no repo link for V8 or Devpost.
    Ten minutes of work, and it is on the critical path.
 
 ---

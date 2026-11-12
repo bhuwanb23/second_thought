@@ -12,7 +12,7 @@ Eleven days: **1 Nov → 12 Nov 2026, 12:00 PT (13 Nov 01:30 IST).** Plan backwa
 
 Reference concept below is **C02 — Second Thought**, which is now decided, specified
 (`../../research/07_concepts/C02_PRD.md`), validated (`../../research/07_concepts/C02_VALIDATION_REPORT.md`) and built
-(`../../../product/`, 91 tests passing). The build days below are therefore mostly done;
+(`../../../09_build/prototype/.env.example`, 91 tests passing). The build days below are therefore mostly done;
 what remains is credentials, deployment and the video.
 
 ---

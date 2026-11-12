@@ -3,7 +3,7 @@
 **Status:** ✅ **green**, with two test defects found and fixed
 **Run:** 2 Nov 2026 · **Pass:** all green, and the tests actually assert what their names claim
 
-> **Path note:** V2 names `product`, but the shipped code is now `product/`. Both were run.
+> **Path note:** V2 names `09_build/prototype`, but the shipped code is now `product/`. Both were run.
 > The prototype carries the AI and session guarantees the product has not ported yet; the product
 > carries the reservation guarantees the prototype never had. The table below says which is where.
 
@@ -12,9 +12,9 @@
 ## 1. The runs
 
 ```bash
-cd product
-python3 -m unittest discover -s tests -v     # Ran 155 tests … OK
-python3 scripts/preflight_deploy.py                    # ALL CHECKS PASSED   (10 checks)
+cd 09_build/prototype
+python3 -m unittest discover -s tests -v     # Ran 119 tests … OK   (116 matched "… ok" on one line)
+bash scripts/preflight.sh                    # ALL CHECKS PASSED   (10 checks)
 
 cd product
 python3 -m unittest discover -s tests -v     # Ran 30 tests … OK
@@ -32,7 +32,7 @@ Both suites pass. Neither needs a network, a key, or a credential.
 | Approval token rejects a mismatched amount | `prototype/tests/test_ai.py` + `product/tests/test_checkout.py` | ✅ both | ✅ **Strong.** Signs $249, asserts $999 is rejected **and** $249 is accepted — both directions |
 | `test_one_visitor_cannot_change_anothers_verdict` | `prototype/tests/test_session.py` | ✅ | ✅ **Strong.** Hostile profile saved by judge A; judge B's profile is `None` and the verdict is byte-identical |
 | `test_no_instrument_makes_the_merchant_carry_credit_risk` | `prototype/tests/test_profile.py` | ✅ | ❌ **Weak — see finding 1.** Renamed |
-| Idempotency: same `PayPal-Request-Id` never creates two orders | `product/tests/test_paypal_live.py` | ✅ | ✅ **Strong.** Same id → same order; different ids → different orders; and *every* POST carries the header |
+| Idempotency: same `PayPal-Request-Id` never creates two orders | `prototype/tests/test_paypal.py` | ✅ | ✅ **Strong.** Same id → same order; different ids → different orders; and *every* POST carries the header |
 
 **Not yet in the product:** the rogue-explainer and session-isolation tests. Those layers (AI, HTTP
 sessions) do not exist in `product/` yet — they are ported in the phases that add them, not forgotten.
@@ -100,7 +100,7 @@ exactly that regression and could not.
 
 ## 5. What this means for the submission
 
-- The suite is **green and honest**: 119 + 30 = **155 tests**, no network, no keys.
+- The suite is **green and honest**: 119 + 30 = **149 tests**, no network, no keys.
 - One test was renamed because it overclaimed; one was strengthened because it under-tested. Both
   changes make the suite *less* flattering and more trustworthy, which is the only direction that
   matters for a judge who reads assertions rather than names.
@@ -109,7 +109,7 @@ exactly that regression and could not.
 ## 6. Repeat this before the freeze (9 Nov)
 
 ```bash
-cd product && python3 -m unittest discover -s tests -v && python3 scripts/preflight_deploy.py
+cd 09_build/prototype && python3 -m unittest discover -s tests -v && bash scripts/preflight.sh
 cd product            && python3 -m unittest discover -s tests -v
 ```
 

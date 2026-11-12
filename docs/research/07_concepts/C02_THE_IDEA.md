@@ -2,7 +2,7 @@
 
 **The checkout that tells you the truth about your next four weeks.**
 
-PayPal AI Hackathon 2026 · concept C02 · **researched, built and tested (155 tests)** · not yet user-validated — see `VALIDATION_CONVERSATIONS.md`
+PayPal AI Hackathon 2026 · concept C02 · **researched, built and tested (99 tests)** · not yet user-validated — see `VALIDATION_CONVERSATIONS.md`
 
 ---
 
@@ -179,8 +179,8 @@ Two implementations, same rule:
   merchant can ship under its normal policy.
 
 Every instrument carries this in code — `paylater.describe_instrument()[fulfilment]` and
-`risk_bearer` — and the checkout tests assert that **no instrument puts credit risk on the
-merchant** (`product/tests/test_checkout.py`).
+`risk_bearer` — and there is a test asserting that **no instrument puts credit risk on the
+merchant** (`tests/test_profile.py::test_risk_bearer_label_never_names_the_merchant`).
 
 ### The mechanic that makes it commercially sane
 
@@ -261,8 +261,8 @@ Three things make that credible:
 presented as a feature.
 
 **Privacy commitments:** no bureaus, no open banking today, no cross-merchant profile, no data
-sold, no adverse action, every verdict overridable, profile deletable. The active product
-keeps profile data session-scoped; see `product/README.md`.
+sold, no adverse action, every verdict overridable, profile deletable. Full detail in
+`../../../09_build/prototype/DATA_AND_PRIVACY.md`.
 
 ---
 
@@ -371,14 +371,18 @@ cluster of **3**, and none of the twelve highest-depth repos in the field touche
 
 ## 10. What exists today, and what does not
 
-**Built and tested — 155 tests, all passing, no third-party runtime dependencies:**
+**Built and tested — 99 tests, all passing, no dependencies:**
 
 ```
-secondthought/domain/    deterministic calendar, verdict, and reservation rules
-secondthought/ai/        validated extraction and model isolation
-secondthought/app/       checkout orchestration and HMAC approval
-secondthought/infra/     SQLite, simulated/sandbox PayPal, and webhook verification
-secondthought/interfaces/ WSGI API, sessions, and the self-contained browser page
+engine.py     deterministic integer-cent decision engine   (32 tests)
+agentic.py    extraction + tool loop with HMAC approval gate
+llm.py        real tool-calling model, or a labelled scripted stand-in
+paylater.py   resolves OFFER into paylater | authorize_hold | invoice, with the fulfilment rule
+profile.py    the payday profile: set up once, applied silently at checkout
+paypal.py     sandbox REST or simulated transport, one interface, always labelled
+ledger.py     every plan we originated — the answer to "what can you actually see?"
+server.py     stdlib API: /decide /profile /extract /agent /approve /execute /paylater
+web/          one self-contained page: verdict, calendar, balance curve, approve step
 ```
 
 Three demo shoppers produce the three branches: **Maya → DECLINE** (instalment 3 lands on rent,
@@ -386,7 +390,7 @@ $36.75 short, safe amount $200), **Dev → DEFER** (paid Thursday, invoice due t
 OFFER** (never dips below $1,925).
 
 **Not yet done, and the only real unknown:** the Pay Later sandbox probe
-(`../../../product/PAYLATER_SANDBOX_TEST.md`). Eligibility is only knowable client-side, so the
+(`../../../09_build/prototype/PAYLATER_SANDBOX_TEST.md`). Eligibility is only knowable client-side, so the
 server never guesses it; OFFER falls back to a real authorisation hold when eligibility isn't
 confirmed. **That probe decides how the OFFER branch gets worded on camera** — and if Pay Later
 won't render, the invoice becomes the hero rather than a mocked button being shown.
