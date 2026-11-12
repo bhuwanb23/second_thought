@@ -2,7 +2,7 @@
 
 **Status:** ✅ **complete** (1 November 2026)
 **Owner:** agent · **Window:** up to 1 Nov · **Hours:** 0 remaining
-**Exit condition:** concept frozen · 155 tests passing · preflight passes · repo committed
+**Exit condition:** concept frozen · 103 tests passing · preflight passes · repo committed
 
 ---
 
@@ -29,13 +29,13 @@ verify the foundation in sixty seconds without trusting a summary.
 ## 0.2 Verify the build in 60 seconds
 
 ```bash
-cd product
-python3 -m unittest discover -s tests -q     # expect: Ran 155 tests … OK
-python3 scripts/preflight_deploy.py                     # expect: ALL CHECKS PASSED
+cd 09_build/prototype
+python3 -m unittest discover -s tests -q     # expect: Ran 103 tests … OK
+bash scripts/preflight.sh                     # expect: ALL CHECKS PASSED
 python3 demo.py                               # expect: three personas, three verdicts
 ```
 
-Then open a browser at the demo server (`python3 scripts/serve.py`).
+Then open a browser at the demo server (`python3 server.py 8000`).
 
 | Check | Expected |
 |---|---|
@@ -51,15 +51,17 @@ Then open a browser at the demo server (`python3 scripts/serve.py`).
 
 | File | Job | Tests |
 |---|---|---|
-| `secondthought/domain/engine.py` | Deterministic decision engine, integer minor units | ✓ |
-| `secondthought/domain/reservation.py` | Pay-before-ship lifecycle | ✓ |
-| `secondthought/ai/agent.py` and `extract.py` | Facts, confidence, and model isolation | ✓ |
-| `secondthought/app/approvals.py` | HMAC approval gate | ✓ |
-| `secondthought/infra/paypal_live.py` and `gateway.py` | Sandbox REST and simulated gateways | ✓ |
-| `secondthought/infra/db.py` | SQLite reservations, ledger, and webhook state | ✓ |
-| `secondthought/interfaces/http.py` | WSGI routes and session isolation | ✓ |
-| `secondthought/interfaces/screens.py` | Self-contained browser page | manual |
-| `probe/v1_probe.html` | The P1 tripwire tool | manual |
+| `engine.py` | Deterministic decision engine, integer minor units | 32 |
+| `personas.py` | Three shoppers, three month shapes | — |
+| `agentic.py` | Extraction + tool loop + HMAC approval gate | ✓ |
+| `llm.py` | Real tool-calling model; labelled scripted stand-in | ✓ |
+| `paylater.py` | Resolves OFFER/DEFER/DECLINE → instrument, **with fulfilment rule** | ✓ |
+| `profile.py` | Payday profile, set up once, `answer_quality` | ✓ |
+| `paypal.py` | Sandbox REST or simulated transport, always labelled | ✓ |
+| `ledger.py` | Every plan we originated | ✓ |
+| `server.py` | `/decide /profile /extract /agent /approve /execute /paylater` | ✓ |
+| `web/index.html` | Verdict, calendar, balance curve, approve step, disclaimer | manual |
+| `paylater_probe.html` | The P1 tripwire tool | manual |
 
 ---
 
@@ -67,7 +69,7 @@ Then open a browser at the demo server (`python3 scripts/serve.py`).
 
 Recorded so absence reads as a decision, not an oversight:
 
-- **No framework.** Stdlib only, no dependencies, no build step. A judge can run `python3 scripts/serve.py`.
+- **No framework.** Stdlib only, no dependencies, no build step. A judge can `python3 server.py`.
 - **No Subscriptions or vaulting.** PayPal's docs say Pay Later messaging is unavailable alongside
   them; mixing them would produce a demo where one feature silently disables another.
 - **No APIMatic.** Not free, and an unused sponsor tool earns nothing.
@@ -91,7 +93,7 @@ Recorded so absence reads as a decision, not an oversight:
 ## Exit criteria
 
 - [x] Concept locked with a written frozen/not-frozen table
-- [x] 155 tests, `OK`, no dependencies, no network needed
+- [x] 103 tests, `OK`, no dependencies, no network needed
 - [x] Preflight `ALL CHECKS PASSED` (license, `.env` hygiene, secrets, README claims, health check)
 - [x] Offline demo rehearses the whole arc honestly
 - [x] Git committed with no secrets

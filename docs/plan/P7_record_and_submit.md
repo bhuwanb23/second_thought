@@ -22,8 +22,7 @@ Deadline: **12 Nov 12:00 PT = 13 Nov 01:30 IST.** We submit on **11 Nov**, leavi
 - [ ] Microphone tested; record 15 s and play it back before the real take
 - [ ] Browser at 100% zoom, one tab, no bookmarks bar, no notifications
 - [ ] Notifications off (macOS Focus / Windows Do Not Disturb)
-- [ ] Demo state reset: stop the local server and remove the development SQLite file
-      configured by `ST_DB_PATH`, then restart the server
+- [ ] Demo state reset: `rm -f ledger.json profiles.json` then restart the server
 - [ ] **Warm the hosted demo** — hit the URL five minutes before recording so nothing cold-starts on camera
 
 **Fallback if a bad recording day:** generated narration can be laid over the same capture. Ask me
@@ -94,7 +93,7 @@ use the draft, not a remembered checklist, and note anything it asks for that is
 2. `curl https://<app>.onrender.com/healthz` → `ok:true, paypal:live, ai:llm`
 3. Clean clone in `/tmp` → tests pass with no credentials
 4. Every claim on the listing page has a source, or is gone
-5. `python3 scripts/preflight_deploy.py` → **ALL CHECKS PASSED**
+5. `bash scripts/preflight.sh` → **ALL CHECKS PASSED**
 6. Video is ≤3:00 (check the actual runtime, not the plan)
 7. Read the short description aloud — if it sounds like a pitch deck, rewrite it plainly
 
@@ -125,7 +124,7 @@ Then, and only then:
 |---|---|
 | Recording is bad on 10 Nov | Re-record on 11 **morning**. Still submit on 11 Nov evening. Never submit late to get a better take |
 | Video over 3:00 | Cut the architecture section first; keep the live product and the approval gate |
-| Hosted demo down on recording day | Record locally with `python3 scripts/serve.py`, say "running locally, sandbox", and keep the hosted URL in the submission. Honest and survivable |
+| Hosted demo down on recording day | Record locally with `python3 server.py 8000`, say "running locally, sandbox", and keep the hosted URL in the submission. Honest and survivable |
 | Form asks for something unavailable | Submit what exists; do not invent. Missing a field is better than a false claim |
 | It is 11 Nov 23:00 and the video is not uploaded | Upload the best take you have. A finished 2:30 beats a perfect 0:00 |
 | Temptation to claim live when it is simulated | The badge is on screen. It will be caught |

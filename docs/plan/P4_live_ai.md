@@ -21,7 +21,7 @@ Serves: **Technological Implementation** + **Innovation** (AI genuinely used).
 ## P4.1 — Possession check and key (15 min)
 
 ```bash
-cd product && grep -c '^LLM_API_KEY=..' .env 2>/dev/null || echo "no key yet"
+cd 09_build/prototype && grep -c '^LLM_API_KEY=..' .env 2>/dev/null || echo "no key yet"
 ```
 
 Any OpenAI-compatible endpoint works. Set in `.env`:
@@ -84,7 +84,7 @@ Reload the page. The header must read **`AI · LLM`** (or your provider's name).
 
 ## P4.4 — Record the evidence (10 min)
 
-In `../../product/README.md`, state:
+In `../../09_build/prototype/README.md`, state:
 
 - the model and provider actually used
 - the date of the live extraction run

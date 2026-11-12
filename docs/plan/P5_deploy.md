@@ -27,13 +27,15 @@ Serves: **Presentation**, **Technological Implementation**, and rule compliance 
 ## P5.1 — Pre-deploy sanity (15 min)
 
 ```bash
-cd product
+cd 09_build/prototype
 python3 -m unittest discover -s tests -q     # OK
-python3 scripts/preflight_deploy.py              # ALL CHECKS PASSED
+bash scripts/preflight.sh                     # ALL CHECKS PASSED
+docker build -t second-thought . 2>&1 | tail -3   # optional: catches Dockerfile errors locally
 ```
 
 Confirm before shipping:
 
+- [ ] `Dockerfile` healthcheck present and pointing at `/healthz`
 - [ ] `render.yaml` exists, with `sync: false` on every secret
 - [ ] `APPROVAL_SECRET` uses `generateValue: true` (never a committed value)
 - [ ] `.env` is **not** in the image (`.dockerignore` covers it)
@@ -42,11 +44,11 @@ Confirm before shipping:
 
 ## P5.2 — Deploy to Render (40 min)
 
-1. Push the root repository to a **public** GitHub repo (P5.4 covers licensing).
+1. Push `../../09_build/prototype` to a **public** GitHub repo (P5.4 covers licensing).
 2. Render → **New → Blueprint** → select the repo. It reads `render.yaml`.
 3. Set the secrets marked `sync: false`: `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET`,
    `LLM_API_KEY`. `LLM_MODEL` and `APPROVAL_SECRET` are handled by the blueprint.
-4. Deploy. Render installs the Python package and starts `product/scripts/serve.py`.
+4. Deploy. Wait for the first build (Docker, several minutes).
 
 **The plan is `starter`, deliberately — not free.** Free instances sleep, and a cold start inside a
 judge's three-minute window is a lost Presentation score. `$7/month for the judging window` is the
@@ -58,21 +60,22 @@ cheapest insurance in this project.
 curl -s https://<your-app>.onrender.com/healthz | python3 -m json.tool
 ```
 
-Expected shape:
+Expected:
 
 ```json
-{"status": "ok", "ai_mode": "llm", "payments_mode": "sandbox", "checks": {}}
+{"ok": true, "paypal_live": true, "ai_live": true}
 ```
 
-The public response contains only booleans and short status words. It reveals nothing
+**That is the whole public response** — three keys, two booleans. It reveals nothing
 that the on-screen badge does not already show, because it is on a public,
 unauthenticated URL.
 
 The internal detail lives behind a token:
 
 ```bash
-curl -s -H "X-Diag-Token: $DIAG_TOKEN" \
-  "https://<your-app>.onrender.com/diagnostics" | python3 -m json.tool
+curl -s "https://<your-app>.onrender.com/diagnostics?token=$DIAG_TOKEN" | python3 -m json.tool
+# → {"ok":true,"paypal":"live","ai":"llm","approval_secret":"env","diag_token":"env",
+#    "sessions":1,"limits":{"per_session":30,"per_ip":90,"global_daily":1500}}
 ```
 
 Without a token, or with the wrong one, `/diagnostics` returns **404** — it does not
@@ -140,10 +143,10 @@ A `LICENSE` file is **not** enough — GitHub must detect it and show it in the 
 In a **fresh directory**, with no `.env`:
 
 ```bash
-git clone https://github.com/<you>/<repo>.git /tmp/clonetest && cd /tmp/clonetest/product
+git clone https://github.com/<you>/<repo>.git /tmp/clonetest && cd /tmp/clonetest
 python3 -m unittest discover -s tests -q     # must pass with no credentials
-python3 scripts/serve.py                      # must start
-python3 -m secondthought.cli                 # must run simulated, labelled
+python3 server.py 8000                        # must start
+python3 demo.py                               # must run simulated, labelled
 ```
 
 If the clone fails without credentials, a judge fails it too. The build is designed for this: no
@@ -175,7 +178,7 @@ limitation and say so; a webhook endpoint that accepts anything is worse than no
 
 | Symptom | Response |
 |---|---|
-| Blueprint deploy fails | Deploy as a plain **Web Service → Python** using root `render.yaml` with `rootDir: product`, and record the deviation in [DECISION_LOG](DECISION_LOG.md) |
+| Blueprint deploy fails | Deploy as a plain **Web Service → Docker** and document it in the README. Record the deviation in [DECISION_LOG](DECISION_LOG.md) |
 | Build succeeds, app crashes | Read the Render log; almost always a missing env var. `/healthz` shows which subsystem is degraded |
 | `paypal:"simulated"` in production | Secret missing. Fix before recording — a simulated public demo is fine *if labelled*, but the point of P5 is live |
 | Free-plan sleeping (if you override to free) | Accept longer cold start, keep the keep-alive, and say it in the README |
@@ -186,10 +189,10 @@ limitation and say so; a webhook endpoint that accepts anything is worse than no
 
 ## Exit criteria
 
-- [ ] Public URL live; `/healthz` reports **`payments_mode:"sandbox"`, `ai_mode:"llm"`, and configured checks**
+- [ ] Public URL live; `/healthz` returns `ok:true`, **`paypal:"live"`, `ai:"llm"`, `approval_secret:"env"`**
 - [ ] **A real `INV2-…` invoice created from the public URL** (not from localhost), visible in the sandbox merchant account
 - [ ] Badge on the hosted page reads **`SANDBOX · LIVE`** and **`AI · LLM`**
-- [ ] `/healthz` returns only status words and booleans
+- [ ] `/healthz` returns **exactly** `{ok, paypal_live, ai_live}` — nothing internal
 - [ ] `/diagnostics` returns **404** without the token, full detail with it
 - [ ] 31 calls on one cookie → `429`; **fresh cookies from one IP stop at 90**
 - [ ] Provider spend cap screenshotted

@@ -21,7 +21,7 @@ Serves: **Design** (20%) and protects the tiebreak (**Technological Implementati
 
 - [ ] It can be done in **≤3 hours** without touching the engine or the API
 - [ ] It is used **genuinely** — a real balance-curve grid with real projected data, not a bolt-on table
-- [ ] It does not break any of the 155 tests
+- [ ] It does not break any of the 103 tests
 - [ ] It leaves ≥4 h of slack before the freeze
 
 If AG Grid requires React + Studio Agent Framework to be *judgeable* as a sponsor integration, the
@@ -56,13 +56,13 @@ The README is read by a machine as well as a human — automated analysis is exp
 - [ ] The approval-gate test named explicitly (`test_forged_amount_token_is_rejected`)
 - [ ] Every statistic carries a source and a date; the 1.83% charge-off counterweight is present
 - [ ] Screenshot of the real sandbox invoice from P3.3
-- [ ] Data & privacy line, linking the session-scoped profile policy in `product/README.md`
+- [ ] Data & privacy line, linking `DATA_AND_PRIVACY.md`
 
 ---
 
 ## P6.4 — Repo shape decision (20 min)
 
-Assumption **A2** keeps the code at `../../product` and pushes *that folder* as the repo.
+Assumption **A2** keeps the code at `../../09_build/prototype` and pushes *that folder* as the repo.
 Revisit only if all of these hold:
 
 - [ ] Promotion to repo root is done by **file move only** (no code edits)
@@ -94,7 +94,7 @@ Go through every judge-visible word. **Any claim without a source gets deleted, 
 Then:
 
 ```bash
-cd product && python3 scripts/preflight_deploy.py && python3 -m unittest discover -s tests -q
+cd 09_build/prototype && bash scripts/preflight.sh && python3 -m unittest discover -s tests -q
 ```
 
 ---

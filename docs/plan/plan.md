@@ -1,7 +1,7 @@
 # Master plan — Second Thought (C02)
 
 **Project:** payday-aware checkout that sometimes says "not yet"
-**Status:** 🔒 concept locked 1 Nov 2026 · 155 tests passing · build complete, *verification and submission remain*
+**Status:** 🔒 concept locked 1 Nov 2026 · 103 tests passing · build complete, *verification and submission remain*
 **Hard deadline:** Thu 12 Nov 2026, 12:00 PT = **13 Nov 01:30 IST**
 **Internal deadline:** **11 Nov** — one day of slack, non-negotiable
 **Builder:** solo · **budget:** ~25 hours across 10 days (~2.5 h/day)
@@ -34,7 +34,7 @@ The five questions I asked went unanswered, so I made these calls rather than st
 | # | Assumption | Why I chose it | Reversal cost |
 |---|---|---|---|
 | **A1** | All research and concept docs now live under `../research/`; decisions, submission kit and phases under `` | Matches the structure requested. 117 references rewritten and verified — 103 resolve, 0 broken | Nil; moving back is the same script in reverse |
-| **A2** | The active code stays at `../../product/`, inside one root repository | The product build is the current source of truth; the earlier implementation is archived separately | Closed by repository consolidation |
+| **A2** | The code stays at `../../09_build/prototype/`, and **that folder is the public submission repo** | It already has `git init`, `LICENSE`, `Dockerfile`, `render.yaml` and a passing preflight. Moving it breaks the deploy config for cosmetic gain | Medium — P6.4 covers promotion to repo root if we decide the presentation is worth it |
 | **A3** | Credential status is **unknown**, so P3/P4/P5 each open with a 30-second possession check and carry the acquisition steps inline | Cheapest assumption to be wrong about; costs one check, not a rewrite | Nil |
 | **A4** | Conversations may not happen, so P2 defines pre-agreed wording for n = 5, n = 3 and n = 0 | The claim is the thing that must not be improvised on 10 Nov | Nil |
 | **A5** | Video is **self-recorded**; generated narration exists as a fallback | Own voice is stronger on Presentation; the fallback protects a bad recording day | Nil |
@@ -59,14 +59,14 @@ either passes or stops the build.
 
 | Phase | Name | Window | Hours | Exit condition (checkable) | Serves |
 |---|---|---|---|---|---|
-| **[V2](V2_code_correctness.md)** | **Code correctness — automated** | 2 Nov | **0.5** | ✅ **Green.** 155 tests, both suites; 2 test defects found and fixed |
+| **[V2](V2_code_correctness.md)** | **Code correctness — automated** | 2 Nov | **0.5** | ✅ **Green.** 149 tests, both suites; 2 test defects found and fixed |
 | **[V3](V3_live_paypal.md)** | **Live PayPal, local** | 2 Nov | **2.0** | 🔴 **Blocked at V0.1.** Instrument built; 21 tests; `--dry-run` 5/5. Needs the key |
 | **[V4](V4_live_ai.md)** | **Live AI** | 2 Nov | **2.0** | 🔴 **Blocked at V0.3.** AI layer built; safety half proven by 49 tests; quality half needs the key |
 | **[V5](V5_session_security.md)** | **Session isolation & security** | 2 Nov | **2.5** | 🟢 **5 of 6 PASS** over a real socket — 22/22 checks. Item 6 proven locally, pending the Render redeploy |
-| **[V6](V6_deployment.md)** | **Deployment & durability** | 4 Nov | **2.0** | 🔴 **No public URL — nothing deployed.** Webhook verification built (P5.6, 24 tests), deploy config green (18 checks), cold-check instrument works, calendar filed |
+| **[V6](V6_deployment.md)** | **Deployment & durability** | 4 Nov | **2.0** | 🔴 **No public URL — nothing deployed.** Webhook verification built (P5.6, 24 tests), deploy config green (17 checks), cold-check instrument works, calendar filed |
 | **[V7](V7_human_validation.md)** | **Human validation** | 4 Nov | **1.5** | 🔴 **Not run — n = 0.** Cannot be delegated. Capture + verdict scripts built and tested; the pre-commitment is now mechanical |
 | **[V0](V0_preconditions.md)** | **Preconditions — do once** | 2 Nov | **0.75** | **`python3 scripts/v0_check.py` exits 0**, and the four manual rows are confirmed | Tech Impl + Stage 1 |
-| **[P0](P0_lock_and_foundation.md)** | Lock & foundation | 1 Nov | ✅ 0 | Concept frozen; canonical product build and root repository established | all |
+| **[P0](P0_lock_and_foundation.md)** | Lock & foundation | 1 Nov | ✅ 0 | Concept frozen; 119 tests; preflight passes; repo committed | all |
 | **[P1](P1_paylater_probe.md)** | Tripwire 1 — Pay Later probe | 2 Nov | 0.5 | A sandbox verdict recorded in the results table; OFFER wording chosen | Tech Impl |
 | **[P2](P2_five_conversations.md)** | Tripwire 2 — five conversations | 2–4 Nov | 1.5 | Table has rows; decision rules applied **as written**; claim wording updated | Impact |
 | **[P3](P3_live_paypal.md)** | Live PayPal credentials | 2–3 Nov | 1.5 | `demo.py --live` creates a real `INV2-…` invoice on sandbox | Tech Impl |
@@ -132,13 +132,13 @@ filesystems are ephemeral anyway: a redeploy or spin-down wipes them.
 |---|---|
 | `session.py` — cookie-scoped `Session` per visitor | Judge A's profile, ledger and eligibility cannot leak to judge B |
 | Personas are **read-only** | The three demo verdicts are reproducible for everyone, forever |
-| Durable state is SQLite; sessions and approvals are **in-memory** | Reservations and webhook state survive a process restart when the configured database path is durable; session cookies are invalidated on restart |
+| State is **in-memory only** | Nothing depends on a filesystem a redeploy will wipe |
 | Bounded to 400 sessions, oldest evicted | Memory cannot grow without limit |
-| **Two session/network limit gates**: 30/session and **90/IP**, plus the provider budget | A cookie-scoped limit alone is bypassable by clearing cookies, so the IP gate survives that; the provider-side budget is the real spend backstop |
+| **Three limit gates**: 30/session, **90/IP**, 1500/day global | A cookie-scoped limit alone is bypassable by clearing cookies, so the IP gate survives that; the global gate is the in-app bill backstop. **The provider-side spend cap is the real protection** — confirm it in P5.4 |
 | `test_one_visitor_cannot_change_anothers_verdict` | The defect cannot silently return |
-| **`/healthz` returns booleans and status words only** | No paths, keys, versions, session counts, or internal details on a public unauthenticated URL |
+| **`/healthz` returns only `{ok, paypal_live, ai_live}`** | No session counts, no config, no internal flags on a public unauthenticated URL |
 | **`/diagnostics` is operator-only** | Returns 404 without a matching `DIAG_TOKEN`, so it does not advertise itself |
-| `155 tests` | Canonical product suite, no network required |
+| `119 tests` | Up from 103 |
 
 Verified over HTTP with two cookie jars: judge B sees `DEFER` while judge A, who saved a profile,
 sees `DECLINE`.
@@ -158,7 +158,7 @@ If the schedule slips, cut **downward**. Do not improvise.
 | 5. Nice extras (webhook demo, extra personas) | Tech Impl depth | Only after 4 |
 
 **Never cut:** the live LLM key · the deploy · the video · the README checklist · the probe ·
-the canonical test suite · the honest mode badge.
+the 119 tests · the honest mode badge.
 
 > **Correction (review):** this ladder said "never cut the live LLM key" while **U6** allowed shipping
 > `LLM-MOCK`. Those contradicted each other. Stage 1 requires AI that is genuinely used, and a mock is
@@ -181,14 +181,13 @@ The submission is done when every row is true. Items marked ✅ are already sati
 | 4 | Demo video, public, ≤3:00 | ⬜ P7 |
 | 5 | **Public repo with license visible in the About section** (17% of scanned repos fail this) | ⬜ P5.4 |
 | 6 | PayPal tools + AI tools written out explicitly | ✅ §1 |
-| 7 | **Sandbox-only confirmation**, no live credentials | ✅ adapter refuses `PAYPAL_ENV=live` |
+| 7 | **Sandbox-only confirmation**, no live credentials | ⬜ P6.5 |
 | 8 | New vs existing project stated | ⬜ P7.4 |
 | 9 | Setup/run instructions that work on a clean clone | ✅ README, re-tested P6.3 |
 | 10 | **Available until 15 Dec 08:00 PT** | ⬜ P5.3 + read-only re-verify 1 Dec |
 | 11 | **Submitted commit tagged; `main` frozen until 15 Dec** — the rules bar changes after the deadline | ⬜ P7.6 |
 
-Plus the internal bar: `python3 -m unittest discover -s tests -q` → **OK**,
-`python3 scripts/preflight_deploy.py` → **ALL CHECKS PASSED**, no secrets in git.
+Plus the internal bar: `python3 -m unittest discover -s tests` → **OK**, `bash scripts/preflight.sh` → **ALL CHECKS PASSED**, no secrets in git.
 
 ---
 
@@ -210,10 +209,10 @@ Plus the internal bar: `python3 -m unittest discover -s tests -q` → **OK**,
 ## 9. Daily ritual — 10 minutes, every day until submission
 
 ```bash
-cd product
-python3 -m unittest discover -s tests -q     # must say OK (155 tests)
-python3 scripts/preflight_deploy.py          # must say ALL CHECKS PASSED
-git -C .. status                              # nothing uncommitted, no .env
+cd 09_build/prototype
+python3 -m unittest discover -s tests -q     # must say OK (119 tests)
+bash scripts/preflight.sh                     # must say ALL CHECKS PASSED
+git status                                    # nothing uncommitted, no .env
 ```
 
 Then update the phase file's status line. **A day where these three fail is a day that does not get recorded.**
@@ -231,6 +230,7 @@ Then update the phase file's status line. **A day where these three fail is a da
 | V5 | [V5_session_security.md](V5_session_security.md) | 🟢 Isolation, rate limits, `/healthz`, and no unauthenticated money action — 22 live checks |
 | V6 | [V6_deployment.md](V6_deployment.md) · [calendar](V6_repeat_calendar.ics) | 🔴 Deploy blocked; P5.6 webhook verification done; repeats filed for 1 and 10 Dec |
 | V7 | [V7_human_validation.md](V7_human_validation.md) | 🔴 n = 0. Hash-chained capture + rule engine built; the conversations are yours to run |
+| SCORE | [SCORECARD.md](SCORECARD.md) | 📊 The five criteria scored against the field; `product/scripts/scorecard.py` regenerates it. **3.0 now, 4.5 if the plan lands** |
 | V8 | [V8_outside_eye.md](V8_outside_eye.md) | 🟡 There was no screen at all — now there is one, plus the protocol and the timer. Needs a stranger and the URL |
 | P0 | [P0_lock_and_foundation.md](P0_lock_and_foundation.md) | What is already done, and the evidence |
 | P1 | [P1_paylater_probe.md](P1_paylater_probe.md) | Two minutes that decide the OFFER wording |
@@ -241,7 +241,7 @@ Then update the phase file's status line. **A day where these three fail is a da
 | P6 | [P6_polish_and_freeze.md](P6_polish_and_freeze.md) | Decide AG Grid, stop adding, freeze |
 | P7 | [P7_record_and_submit.md](P7_record_and_submit.md) | 2:40 of video and a submitted form |
 
-How the code is organised — one job per file, with small modules where practical:
+How the code is organised — one job per file, every file under 300 lines, enforced by preflight:
 **[REPO_STRUCTURE.md](REPO_STRUCTURE.md)**
 
 Reference material: [LOCK.md](LOCK.md) · [DECISION_LOG.md](DECISION_LOG.md) · [GATES_AND_REDTEAM.md](GATES_AND_REDTEAM.md) · [SUBMISSION_KIT.md](SUBMISSION_KIT.md) · [../research/README.md](../research/README.md)

@@ -95,7 +95,7 @@ Presentation score) — confirm the price and whether the $50 credit applies bef
 
 ## 4. README requirements before the final push
 
-Already in place in `product/README.md`, verify at submission:
+Already in place in `prototype/README.md`, verify at submission:
 
 ```
 [x] First line is the one-sentence pitch, identical wording to the video
@@ -119,8 +119,8 @@ tripwires can change anything, and both are pre-committed.
 
 | Date | Work | Tripwire |
 |---|---|---|
-| **1 Nov** | ✅ Engine, agent, PayPal adapter, profile, fulfilment rule, **155 tests**, UI, probe page, all five review rounds | — |
-| **2 Nov** | **Pay Later probe first** (`product/probe/v1_probe.html`) — closes tripwire 1 and fixes the OFFER wording. Then sandbox client ID + secret → `product/demo.py --live`. **Start conversations.** | ⚠️ 1 |
+| **1 Nov** | ✅ Engine, agent, PayPal adapter, profile, fulfilment rule, **103 tests**, UI, probe page, all five review rounds | — |
+| **2 Nov** | **Pay Later probe first** (`paylater_probe.html`) — closes tripwire 1 and fixes the OFFER wording. Then sandbox client ID + secret → `demo.py --live`. **Start conversations.** | ⚠️ 1 |
 | **3 Nov** | `LLM_API_KEY` → badge reads `LLM`. Conversations continue | ⚠️ 2 |
 | **4 Nov** | Conversations finish and are recorded in the table. **Apply the pre-committed decision rules — no reinterpretation.** Deploy to Render starter; verify `/healthz` | ⚠️ 2 |
 | **5 Nov** | **AG Grid decision: in or out.** Write the answer down | — |
@@ -132,7 +132,7 @@ tripwires can change anything, and both are pre-committed.
 **Conversations are time-boxed to 2–4 Nov and run in parallel with building.** They are not a
 reason to lose a day, and finishing with three instead of five is acceptable if the count is stated.
 
-**Do not start a framework rewrite at any point.** The canonical product is working, tested and small;
+**Do not start a framework rewrite at any point.** The prototype is working, tested and small;
 that is the asset.
 
 ---
@@ -151,7 +151,7 @@ returns; one who is silently blacklisted churns. The CEO calls financial service
 engine — this protects the engine.
 
 **"Whose data is this?"**
-The shopper's. See `product/README.md`. Consented input, arithmetic only, no adverse
+The shopper's. See `prototype/DATA_AND_PRIVACY.md`. Consented input, arithmetic only, no adverse
 action, always overridable.
 
 **"What happens when the model is wrong?"**
