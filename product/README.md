@@ -12,10 +12,10 @@
 </p>
 
 <p align="center">
-  <b><a href="https://PLACEHOLDER.onrender.com">Live demo</a></b> ·
+  <b><a href="https://second-thought-h61b.onrender.com">Live demo</a></b> ·
   <b><a href="https://youtu.be/PLACEHOLDER">2:40 video</a></b> ·
   <b><a href="../docs/Second-Thought-Dossier.pdf">The dossier</a></b> ·
-  <b><a href="https://PLACEHOLDER.onrender.com/proof">/proof</a></b> ·
+  <b><a href="https://second-thought-h61b.onrender.com/proof">/proof</a></b> ·
   <b><a href="SECURITY.md">security model</a></b>
 </p>
 

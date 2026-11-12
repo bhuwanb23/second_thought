@@ -14,6 +14,8 @@ The canonical application is in [`product/`](product/). The earlier prototype is
 | [`START_HERE.md`](START_HERE.md) | Two-minute orientation |
 | [`product/README.md`](product/README.md) | Product setup, architecture, API, and validation |
 | [`product/SECURITY.md`](product/SECURITY.md) | Implemented controls, threat model, and known limitations |
+| [Live demo](https://second-thought-h61b.onrender.com) | Free Render deployment; may sleep after inactivity |
+| [Live proof page](https://second-thought-h61b.onrender.com/proof) | Measured local/deployment evidence |
 | [`assets/demo/`](assets/demo/) | Judge-ready demo video, poster, and YouTube upload notes |
 | [`docs/research/07_concepts/C02_THE_IDEA.md`](docs/research/07_concepts/C02_THE_IDEA.md) | Product concept and rationale |
 | [`docs/plan/plan.md`](docs/plan/plan.md) | Master plan and verification register |

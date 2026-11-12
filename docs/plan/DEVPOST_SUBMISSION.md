@@ -274,11 +274,10 @@ moving real money.
 
 ## 6. Additional sponsor tools
 
-**Render** — the app is built to deploy on Render from a `render.yaml` blueprint, on a
-Starter instance so it does not sleep between judge visits, with every secret set in the
-dashboard rather than in the repository. ⟨If the deploy is not live when you submit, change
-this to "deploys to Render via render.yaml" — do not describe a running service you do not
-have.⟩ No other sponsor tool is used; the remaining
+**Render** — the app is deployed on Render from a `render.yaml` blueprint at
+`https://second-thought-h61b.onrender.com`. It currently uses the free plan and may sleep after
+15 minutes of inactivity; upgrade to Starter before submission if continuous availability is
+required. Secrets are set in the dashboard rather than in the repository. No other sponsor tool is used; the remaining
 options were not part of the build and we would rather leave them blank than claim them.
 
 ## 6b. Assets and the thumbnail
@@ -315,12 +314,11 @@ name, AI tools by name, how to run it, tests, privacy). See §12.*
 ## 8. Working demo / hosted application
 
 ```
-⟨https://<app>.onrender.com⟩
+https://second-thought-h61b.onrender.com
 ```
 
-*No login, no keys, no signup. If this field is empty on 11 November, the Design criterion
-cannot be verified by anyone and the "available until 15 December" requirement has nothing
-behind it.*
+*No login, no keys, no signup. This is a Render free service, so it may sleep after inactivity;
+open it once before judging to wake it. Upgrade to Starter if continuous availability is required.*
 
 ## 9. Testing instructions for judges
 
