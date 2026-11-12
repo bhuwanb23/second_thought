@@ -40,3 +40,7 @@ Thumbs.db
 *.swp
 *.swo
 brag-output/
+!assets/
+!assets/demo/
+!assets/demo/second-thought-demo.mp4
+!assets/demo/second-thought-poster.jpg
