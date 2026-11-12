@@ -43,7 +43,9 @@ LIFECYCLE = (
     ("RESERVED", "Price held; invoice is dated to the selected payday."),
     ("PAID", "Payment is recorded; the merchant may fulfil the order."),
     ("FULFILLED", "Shipment is allowed only after payment."),
-    ("EXPIRED / RELEASED", "Unpaid inventory is not shipped; the hold ends."),
+    ("EXPIRED", "Unpaid inventory is not shipped; the hold ends."),
+    ("RELEASED", "The shopper or merchant cancels before payment; nothing ships."),
+    ("REFUNDED", "A paid order is returned after payment or fulfilment."),
 )
 
 _STYLE = """

@@ -17,7 +17,7 @@ services:
     region: oregon
     numInstances: 1                 # one instance: session state is in memory, on purpose
     buildCommand: pip install .
-    startCommand: python3 scripts/serve.py
+    startCommand: python3 scripts/make_proof.py --quiet && python3 scripts/serve.py
     healthCheckPath: /healthz
     autoDeploy: true
     envVars:

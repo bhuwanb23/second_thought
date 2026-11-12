@@ -21,6 +21,7 @@ or hostile, can move the engine's verdict.
 from __future__ import annotations
 
 import argparse
+from dataclasses import replace
 import json
 import sys
 from datetime import date, datetime
@@ -179,7 +180,9 @@ def main(argv=None) -> int:
     live = args.live and not args.offline
 
     print(f"\n{RULE}\nSecond Thought — V4 {'LIVE AI' if live else 'OFFLINE'}\n{RULE}")
-    for b in badges(settings):
+    effective_settings = settings if live else replace(
+        settings, llm=replace(settings.llm, api_key=""))
+    for b in badges(effective_settings):
         print(f"  badge        {b['label']:<22} ({b['detail']})")
 
     if live and not settings.llm.configured:

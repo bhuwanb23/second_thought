@@ -23,6 +23,7 @@ class WebhookAPI:
     def __init__(self, webhook_id: str, *, diag_token: str = "", cert_lookup=None):
         self.verifier = WebhookVerifier(webhook_id, cert_lookup=cert_lookup)
         self.diag_token = diag_token or ""
+        self.reconciliation: list[dict] = []
 
     # -- routes ------------------------------------------------------------
     def route(self, path: str, environ, raw_body: bytes, headers: list,
@@ -59,13 +60,20 @@ class WebhookAPI:
             svc = service_for()
             try:
                 reservation = svc.mark_paid(invoice_id, event.get("id", ""))
-            except ReservationError:
+            except ReservationError as exc:
                 # A payment arriving after expiry/release is acknowledged so
                 # PayPal does not retry it forever, but it cannot reopen the
-                # reservation or authorize shipment.
+                # reservation or authorize shipment. Keep a manual-review row
+                # rather than silently dropping a payment conflict.
+                self.reconciliation.append({
+                    "invoice_id": invoice_id,
+                    "event_id": event.get("id", ""),
+                    "reason": str(exc),
+                })
                 return {"applied": False,
                         "invoice_id": invoice_id,
-                        "reason": "reservation is no longer payable"}
+                        "reason": "payment conflict requires reconciliation",
+                        "reconciliation_required": True}
             return {"applied": reservation is not None,
                     "invoice_id": invoice_id,
                     "note": "idempotent — a repeat changes nothing"}

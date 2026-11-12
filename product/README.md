@@ -51,7 +51,7 @@ python3 demo.py --dry-run              # the five PayPal calls, fake transport (
 python3 demo.py --live                 # the same five, against the PayPal sandbox
 python3 demo_ai.py --offline           # the AI reader on unfamiliar text + a tampered approval
 bash scripts/v5_two_jars.sh            # 22 live security checks
-python3 -m unittest discover -s tests -q   # 170 tests, 0.7 s
+python3 -m unittest discover -s tests -q   # 173 tests, 0.3 s
 ```
 
 **No dependencies. Python 3.11+. Every file under 300 lines.**
@@ -226,11 +226,11 @@ the first capture rather than charging again.
 
 ```
 $ python3 -m unittest discover -s tests -q
-Ran 170 tests in 0.709s
+Ran 173 tests in 0.335s
 OK
 ```
 
-170 tests, standard library only, no network. They include the invariants that matter:
+173 tests, standard library only, no network. They include the invariants that matter:
 you cannot ship before payment, nothing moves without a human approval, an approval is
 bound to one action and cannot be replayed, a retried webhook is harmless, a foreign
 session cannot spend another's budget, and **the demo still shows three different verdicts
@@ -274,7 +274,7 @@ interface with per-session isolation and two-key rate limits, and the three scre
 | V7 — a human has used it | OPEN | five conversations, or an honest n = 0 |
 
 The distinction is the point. Every number in this README was produced in this repository; anything
-that has not been run against PayPal or a real model is labelled READY rather than claimed.
+that has not been run against PayPal or a real model is labelled PARTIAL, BLOCKED, or OPEN rather than claimed.
 
 ## Proof
 

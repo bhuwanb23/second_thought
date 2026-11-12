@@ -25,7 +25,7 @@ TESTS = "unittest discover -s tests -q"
 CHECKS = [
     ("Unit tests", [sys.executable, "-m", *TESTS.split()],
      r"Ran (\d+) tests in ([\d.]+)s", "python3 -m unittest discover -s tests -q"),
-    ("Security checks",
+    ("Security checks" if os.name != "nt" else "Security regression tests",
      (["bash", "scripts/v5_two_jars.sh"] if os.name != "nt" else
       [sys.executable, "-m", "unittest", "discover", "-s", "tests",
        "-p", "test_http_*.py", "-q"]),
@@ -70,7 +70,10 @@ def dependencies() -> dict:
 
 def git() -> str:
     code, out = run(["git", "rev-parse", "--short", "HEAD"])
-    return out.strip() if code == 0 and out.strip() else "no git checkout"
+    if code != 0 or not out.strip():
+        return "no git checkout"
+    status, status_text = run(["git", "status", "--porcelain"])
+    return out.strip() + ("-dirty" if status == 0 and status_text.strip() else "")
 
 
 def main() -> int:

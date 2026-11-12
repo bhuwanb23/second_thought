@@ -91,7 +91,8 @@ class TheVerifier(unittest.TestCase):
 
         outcome = api.apply(EVENT, lambda: ExpiredService())
         self.assertFalse(outcome["applied"])
-        self.assertEqual(outcome["reason"], "reservation is no longer payable")
+        self.assertTrue(outcome["reconciliation_required"])
+        self.assertEqual(len(api.reconciliation), 1)
 
 
 class TheRoute(unittest.TestCase):

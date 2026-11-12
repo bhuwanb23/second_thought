@@ -192,9 +192,9 @@ class ProofPage(unittest.TestCase):
     def test_it_shows_measured_numbers_when_there_are_some(self):
         html = render_proof({"generated_at": "2026-11-12 15:40 UTC", "git": "abc1234",
                              "summary": "all measured checks passed",
-                             "checks": [{"label": "Unit tests", "value": "165 tests OK in 0.73 s",
+                             "checks": [{"label": "Unit tests", "value": "173 tests OK in 0.31 s",
                                          "command": "python3 -m unittest discover -s tests -q"}]})
-        self.assertIn("165 tests OK in 0.73 s", html)
+        self.assertIn("173 tests OK in 0.31 s", html)
         self.assertIn("python3 -m unittest discover -s tests -q", html)
         self.assertIn("abc1234", html)
 
@@ -213,7 +213,7 @@ class ProofPage(unittest.TestCase):
 
     def test_it_exposes_the_deferred_lifecycle_and_its_limit(self):
         html = render_proof({})
-        for state in ("RESERVED", "PAID", "FULFILLED", "EXPIRED / RELEASED"):
+        for state in ("RESERVED", "PAID", "FULFILLED", "EXPIRED", "RELEASED", "REFUNDED"):
             self.assertIn(state, html)
         self.assertIn("not a collections service", html)
 
