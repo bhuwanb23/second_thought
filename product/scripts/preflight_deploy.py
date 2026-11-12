@@ -26,16 +26,12 @@ import re
 import sys
 from pathlib import Path
 
-if hasattr(sys.stdout, "reconfigure"):
-    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
-
-PRODUCT_ROOT = Path(__file__).resolve().parent.parent
-REPO_ROOT = PRODUCT_ROOT.parent
-sys.path.insert(0, str(PRODUCT_ROOT))
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
 
 from secondthought.config import ENV_CONTRACT            # noqa: E402
 
-YAML = REPO_ROOT / "render.yaml"
+YAML = ROOT / "render.yaml"
 SECRET_MARKERS = ("SECRET", "KEY", "TOKEN", "WEBHOOK")
 ok = fail = 0
 
@@ -55,15 +51,13 @@ def main() -> int:
     print("Second Thought — deploy preflight\n")
     if not check("render.yaml exists", YAML.exists()):
         return 1
-    text = YAML.read_text(encoding="utf-8")
+    text = YAML.read_text()
     lines = [ln.rstrip() for ln in text.splitlines()]
 
     # 1. the plan
     plans = re.findall(r"^\s*plan:\s*(\S+)", text, re.M)
     check("plan is starter (free sleeps and loses the review window)",
           plans == ["starter"], f"found {plans}")
-    check("rootDir points at the canonical product",
-          bool(re.search(r"^\s*rootDir:\s*product\s*$", text, re.M)))
     check("/healthz is the health check",
           bool(re.search(r"^\s*healthCheckPath:\s*/healthz\s*$", text, re.M)))
 
@@ -73,7 +67,7 @@ def main() -> int:
     if cmd:
         target = re.search(r"(scripts/[\w.]+\.py)", cmd.group(1))
         check(f"startCommand target exists ({target.group(1) if target else '?'})",
-              bool(target and (PRODUCT_ROOT / target.group(1)).exists()),
+              bool(target and (ROOT / target.group(1)).exists()),
               "not found on disk")
         check("bound to 0.0.0.0 via the PORT env var, not a hardcoded host",
               "serve.py" in cmd.group(1))
@@ -98,10 +92,9 @@ def main() -> int:
           not missing, f"undeclared: {missing}")
 
     # 6. .env.example still matches the contract
-    env_example = PRODUCT_ROOT / ".env.example"
+    env_example = ROOT / ".env.example"
     if env_example.exists():
-        names = set(re.findall(
-            r"^([A-Z][A-Z0-9_]+)=", env_example.read_text(encoding="utf-8"), re.M))
+        names = set(re.findall(r"^([A-Z][A-Z0-9_]+)=", env_example.read_text(), re.M))
         check(".env.example matches ENV_CONTRACT",
               names == set(ENV_CONTRACT),
               f"only in example: {sorted(names - set(ENV_CONTRACT))}; "
