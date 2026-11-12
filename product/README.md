@@ -90,7 +90,7 @@ secondthought/
 ├── infra/               the outside world
 │   ├── db.py            SQLite: profiles, reservations, ledger, webhook idempotency
 │   └── gateway.py       simulated PayPal, held to the real contract
-├── interfaces/          HTTP + browser (next)
+├── interfaces/          HTTP + browser interface
 └── cli.py               runs the whole thing
 ```
 
@@ -123,22 +123,22 @@ else. A demo that hides which one it is running is the failure this design exist
 
 ---
 
-## What is built, and what is next
+## What is built
 
 **Built:** the domain kernel, the reservation lifecycle, the approval gate, SQLite persistence,
 webhook idempotency, the three outcomes, a CLI that exercises all of it, and **the live PayPal
 adapter** — Orders v2 (AUTHORIZE/capture/void) and Invoicing v2 — behind the same protocol as the
 simulated one, with a `demo.py` that drives the five calls V3 asks for.
 
-**Next, in order:**
+The HTTP interface is complete: `interfaces/http.py` and `interfaces/session.py` provide
+session-scoped profiles and approval keys, two-key rate limiting, the three plain-language
+screens, webhook handling, and a secret-free `/healthz`.
 
-1. ~~**HTTP interface**~~ — done: `interfaces/http.py` + `interfaces/session.py`, a box per visitor,
-   per-session approval keys, two-key rate limiting, and a `/healthz` that says booleans and nothing else.
-2. **The three screens** — payday profile setup, the checkout verdict, the reservation/tracking view.
-3. **Webhook signature verification** — the callback that marks a reservation paid.
-4. ~~**The AI layer**~~ — done: `ai/extract.py` (model) and `ai/template.py` (fallback), with
-   per-field confidence, `answer_quality`, and an agent whose model output can never become
-   a verdict.
+The live PayPal adapter is sandbox-only by policy. Orders, OAuth, and idempotency have been
+verified against PayPal Sandbox. Invoice creation additionally requires the Invoicing permission
+on the sandbox app; without it PayPal returns `403 NOT_AUTHORIZED`, which the demo reports rather
+than silently falling back to simulation.
 
-Each of those slots into an interface that already exists, which is the point of building this way
-round: the rules were settled before the wire.
+The AI layer supports both the configured model and a deterministic template fallback. In both
+modes the model can extract and phrase information, but the deterministic engine alone produces
+the money verdict.
