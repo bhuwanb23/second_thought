@@ -36,6 +36,7 @@ from .session import SessionStore
 from .webhook_api import WebhookAPI
 
 COOKIE = "st_sid"
+DEMO_NOW = datetime(2026, 11, 1, 10, 0)
 # The two actions that can move money. Anything else is refused, not mapped.
 MONEY_TOOLS = ("create_reservation", "authorise_hold")
 
@@ -115,7 +116,7 @@ class App:
         """Use the sandbox adapter only when sandbox credentials are configured."""
         if settings.paypal.configured:
             return PayPalLiveGateway(settings.paypal)
-        return SimulatedGateway()
+        return SimulatedGateway(today=DEMO_NOW.date())
 
     # -- the service, rebuilt per request so nothing can be shared by accident
     def service(self, session) -> CheckoutService:
@@ -280,7 +281,8 @@ class App:
                     "403 Forbidden", headers)
         svc = self.service(session)
         try:
-            done = svc.execute(tool, args, token)
+            done = svc.execute(tool, args, token, now=DEMO_NOW,
+                               approval_now=datetime.now().replace(microsecond=0))
         except ApprovalError as exc:
             self.attempts.append({"tool": tool, "reason": str(exc),
                                   "session": session.id[:8]})

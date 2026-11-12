@@ -173,6 +173,14 @@ class Idempotency(unittest.TestCase):
 
 
 class Safety(unittest.TestCase):
+    def test_direct_token_requests_are_also_blocked_for_live(self):
+        live = PayPalSettings(client_id="x", client_secret="y", env="live")
+        fake = FakePayPal()
+        gw = PayPalLiveGateway(live, transport=fake)
+        with self.assertRaises(GatewayError):
+            gw.http.token(force=True)
+        self.assertEqual(fake.requests, [])
+
     def test_it_refuses_to_run_against_the_live_environment(self):
         live = PayPalSettings(client_id="x", client_secret="y", env="live")
         gw = PayPalLiveGateway(live, transport=FakePayPal())

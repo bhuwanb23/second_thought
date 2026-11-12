@@ -162,9 +162,11 @@ class CheckoutService:
 
     # -- executing an approved action -------------------------------------
     def execute(self, tool: str, args: dict, token: str,
-                now: datetime | None = None) -> dict:
+                now: datetime | None = None,
+                approval_now: datetime | None = None) -> dict:
         now = now or datetime.now().replace(microsecond=0)
-        self.approvals.redeem(tool, args, token, now=now.timestamp())
+        approval_now = approval_now or now
+        self.approvals.redeem(tool, args, token, now=approval_now.timestamp())
         if tool == "create_reservation":
             return self._create_reservation(args, now)
         if tool == "authorise_hold":

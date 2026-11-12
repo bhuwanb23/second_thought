@@ -66,6 +66,8 @@ class PayPalHTTP:
     # -- auth ---------------------------------------------------------------
     def token(self, force: bool = False) -> dict:
         """Fetch (and cache) an OAuth token. Returns the raw response."""
+        if self.settings.env == "live":
+            raise GatewayError("refusing to run: PAYPAL_ENV=live moves real money")
         if not force and self._token and time.time() < self._expires_at:
             return {"access_token": self._token, "expires_in": int(self._expires_at - time.time()),
                     "cached": True}

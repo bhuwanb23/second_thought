@@ -3,7 +3,7 @@
 import unittest
 from datetime import date, datetime, timedelta
 
-from secondthought.app.approvals import ApprovalError
+from secondthought.app.approvals import ApprovalError, ApprovalGate
 from secondthought.app.checkout import Checkout
 from secondthought.domain.reservation import ReservationError, State
 from tests.fixtures import NOW, TODAY, Wired
@@ -12,6 +12,14 @@ from tests.fixtures import NOW, TODAY, Wired
 def co(shopper, amount=24900, merchant="northwind"):
     return Checkout(shopper_id=shopper, merchant_id=merchant,
                     amount_minor=amount, currency="USD")
+
+
+class TestApprovalExpiryBoundary(unittest.TestCase):
+    def test_token_expires_at_the_exact_ttl_boundary(self):
+        gate = ApprovalGate(ttl_seconds=60, secret=b"test-secret")
+        approval = gate.propose("tool", {"amount_minor": 100}, now=1000)
+        with self.assertRaises(ApprovalError):
+            gate.redeem("tool", {"amount_minor": 100}, approval.token, now=1060)
 
 
 class TestTheThreeOutcomes(unittest.TestCase):

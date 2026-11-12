@@ -80,7 +80,7 @@ class Approval:
     nonce: str = field(default_factory=lambda: secrets.token_hex(8))
 
     def expired(self, now: float | None = None) -> bool:
-        return (now if now is not None else time.time()) > self.issued_at + self.ttl_seconds
+        return (now if now is not None else time.time()) >= self.issued_at + self.ttl_seconds
 
     def describe(self) -> dict:
         return {"tool": self.tool, "args": self.args, "token": self.token,
@@ -122,7 +122,7 @@ class ApprovalGate:
         match = next((a for a in self._pending.values() if a.token == token), None)
         issued = match.issued_at if match else (now or time.time())
         ttl = match.ttl_seconds if match else self.ttl_seconds
-        if (now if now is not None else time.time()) > issued + ttl:
+        if (now if now is not None else time.time()) >= issued + ttl:
             raise ApprovalError("this approval has expired")
         self._spent.add(token)
         if match:

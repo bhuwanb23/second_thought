@@ -14,13 +14,45 @@ from __future__ import annotations
 
 import os
 from dataclasses import dataclass, field
+from pathlib import Path
 
 SANDBOX_BASE = "https://api-m.sandbox.paypal.com"
 LIVE_BASE = "https://api-m.paypal.com"
 
 
+_DOTENV_VALUES: dict[str, str] | None = None
+
+
+def _load_dotenv() -> dict[str, str]:
+    """Load local `.env` values without overriding explicit process variables."""
+    global _DOTENV_VALUES
+    if os.environ.get("ST_ENV", "").strip().lower() == "production":
+        return {}
+    if _DOTENV_VALUES is not None:
+        return _DOTENV_VALUES
+    _DOTENV_VALUES = {}
+    path = Path(__file__).resolve().parent.parent / ".env"
+    if not path.exists():
+        return _DOTENV_VALUES
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        if line.startswith("export "):
+            line = line[7:].lstrip()
+        name, _, value = line.partition("=")
+        name, value = name.strip(), value.strip()
+        if value[:1] in ("'", '"') and value[-1:] == value[:1]:
+            value = value[1:-1]
+        if name:
+            _DOTENV_VALUES[name] = value
+    return _DOTENV_VALUES
+
+
 def _get(name: str, default: str = "") -> str:
-    return (os.environ.get(name) or default).strip()
+    values = _load_dotenv()
+    value = os.environ[name] if name in os.environ else values.get(name, default)
+    return (value or default).strip()
 
 
 def _get_int(name: str, default: int) -> int:

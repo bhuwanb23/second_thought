@@ -24,8 +24,9 @@ class SimulatedGateway:
 
     mode = "simulated"
 
-    def __init__(self, currency: str = "USD"):
+    def __init__(self, currency: str = "USD", today: date | None = None):
         self.currency = currency
+        self.today = today or date.today()
         self._seq = itertools.count(1)
         self._invoices: dict[str, Invoice] = {}
         self._auths: dict[str, Authorisation] = {}
@@ -36,7 +37,7 @@ class SimulatedGateway:
                        due_date: date, reference: str) -> Invoice:
         if amount_minor <= 0:
             raise GatewayError("invoice amount must be positive")
-        if due_date < date.today() - timedelta(days=365):
+        if due_date < self.today - timedelta(days=365):
             raise GatewayError("due date is implausibly far in the past")
         inv = Invoice(
             id=f"INV2-SIM{next(self._seq):05d}{secrets.token_hex(2).upper()}",
@@ -73,7 +74,7 @@ class SimulatedGateway:
         auth = Authorisation(
             id=f"AUTH-SIM{next(self._seq):05d}{secrets.token_hex(2).upper()}",
             amount_minor=amount_minor, currency=currency, status="CREATED",
-            expires_on=date.today() + timedelta(days=_AUTH_VALID_DAYS))
+            expires_on=self.today + timedelta(days=_AUTH_VALID_DAYS))
         self._auths[auth.id] = auth
         self.calls.append(f"authorise {auth.id} {amount_minor}")
         return auth
@@ -89,7 +90,7 @@ class SimulatedGateway:
                            reference="already captured")
         if auth.status == "VOIDED":
             raise GatewayError("cannot capture a voided authorisation")
-        if auth.expires_on and auth.expires_on < date.today():
+        if auth.expires_on and auth.expires_on < self.today:
             raise GatewayError("authorisation has expired")
         auth.status = "CAPTURED"
         self.calls.append(f"capture {auth_id}")
