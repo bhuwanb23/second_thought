@@ -144,7 +144,7 @@ tells the truth about itself: the badge reads `AI · LLM-MOCK` and `PAYMENTS · 
 until real credentials are loaded, because a demo that hides which mode it is in is the
 failure this design exists to prevent.
 
-**165 tests, 0.7 seconds, no network.** They include the things we would want a judge to
+**173 tests, 0.7 seconds, no network.** They include the things we would want a judge to
 try to break: you cannot ship before payment, nothing moves without a human approval, an
 approval cannot be replayed or re-pointed, a retried webhook is harmless, and one visitor
 cannot spend another visitor's budget.
@@ -193,7 +193,7 @@ reason we trust the thing at all.
 the page carries no external assets.
 
 **And one thing we are not proud of, but will say:** we have not put this in front of real
-BNPL users yet. This was researched, built, and tested by us — 165 tests, and a stranger-free
+BNPL users yet. This was researched, built, and tested by us — 173 tests, and a stranger-free
 demo. The conversations are scheduled, not done. We would rather write that here than have
 someone find it out later.
 
@@ -349,7 +349,7 @@ real account, no real money, no live credentials.
 To run it locally:
   git clone <repo> && cd second-thought/product
   python3 scripts/serve.py            # http://localhost:8000
-  python3 -m unittest discover -s tests -q      # 165 tests, ~0.7s, no network
+  python3 -m unittest discover -s tests -q      # 173 tests, ~0.7s, no network
 
 Sandbox PayPal credentials are optional for browsing the demo — without them the app
 runs the same code path against a simulated gateway and says so on the badge.
@@ -443,6 +443,6 @@ design for the other 10% before it is a product.
 4. **The video is public, under 3:00, and shows the DECLINE case.** The refusal is the
    pitch. A video that only shows an offer is a video of a different, more common product.
 5. **Nothing in this copy outruns the repo.** Three sentences to re-read after the live
-   runs: the badges, the "165 tests" number, and the paragraph that says we have not
+   runs: the badges, the "173 tests" number, and the paragraph that says we have not
    tested with users. If a number changes, change it here too — a judge who finds one
    overstatement stops believing the rest, and we have a genuinely good story without one.

@@ -9,8 +9,10 @@ import json
 import unittest
 
 from secondthought.config import AppSettings, PayPalSettings
+from secondthought.domain.reservation import ReservationError
 from secondthought.infra.webhook import Rejection, WebhookVerifier
 from secondthought.interfaces.http import App
+from secondthought.interfaces.webhook_api import WebhookAPI
 from tests.test_rsa import BODY, CERT_PEM, EVENT, K, WEBHOOK_ID, headers
 
 class TheVerifier(unittest.TestCase):
@@ -79,6 +81,17 @@ class TheVerifier(unittest.TestCase):
         with self.assertRaises(Rejection) as ctx:
             v.verify(headers(body=BODY), BODY)
         self.assertIn("no webhook id", ctx.exception.reason)
+
+    def test_a_payment_after_expiry_is_acknowledged_without_reopening(self):
+        api = WebhookAPI("webhook-id")
+
+        class ExpiredService:
+            def mark_paid(self, _invoice_id, _event_id):
+                raise ReservationError("cannot do that from EXPIRED")
+
+        outcome = api.apply(EVENT, lambda: ExpiredService())
+        self.assertFalse(outcome["applied"])
+        self.assertEqual(outcome["reason"], "reservation is no longer payable")
 
 
 class TheRoute(unittest.TestCase):

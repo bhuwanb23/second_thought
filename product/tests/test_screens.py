@@ -164,6 +164,14 @@ class ThePage(unittest.TestCase):
         _s, _h, body = get(self.app, "/")
         self.assertIn(b"Nothing is charged", body)
 
+    def test_the_page_explains_the_deferred_lifecycle_without_promising_collections(self):
+        _s, _h, body = get(self.app, "/")
+        text = body.decode().lower()
+        for phrase in ("dated invoice", "nothing ships before payment",
+                       "hold can expire or be released", "contacts the merchant"):
+            self.assertIn(phrase, text)
+        self.assertIn("does not pretend to collect debt", text)
+
 
 class ProofPage(unittest.TestCase):
     """/proof is the page that has to be boring: it is the one that gets checked."""
@@ -195,12 +203,19 @@ class ProofPage(unittest.TestCase):
 
     def test_it_never_calls_a_ready_gate_a_pass(self):
         html = render_proof({})
-        self.assertIn("READY", html)
+        self.assertIn("PARTIAL", html)
+        self.assertIn("BLOCKED", html)
         self.assertIn("OPEN", html)
         self.assertNotIn('>PASS<', html)
 
     def test_it_says_the_money_is_simulated(self):
         self.assertIn("simulated", render_proof({}))
+
+    def test_it_exposes_the_deferred_lifecycle_and_its_limit(self):
+        html = render_proof({})
+        for state in ("RESERVED", "PAID", "FULFILLED", "EXPIRED / RELEASED"):
+            self.assertIn(state, html)
+        self.assertIn("not a collections service", html)
 
 
 class Money(unittest.TestCase):

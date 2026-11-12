@@ -148,10 +148,16 @@ _TEMPLATE = """<!doctype html>
              padding:12px; font:inherit; resize:vertical; background:#fff; }
   .note { border-left:3px solid #dfe3e9; padding:2px 0 2px 12px; margin:8px 0;
           color:#3b4453; font-size:14px; }
+  .lifecycle { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  .lifecycle div { background:#fff; border:1px solid #dfe3e9; border-radius:10px;
+                   padding:12px; min-height:92px; }
+  .lifecycle b { display:block; font-size:13px; margin-bottom:5px; }
+  .lifecycle span { color:#5b6472; font-size:13px; }
   .flag { color:#8a5a00; }
   footer { margin-top:36px; color:#7a828f; font-size:13px; border-top:1px solid #e4e7ec;
            padding-top:14px; }
   @media (prefers-reduced-motion: no-preference) { .who { transition:border-color .12s; } }
+  @media (max-width:600px) { .lifecycle { grid-template-columns:1fr; } }
 </style></head>
 <body><div class="wrap">
   <h1>Second Thought</h1>
@@ -162,6 +168,15 @@ _TEMPLATE = """<!doctype html>
   <div class="row" id="who">__CARDS__</div>
 
   <div id="out"><p class="muted">Pick one of the three and the answer appears here.</p></div>
+
+  <h2>What happens after &ldquo;not yet&rdquo;</h2>
+  <div class="lifecycle">
+    <div><b>1 &middot; Hold</b><span>The price is held and the shopper gets a dated invoice.</span></div>
+    <div><b>2 &middot; Pay</b><span>The dated invoice is paid; nothing ships before payment.</span></div>
+    <div><b>3 &middot; Resolve</b><span>Paid means ship. Otherwise the hold can expire or be released.</span></div>
+  </div>
+  <p class="muted">If the date no longer works, the shopper contacts the merchant. This prototype
+    does not pretend to collect debt or automate what happens on day 46.</p>
 
   <h2>2 &middot; Or describe your own month</h2>
   <textarea id="text" placeholder="e.g. salary 2,400 on the 15th, rent 1,375 on the 1st"></textarea>

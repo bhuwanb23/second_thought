@@ -20,7 +20,7 @@ in order. Rows marked **DONE** were changed in the repository in the last hour a
 | 9 | Buyer ≠ user never stated | medium | **DONE in copy** — one line in the README, one card at 0:34 | — |
 | 10 | No video (20% of the score, currently zero) | critical | script ready: `docs/plan/VIDEO_SCRIPT.md` | **YOU** |
 | 11 | Not deployed; no live URL; no Render stacking | critical | `render.yaml` + 17 preconditions pass | **YOU** |
-| 12 | V3/V4 still READY: no live PayPal call, no live model | critical | two commands, both work | **YOU** |
+| 12 | V3/V4 evidence incomplete: OAuth/idempotency reached Sandbox, Invoicing lacks permission, live AI timed out | critical | grant the PayPal permission and verify the model provider, then rerun both commands | **YOU** |
 | 13 | No users (V7, n = 0) | medium | accepted, and stated on the closing card | — |
 
 Nothing in the *product* was broken by tonight's edits: **170 tests pass in 0.71 s**, 22/0 security

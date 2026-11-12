@@ -15,7 +15,8 @@
   <b><a href="https://PLACEHOLDER.onrender.com">Live demo</a></b> ·
   <b><a href="https://youtu.be/PLACEHOLDER">2:40 video</a></b> ·
   <b><a href="../docs/Second-Thought-Dossier.pdf">The dossier</a></b> ·
-  <b><a href="https://PLACEHOLDER.onrender.com/proof">/proof</a></b>
+  <b><a href="https://PLACEHOLDER.onrender.com/proof">/proof</a></b> ·
+  <b><a href="SECURITY.md">security model</a></b>
 </p>
 
 Most BNPL is decided by the amount and the country. **Second Thought is decided by the month.**
@@ -202,7 +203,7 @@ secondthought/
 ├── infra/               the outside world
 │   ├── db.py            SQLite: profiles, reservations, ledger, webhook idempotency
 │   └── gateway.py       simulated PayPal, held to the real contract
-├── interfaces/          HTTP + browser (next)
+├── interfaces/          HTTP + browser interface
 └── cli.py               runs the whole thing
 ```
 
@@ -267,8 +268,8 @@ interface with per-session isolation and two-key rate limits, and the three scre
 
 | Gate | State | What it needs |
 |---|---|---|
-| V3 — five real PayPal calls | READY | `python3 demo.py --live` with sandbox credentials |
-| V4 — a real model behind the badge | READY | `python3 demo_ai.py --live` with `LLM_API_KEY` |
+| V3 — five real PayPal calls | PARTIAL | OAuth and idempotency passed; Invoicing requires the sandbox app permission, and capture/void require buyer approval |
+| V4 — a real model behind the badge | BLOCKED | `python3 demo_ai.py --live` with `LLM_API_KEY`; the configured provider timed out during the run |
 | V6 — deployed, hosted, still up on 15 Dec | OPEN | a Render deploy and a webhook id |
 | V7 — a human has used it | OPEN | five conversations, or an honest n = 0 |
 

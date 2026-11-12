@@ -16,6 +16,7 @@ import hmac
 import json
 
 from ..infra.webhook import Rejection, WebhookVerifier
+from ..domain.reservation import ReservationError
 
 
 class WebhookAPI:
@@ -56,7 +57,15 @@ class WebhookAPI:
             if not invoice_id:
                 return {"applied": False, "reason": "no invoice id in the event"}
             svc = service_for()
-            reservation = svc.mark_paid(invoice_id, event.get("id", ""))
+            try:
+                reservation = svc.mark_paid(invoice_id, event.get("id", ""))
+            except ReservationError:
+                # A payment arriving after expiry/release is acknowledged so
+                # PayPal does not retry it forever, but it cannot reopen the
+                # reservation or authorize shipment.
+                return {"applied": False,
+                        "invoice_id": invoice_id,
+                        "reason": "reservation is no longer payable"}
             return {"applied": reservation is not None,
                     "invoice_id": invoice_id,
                     "note": "idempotent — a repeat changes nothing"}

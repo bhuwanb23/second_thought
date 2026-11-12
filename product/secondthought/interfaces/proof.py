@@ -31,10 +31,19 @@ CONSTANTS = (
 )
 
 GATES = (
-    ("V3 · five real PayPal calls", "READY", "python3 demo.py --live"),
-    ("V4 · a real model behind the badge", "READY", "python3 demo_ai.py --live"),
+    ("V3 · five real PayPal calls", "PARTIAL",
+     "python3 demo.py --live; grant sandbox Invoicing permission and approve Orders"),
+    ("V4 · a real model behind the badge", "BLOCKED",
+     "python3 demo_ai.py --live; verify the configured provider responds"),
     ("V6 · deployed and still up on 15 Dec", "OPEN", "a Render deploy and a webhook id"),
     ("V7 · a human has used it", "OPEN", "five conversations, or an honest n = 0"),
+)
+
+LIFECYCLE = (
+    ("RESERVED", "Price held; invoice is dated to the selected payday."),
+    ("PAID", "Payment is recorded; the merchant may fulfil the order."),
+    ("FULFILLED", "Shipment is allowed only after payment."),
+    ("EXPIRED / RELEASED", "Unpaid inventory is not shipped; the hold ends."),
 )
 
 _STYLE = """
@@ -107,6 +116,14 @@ def render(proof: dict | None = None) -> str:
   <h2>The rules the verdicts obey</h2>
   <table><tr><th>Rule</th><th>Value</th><th>Where</th></tr>{consts}</table>
 
+  <h2>The deferred order lifecycle</h2>
+  <table><tr><th>State</th><th>Merchant-facing meaning</th></tr>
+  {''.join(f"<tr><td><b>{escape(state)}</b></td><td>{escape(meaning)}</td></tr>" for state, meaning in LIFECYCLE)}
+  </table>
+  <p class="lede">This is the state machine, not a collections service or a scheduler. If the date
+  no longer works, the shopper uses the merchant’s support or hardship path; the system does not
+  promise to recover an unpaid balance.</p>
+
   <h2>What is not true yet</h2>
   <table><tr><th>Gate</th><th>State</th><th>What closes it</th></tr>{gates}</table>
 
@@ -114,7 +131,7 @@ def render(proof: dict | None = None) -> str:
   transport until sandbox credentials are present; the badge on the main page says which one is
   running. Read the state above as: the wiring is tested, the account is not.</div>
 
-  <footer><a href="/">← back to the page</a> · MIT licensed · no dependencies · no data leaves
-  this process except the free text you type.</footer>
+  <footer><a href="/">← back to the page</a> · security model: <code>product/SECURITY.md</code> ·
+  MIT licensed · no dependencies · no data leaves this process except the free text you type.</footer>
 </main></body></html>
 """

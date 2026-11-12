@@ -109,7 +109,7 @@ class NoPinnedDates(unittest.TestCase):
         for path in list((PKG / "interfaces").glob("*.py")):
             if path.name in ("personas.py",):
                 continue
-            for n, line in enumerate(path.read_text().splitlines(), 1):
+            for n, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
                 if re.search(r"date\(\s*20\d\d\s*,|datetime\(\s*20\d\d\s*,|\"\s*20\d\d-\d\d-\d\d\s*\"", line):
                     offenders.append(f"{path.name}:{n}: {line.strip()}")
         self.assertEqual(offenders, [], "a pinned date is back in the demo path:\n" + "\n".join(offenders))

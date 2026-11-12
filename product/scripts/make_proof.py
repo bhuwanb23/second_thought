@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import subprocess
 import sys
@@ -24,8 +25,14 @@ TESTS = "unittest discover -s tests -q"
 CHECKS = [
     ("Unit tests", [sys.executable, "-m", *TESTS.split()],
      r"Ran (\d+) tests in ([\d.]+)s", "python3 -m unittest discover -s tests -q"),
-    ("Security checks", ["bash", "scripts/v5_two_jars.sh"],
-     r"(\d+) passed, (\d+) failed", "bash scripts/v5_two_jars.sh"),
+    ("Security checks",
+     (["bash", "scripts/v5_two_jars.sh"] if os.name != "nt" else
+      [sys.executable, "-m", "unittest", "discover", "-s", "tests",
+       "-p", "test_http_*.py", "-q"]),
+     (r"(\d+) passed, (\d+) failed" if os.name != "nt" else
+      r"Ran (\d+) tests in ([\d.]+)s"),
+     ("bash scripts/v5_two_jars.sh" if os.name != "nt" else
+      "python3 -m unittest discover -s tests -p 'test_http_*.py' -q")),
     ("Deploy preconditions", [sys.executable, "scripts/preflight_deploy.py"],
      r"(\d+) passed, (\d+) failed", "python3 scripts/preflight_deploy.py"),
 ]
