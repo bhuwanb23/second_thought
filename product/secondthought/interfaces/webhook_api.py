@@ -16,14 +16,12 @@ import hmac
 import json
 
 from ..infra.webhook import Rejection, WebhookVerifier
-from ..domain.reservation import ReservationError
 
 
 class WebhookAPI:
     def __init__(self, webhook_id: str, *, diag_token: str = "", cert_lookup=None):
         self.verifier = WebhookVerifier(webhook_id, cert_lookup=cert_lookup)
         self.diag_token = diag_token or ""
-        self.reconciliation: list[dict] = []
 
     # -- routes ------------------------------------------------------------
     def route(self, path: str, environ, raw_body: bytes, headers: list,
@@ -45,7 +43,14 @@ class WebhookAPI:
             return ({"received": False, "reason": rej.reason, "detail": rej.detail,
                      "note": "rejection logged and visible at /diagnostics"},
                     "400 Bad Request", headers)
-        outcome = self.apply(event, service_for)
+        try:
+            outcome = self.apply(event, service_for)
+        except Exception:
+            # Verification reserves replay protection only after the
+            # application succeeds. A delivery that could not be reconciled
+            # must remain retryable by PayPal.
+            self.verifier.seen.pop(provided.get("PAYPAL-TRANSMISSION-ID", ""), None)
+            raise
         return ({"received": True, "event_type": event.get("event_type"),
                  "event_id": event.get("id"), **outcome}, "200 OK", headers)
 
@@ -58,22 +63,12 @@ class WebhookAPI:
             if not invoice_id:
                 return {"applied": False, "reason": "no invoice id in the event"}
             svc = service_for()
-            try:
-                reservation = svc.mark_paid(invoice_id, event.get("id", ""))
-            except ReservationError as exc:
-                # A payment arriving after expiry/release is acknowledged so
-                # PayPal does not retry it forever, but it cannot reopen the
-                # reservation or authorize shipment. Keep a manual-review row
-                # rather than silently dropping a payment conflict.
-                self.reconciliation.append({
-                    "invoice_id": invoice_id,
-                    "event_id": event.get("id", ""),
-                    "reason": str(exc),
-                })
-                return {"applied": False,
-                        "invoice_id": invoice_id,
-                        "reason": "payment conflict requires reconciliation",
-                        "reconciliation_required": True}
+            # A conflicting or expired payment is allowed to fail closed. The
+            # outer WSGI handler returns 500, so PayPal can retry it rather
+            # than treating an unresolved payment as successfully reconciled.
+            reservation = svc.mark_paid(invoice_id, event.get("id", ""))
+            if reservation is None:
+                raise LookupError("invoice is not linked to a reservation")
             return {"applied": reservation is not None,
                     "invoice_id": invoice_id,
                     "note": "idempotent — a repeat changes nothing"}

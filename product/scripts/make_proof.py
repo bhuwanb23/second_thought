@@ -32,7 +32,7 @@ CHECKS = [
      (r"(\d+) passed, (\d+) failed" if os.name != "nt" else
       r"Ran (\d+) tests in ([\d.]+)s"),
      ("bash scripts/v5_two_jars.sh" if os.name != "nt" else
-      "python3 -m unittest discover -s tests -p 'test_http_*.py' -q")),
+      "python -m unittest discover -s tests -p 'test_http_*.py' -q")),
     ("Deploy preconditions", [sys.executable, "scripts/preflight_deploy.py"],
      r"(\d+) passed, (\d+) failed", "python3 scripts/preflight_deploy.py"),
 ]

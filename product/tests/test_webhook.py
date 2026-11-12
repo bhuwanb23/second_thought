@@ -89,10 +89,8 @@ class TheVerifier(unittest.TestCase):
             def mark_paid(self, _invoice_id, _event_id):
                 raise ReservationError("cannot do that from EXPIRED")
 
-        outcome = api.apply(EVENT, lambda: ExpiredService())
-        self.assertFalse(outcome["applied"])
-        self.assertTrue(outcome["reconciliation_required"])
-        self.assertEqual(len(api.reconciliation), 1)
+        with self.assertRaises(ReservationError):
+            api.apply(EVENT, lambda: ExpiredService())
 
 
 class TheRoute(unittest.TestCase):
@@ -147,10 +145,11 @@ class TheRoute(unittest.TestCase):
         self.assertEqual(public["webhooks"]["rejected"], 1, "a visitor cannot see the refusal")
         self.assertNotIn("last", public["webhooks"], "transmission ids leaked publicly")
 
-    def test_a_good_signature_gets_200(self):
+    def test_a_valid_but_unlinked_invoice_fails_and_remains_retryable(self):
         status, body = self.post(BODY, headers(body=BODY))
-        self.assertEqual(status, "200 OK", body)
-        self.assertTrue(body["received"])
+        self.assertEqual(status, "500 Internal Server Error", body)
+        status, _body = self.post(BODY, headers(body=BODY))
+        self.assertEqual(status, "500 Internal Server Error")
 
     def test_diagnostics_is_404_without_a_configured_token(self):
         app_ = App(AppSettings(approval_secret="x"), cert_lookup=lambda _u: CERT_PEM)

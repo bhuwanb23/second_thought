@@ -180,8 +180,14 @@ def main(argv=None) -> int:
     live = args.live and not args.offline
 
     print(f"\n{RULE}\nSecond Thought — V4 {'LIVE AI' if live else 'OFFLINE'}\n{RULE}")
-    effective_settings = settings if live else replace(
-        settings, llm=replace(settings.llm, api_key=""))
+    # V4 always uses the simulated payment gateway. Only the model transport
+    # changes between --live and --offline.
+    simulated_paypal = replace(settings.paypal, client_id="", client_secret="",
+                               webhook_id="")
+    effective_settings = replace(
+        settings,
+        paypal=simulated_paypal,
+        llm=settings.llm if live else replace(settings.llm, api_key=""))
     for b in badges(effective_settings):
         print(f"  badge        {b['label']:<22} ({b['detail']})")
 
@@ -193,12 +199,21 @@ def main(argv=None) -> int:
     mode = ("LIVE — real model calls" if live else
             "OFFLINE — template extractor. Does not answer what the model would do")
     rec = Recorder(args.out, mode)
-    rec.check("badge", "Badge matches configuration", "PASS",
-              {"badges": [{k: b[k] for k in ("id", "label", "detail")} for b in badges(settings)],
+    effective_badges = badges(effective_settings)
+    model_badge = next(b for b in effective_badges if b["id"] == "ai")
+    payment_badge = next(b for b in effective_badges if b["id"] == "payments")
+    badge_ok = (
+        model_badge["label"] == ("AI · LLM" if live else "AI · LLM-MOCK")
+        and payment_badge["label"] == "PAYMENTS · SIMULATED"
+    )
+    rec.check("badge", "Badges match effective transports", "PASS" if badge_ok else "FAIL",
+              {"badges": [{k: b[k] for k in ("id", "label", "detail")} for b in effective_badges],
                "expected_live_badge": "AI · LLM" if live else "AI · LLM-MOCK"},
               dashboard="The badge is rendered from config, never from a flag",
               notes="With no key the badge reads AI · LLM-MOCK. Asking for --live "
                     "exits rather than upstaging the mock.")
+    if not badge_ok:
+        rec.rows[-1]["status"] = "FAIL"
 
     db = Database(":memory:")
     gw = SimulatedGateway()
@@ -208,7 +223,7 @@ def main(argv=None) -> int:
     llm = LLMExtractor(settings.llm) if live else None
     agent = Agent(service, llm=llm)
 
-    results = {"read": False, "tool": False}
+    results = {"badge": badge_ok, "read": False, "tool": False}
     try:
         results["read"] = run_readings(agent, rec, today, live)
         results["tool"] = run_tool(agent, rec, today, gw)

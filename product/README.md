@@ -5,7 +5,7 @@
 <h3 align="center">A checkout that sometimes says <em>not yet</em> — and tells you why.</h3>
 
 <p align="center">
-  <a href="https://github.com/OWNER/second-thought/actions/workflows/tests.yml"><img alt="tests" src="https://img.shields.io/badge/tests-170%20passing-0f7b4f"></a>
+  <a href="https://github.com/OWNER/second-thought/actions/workflows/tests.yml"><img alt="tests" src="https://img.shields.io/badge/tests-173%20passing-0f7b4f"></a>
   <img alt="dependencies" src="https://img.shields.io/badge/dependencies-0-0f7b4f">
   <img alt="python" src="https://img.shields.io/badge/python-3.11%2B-14181f">
   <a href="LICENSE"><img alt="license" src="https://img.shields.io/badge/license-MIT-14181f"></a>
