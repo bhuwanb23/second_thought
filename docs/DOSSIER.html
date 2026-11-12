@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Second Thought — Project Dossier</title>
+<style>
+  @page {
+    size: A4;
+    margin: 20mm 18mm 20mm 18mm;
+    @bottom-left  { content: "Second Thought — project dossier"; font-size: 8pt; color: #8a919c; }
+    @bottom-right { content: counter(page) " / " counter(pages); font-size: 8pt; color: #8a919c; }
+  }
+  @page cover { margin: 0; @bottom-left { content: none } @bottom-right { content: none } }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "DejaVu Sans", Verdana, sans-serif; font-size: 9.6pt;
+         line-height: 1.52; color: #14181f; }
+  h1, h2, h3, h4 { letter-spacing: -0.01em; margin: 0; }
+  p { margin: 0 0 7pt; }
+  a { color: #14181f; text-decoration: none; }
+  code, .mono { font-family: "DejaVu Sans Mono", monospace; font-size: 8.6pt; }
+  code { background: #f1f3f5; padding: 0 2pt; border-radius: 2pt; }
+
+  /* ---------- cover ---------- */
+  .cover { page: cover; background: #14181f; color: #fff; height: 297mm;
+           padding: 34mm 22mm; position: relative; page-break-after: always; }
+  .cover .mark { width: 26mm; margin-bottom: 10mm; }
+  .cover h1 { font-size: 42pt; line-height: 1.02; letter-spacing: -0.03em; }
+  .cover .tag { font-size: 15pt; color: #c7ccd4; margin-top: 5mm; }
+  .cover .rule { height: 1pt; background: #333a45; margin: 12mm 0 8mm; }
+  .cover .meta { font-family: "DejaVu Sans Mono", monospace; font-size: 8.5pt;
+                 color: #8f97a2; line-height: 1.9; }
+  .cover .claim { position: absolute; bottom: 30mm; left: 22mm; right: 22mm;
+                  font-size: 11pt; color: #e7eaf0; }
+  .cover .claim b { color: #7fd1ab; }
+
+  /* ---------- structure ---------- */
+  .part { page-break-before: always; }
+  .kicker { font-family: "DejaVu Sans Mono", monospace; font-size: 7.8pt; color: #8a919c;
+            letter-spacing: .16em; text-transform: uppercase; margin-bottom: 3pt; }
+  h2 { font-size: 21pt; margin-bottom: 4pt; }
+  h2 + .lede { font-size: 10.5pt; color: #5b6472; margin: 0 0 14pt; }
+  h3 { font-size: 12.5pt; margin: 16pt 0 5pt; }
+  h4 { font-size: 10pt; margin: 11pt 0 3pt; }
+  .rule { height: 1.6pt; background: #14181f; margin: 0 0 10pt; width: 22mm; }
+
+  /* ---------- tables ---------- */
+  table { width: 100%; border-collapse: collapse; margin: 7pt 0 10pt; font-size: 8.7pt;
+          table-layout: fixed; }
+  td, th { overflow-wrap: break-word; }
+  /* a short table should never be split with one orphan row */
+  table.keep, tr, figure { break-inside: avoid; }
+  h3.fresh { break-before: page; margin-top: 0; }
+
+  .endpaper { break-before: page; padding-top: 62mm; }
+  .endpaper .endmark { margin-bottom: 10mm; }
+  .endpaper .endmark img { width: 17mm; height: auto; }
+  .endpaper h4 { font-size: 13pt; margin: 0 0 8pt; letter-spacing: 0; text-transform: none; }
+  .endpaper p { font-size: 10.5pt; line-height: 1.55; max-width: 120mm; }
+  .endpaper .colophon { font-size: 8.4pt; color: #6b7280; margin-top: 26mm;
+                        border-top: 0.6pt solid #d6dae0; padding-top: 7pt; }
+  th { text-align: left; font-size: 7.6pt; letter-spacing: .07em; text-transform: uppercase;
+       color: #5b6472; border-bottom: 1.2pt solid #14181f; padding: 4pt 5pt 4pt 0; }
+  td { border-bottom: 0.5pt solid #dfe3e9; padding: 4pt 5pt 4pt 0; vertical-align: top; }
+  tr.hi td { background: #f2faf6; }
+  td.num { font-family: "DejaVu Sans Mono", monospace; white-space: nowrap; }
+
+  /* ---------- boxes ---------- */
+  .box { background: #f6f7f9; border-left: 2.5pt solid #14181f; padding: 8pt 11pt;
+         margin: 9pt 0; font-size: 9pt; }
+  .box.warn { border-left-color: #8c2f39; background: #fbf5f5; }
+  .box.good { border-left-color: #0f7b4f; background: #f2faf6; }
+  .box h4 { margin-top: 0; }
+  .quote { font-size: 11pt; line-height: 1.45; border-left: 2pt solid #dfe3e9;
+           padding-left: 10pt; margin: 9pt 0; color: #3b4453; }
+
+  /* ---------- figures & stats ---------- */
+  figure { margin: 10pt 0 12pt; page-break-inside: avoid; }
+  figure img { width: 100%; border: 0.5pt solid #e4e7ec; border-radius: 3pt; }
+  figcaption { font-size: 8pt; color: #8a919c; margin-top: 3pt; }
+  .stats { display: flex; gap: 8pt; margin: 8pt 0 8pt; }
+  .stats + .stats { margin-top: 0; }
+  .stat { flex: 1; border: 0.5pt solid #dfe3e9; border-radius: 4pt; padding: 7pt 9pt; }
+  .stat .n { font-size: 19pt; letter-spacing: -0.02em; }
+  .stat .l { font-size: 7.8pt; color: #5b6472; text-transform: uppercase;
+             letter-spacing: .08em; }
+  .ok { color: #0f7b4f; } .bad { color: #8c2f39; } .mid { color: #8a5a00; }
+  .two { display: flex; gap: 12pt; }
+  .two > div { flex: 1; }
+  .small { font-size: 8.4pt; color: #5b6472; }
+  ul, ol { margin: 4pt 0 8pt; padding-left: 14pt; }
+  li { margin-bottom: 2.5pt; }
+  .pagebreak { page-break-before: always; }
+  .toc td { border: none; padding: 2pt 0; font-size: 9pt; }
+  .toc .n { width: 12mm; color: #8a919c; font-family: "DejaVu Sans Mono", monospace; }
+</style></head>
+<body>
+
+<!-- ============================== COVER ============================== -->
+<section class="cover">
+  <img class="mark" src="../product/assets/png/logo-mark-white.png" alt="Second Thought">
+  <h1>Second Thought</h1>
+  <div class="tag">A checkout that sometimes says <i>not yet</i>.</div>
+  <div class="rule"></div>
+  <div class="meta">
+    PROJECT DOSSIER · RESEARCH TO WORKING BUILD<br>
+    PayPal AI Hackathon 2026 · Devpost<br>
+    Submission deadline · Thu 12 Nov 2026, 12:00 pm PT<br>
+    Prepared 5 November 2026
+  </div>
+  <div class="claim">
+    Everything measured here was run. Where something is claimed and not proven, this
+    document says so — <b>including the parts nobody would have checked</b>.
+  </div>
+</section>
+
+<!-- ============================== CONTENTS ============================== -->
+<section>
+<div class="kicker">Contents</div>
+<h2>What is in this dossier</h2>
+<div class="rule"></div>
+
+<table class="toc">
+<tr><td class="n">I</td><td><b>The research</b> — the contest, the field, the pain, and the idea those three produced</td></tr>
+<tr><td class="n"></td><td class="small">1. The contest as it is actually judged · 2. The field of 549 · 3. The pain, sourced · 4. The idea and its rules</td></tr>
+<tr><td class="n">II</td><td><b>The build</b> — what was constructed, and where each guarantee lives</td></tr>
+<tr><td class="n"></td><td class="small">5. Architecture · 6. The PayPal integration · 7. The AI boundary · 8. The security model · 9. The decision engine · 10. The screen</td></tr>
+<tr><td class="n">III</td><td><b>The evidence</b> — what is verified, what is not, and how it is checked</td></tr>
+<tr><td class="n"></td><td class="small">11. Verified against simulated · 12. Five things that broke · 13. Gates V0–V8 · 14. The scorecard</td></tr>
+<tr><td class="n">IV</td><td><b>The submission</b> — the words, the pictures, the three minutes</td></tr>
+<tr><td class="n"></td><td class="small">15. Devpost copy · 16. Assets · 17. The video</td></tr>
+<tr><td class="n">V</td><td><b>The honest parts</b> — what is missing, what would lose, what comes next</td></tr>
+<tr><td class="n"></td><td class="small">18. Limits · 19. The eight days · 20. Appendices</td></tr>
+</table>
+
+<h3>How to read the status marks</h3>
+<table>
+<tr><th style="width:18mm">Mark</th><th>Meaning</th></tr>
+<tr><td class="ok"><b>PASS</b></td><td>Executed in this workspace, output recorded, reproducible by a command in Appendix C.</td></tr>
+<tr><td class="mid"><b>READY</b></td><td>Built and tested against a simulated transport that implements the same protocol. It has not spoken to PayPal or a model yet — one command and your credentials away.</td></tr>
+<tr><td class="bad"><b>OPEN</b></td><td>Not done. Named, sized, and owned.</td></tr>
+</table>
+
+<div class="box">
+<h4>One honesty note, up front</h4>
+<p>The live sandbox calls require credentials, and this workspace does not hold them. Every
+number in Part III that says <b>PASS</b> is a real measurement made here. Every number that
+says <b>READY</b> is a fact about code, not about your PayPal account. On your machine, with
+your <code>.env</code>, the two commands in §11 turn READY into PASS and write the artifacts
+a judge can look up in the dashboard. This dossier will be re-issued with those artifacts
+attached — until then it describes them accurately, as things that will happen rather than
+things that did.</p>
+</div>
+
+<h3>The ten numbers</h3>
+<div class="stats">
+  <div class="stat"><div class="n">170</div><div class="l">tests, 0.7 s</div></div>
+  <div class="stat"><div class="n">3</div><div class="l">verdicts</div></div>
+  <div class="stat"><div class="n">5</div><div class="l">PayPal calls</div></div>
+  <div class="stat"><div class="n">0</div><div class="l">dependencies</div></div>
+  <div class="stat"><div class="n">22</div><div class="l">security checks</div></div>
+</div>
+<div class="stats">
+  <div class="stat"><div class="n">549</div><div class="l">repos scanned</div></div>
+  <div class="stat"><div class="n">3</div><div class="l">in our cluster</div></div>
+  <div class="stat"><div class="n">47%</div><div class="l">paid late</div></div>
+  <div class="stat"><div class="n">299</div><div class="l">line cap, per file</div></div>
+  <div class="stat"><div class="n">0</div><div class="l">users tested</div></div>
+</div>
+</section>
+
+<!-- ============================== PART I ============================== -->
+<section class="part">
+<div class="kicker">Part I · The research</div>
+<h2>What the contest rewards, and who else is in it</h2>
+<p class="lede">Six weeks of reading condensed into four pages: the rules that decide
+everything, the field that sets the bar, the pain that justifies the product, and the idea
+those three produced.</p>
+
+<h3>1 · The contest as it is actually judged</h3>
+<p>Two stages. <b>Stage 1 is pass/fail</b> and asks only two things: does the project fit the
+theme, and does it <i>reasonably apply</i> the required APIs. A beautiful project with a
+decorative PayPal button dies here and is never scored.</p>
+<p><b>Stage 2 scores five criteria, equally weighted.</b> The tiebreak goes to the first one
+listed, which is Technological Implementation — so in a field this size, where scores
+cluster, depth beats polish when the two compete for the same hour.</p>
+
+<table>
+<tr><th style="width:44mm">Criterion</th><th>What it actually asks</th><th style="width:52mm">What we did about it</th></tr>
+<tr><td><b>Technological Implementation</b></td><td>Is the PayPal and AI use thorough, skilful and verifiable — or a template with a logo?</td><td>Server-side OAuth, Orders v2, Invoicing v2, verified webhooks, idempotency, 170 tests</td></tr>
+<tr><td><b>Design</b></td><td>A complete, coherent product, not a technical proof of concept</td><td>One page, three answers as sentences, empty and error states, no external assets</td></tr>
+<tr><td><b>Potential Impact</b></td><td>A specific problem, a real audience, and a demo that shows the solution working for them</td><td>Sourced pain, a named shopper, and a refusal that runs rather than a slide that says "we care"</td></tr>
+<tr><td><b>Innovation</b></td><td>Novel, and not the same as the other entries</td><td>3 entries in our cluster of 549; the inversion is the demo</td></tr>
+<tr><td><b>Presentation</b></td><td>Does the video show it working end to end and explain who it is for</td><td>Beat sheet in §17, recorded after the outside-eye pass</td></tr>
+</table>
+
+<h4>Dates and prizes</h4>
+<table>
+<tr><th style="width:40mm">Item</th><th>Detail</th></tr>
+<tr><td>Submission closes</td><td><b>Thu 12 Nov 2026, 12:00 pm PT</b> = 13 Nov, 01:30 IST</td></tr>
+<tr><td>Judging</td><td>1 Dec 2026 → 15 Dec 2026, 08:00 PT</td></tr>
+<tr><td>Winners</td><td>on or around 21 Dec 2026</td></tr>
+<tr><td>Prize pool</td><td>$67,500 cash. 1st $12,000 · 2nd $8,000 · 3rd $5,000</td></tr>
+<tr><td>Honourable mentions</td><td>five × $5,000 — Most Creative, Most Impactful, Best Demo Delivery, Best Use of PayPal + AI, Best Use of Agentic Commerce</td></tr>
+<tr class="hi"><td>Registered</td><td>26,708 participants as of 2 Nov (reported). Registrations, not submissions — expect hundreds to ~2,000 entries. An estimate, labelled as one.</td></tr>
+</table>
+
+<div class="box warn">
+<h4>Two things to re-check before submitting</h4>
+<p><b>The deadline hour.</b> The official rules say 12:00 pm PT; at least two third-party
+summaries say 2:00 pm PT. Plan for noon and confirm on the live listing. <b>The video must be
+public and under 3:00</b> — judges are not required to watch past it, and README, demo link
+and video all lock at close.</p>
+</div>
+
+<h3>2 · The field of 549</h3>
+<p>Every public repo on the hackathon's topic list was scanned and clustered by what it does.
+The point was not to find competitors to copy, but to find the clusters that are already
+crowded and the ones that are empty.</p>
+
+<figure>
+  <img src="../product/assets/png/diagram-clusters.png" alt="Cluster density">
+  <figcaption>Cluster density, 1 Nov 2026. Bar length is entries in that cluster.</figcaption>
+</figure>
+
+<table>
+<tr><th style="width:52mm">Measurement</th><th style="width:20mm">Value</th><th>Why it matters</th></tr>
+<tr><td>Public repos scanned</td><td class="num">549</td><td>the sample the clusters are drawn from</td></tr>
+<tr><td>With a live demo URL</td><td class="num">230 (42%)</td><td>a deployed link is table stakes, not a differentiator</td></tr>
+<tr><td>No detectable licence</td><td class="num">95 (17%)</td><td>an eligibility item a sixth of the field fails</td></tr>
+<tr><td>Scoring 10+ of 13 depth markers</td><td class="num">7 (1.3%)</td><td>the actual bar for a prize, not the median</td></tr>
+<tr class="hi"><td><b>Credit / BNPL entries</b></td><td class="num"><b>3</b></td><td>average depth 1.7 — the thinnest cluster with a real problem behind it</td></tr>
+</table>
+
+<p class="small">What the top decile already does, and that we must match: a CI badge and a
+passing suite advertised in the README, a live demo with no login and no keys, a <code>/proof</code>
+page listing every measured number, a threat model, a red-team screen showing attacks
+blocked, an explicit statement that the demo stays online until 15 Dec, and a 2:18–2:37 demo
+video recorded weeks early.</p>
+
+<h3>3 · The pain, sourced</h3>
+<p>The product thesis is narrow: <b>the decision to offer a buy-now-pay-later plan is made
+without any model of whether this person can carry it.</b> The harm numbers are not about the
+product existing. They are about it being offered indiscriminately, in small repeated
+badly-timed payments.</p>
+
+<table>
+<tr><th style="width:62mm">Finding</th><th style="width:26mm">Figure</th><th>Source</th></tr>
+<tr><td>BNPL users who paid late at least once in the past year</td><td class="num"><b>47%</b></td><td>LendingTree, 2026 — up from 41% (2025) and 34% (2024)</td></tr>
+<tr><td>BNPL users holding multiple simultaneous loans</td><td class="num"><b>63%</b></td><td>CFPB, January 2025</td></tr>
+<tr><td>…of whom, across multiple lenders</td><td class="num"><b>33%</b></td><td>CFPB, January 2025</td></tr>
+<tr><td>BNPL complaints, 2026 to date</td><td class="num"><b>10,884</b></td><td>CFPB complaint database — against 7,412 in all of 2025, +47% with two months to run</td></tr>
+</table>
+
+<div class="box">
+<h4>The caveat that belongs in the pitch, not the footnotes</h4>
+<p>The 47% is self-reported. The CFPB's dollar-weighted charge-off rate stays <b>under 2%</b>.
+Both are true and they measure different things. Saying "47% of BNPL users default" would be
+wrong, and a judge may know it. The correct sentence: <i>"47% report paying late at least
+once, while dollar-weighted losses stay under 2% — the harm is concentrated in small,
+repeated, badly-timed payments, which is exactly the pattern a per-purchase check could
+prevent."</i></p>
+</div>
+
+<h3>4 · The idea and its rules</h3>
+<p><b>Second Thought.</b> At the moment someone is about to split a payment into four, ask a
+question nobody else asks: <i>is this good for this person?</i> Project their next 45 days,
+then answer with one of three things.</p>
+
+<figure>
+  <img src="../product/assets/png/diagram-verdicts.png" alt="The three verdicts">
+  <figcaption>The three answers, in the exact words the product renders.</figcaption>
+</figure>
+
+<table>
+<tr><th style="width:22mm">Answer</th><th style="width:56mm">Rule</th><th>What actually happens</th></tr>
+<tr><td class="ok"><b>OFFER</b></td><td>every one of the four payments leaves the balance at or above the floor, every day for 45 days</td><td>PayPal <code>AUTHORIZE</code> hold, captured on the approved date</td></tr>
+<tr><td class="mid"><b>DEFER</b></td><td>that fails, but a single payment dated to the next payday passes, and the payday is inside the 21-day deferral window</td><td>An Invoicing invoice due on payday. <b>The merchant ships when it clears</b></td></tr>
+<tr><td class="bad"><b>DECLINE</b></td><td>neither works, including the partial ladder</td><td>Nothing offered. The collision is named and the largest amount that <i>would</i> work is quoted</td></tr>
+</table>
+
+<h4>The arithmetic, which is deliberately boring</h4>
+<ul>
+<li><b>Horizon:</b> 45 days. Long enough to catch next month's rent, short enough to stay honest.</li>
+<li><b>Floor:</b> <code>max(10% of monthly income, $50)</code>. Not a credit score, not a limit — a "don't let this week break you" line.</li>
+<li><b>Instalments:</b> four, fourteen days apart.</li>
+<li><b>Deferral window:</b> 21 days. Beyond that it is not a deferral, it is a different month.</li>
+<li><b>Determinism:</b> the same calendar and the same amount always produce the same answer. There is no sampling, no temperature, no model in this path.</li>
+<li><b>Partial ladder:</b> 90/75/60/50/40/25/10% now, remainder on payday — a fixed ladder, because feasibility is not monotonic in the split and a binary search would be unsound.</li>
+</ul>
+
+<div class="box good">
+<h4>Why this is not another BNPL app</h4>
+<p><b>DEFER is pay-before-ship.</b> The merchant extends no credit and funds no receivable; the
+shopper never borrows; the goods move when the money arrives. Compare a card decline, where a
+good customer is simply lost. Here the sale moves to a date the shopper can actually meet.
+The trade is timing, not volume — and it is stated that way, because "volume preserved" is a
+claim we cannot support.</p>
+</div>
+
+<h4>What could make this derivative, and the escape route</h4>
+<table>
+<tr><th style="width:56mm">Risk</th><th>Mitigation, applied in the build</th></tr>
+<tr><td>"Responsible lending" reads as a lecture</td><td>The refusal carries a number: <i>"Up to $140.00 would work today."</i> Show the maths and the option, never "you can't afford this"</td></tr>
+<tr><td>A judge asks why PayPal would reduce its own BNPL volume</td><td>Because a denied-then-explained shopper returns and a silently-blacklisted one churns — and because the alternative to a deferral is a lost sale, not a full-price one</td></tr>
+<tr><td>Looks like a budgeting app</td><td>It has no dashboard, no categories, no goals. It has one question and three answers, inside a checkout</td></tr>
+</table>
+</section>
+
+<!-- ============================== PART II ============================== -->
+<section class="part">
+<div class="kicker">Part II · The build</div>
+<h2>What was constructed, and where each guarantee lives</h2>
+<p class="lede">Seven and a half thousand lines of Python, no third-party packages, every file
+under 300 lines. The layering is not decoration: it is what makes the AI boundary and the
+security model checkable by a person in ten minutes.</p>
+
+<figure>
+  <img src="../product/assets/png/diagram-architecture.png" alt="Architecture">
+  <figcaption>Four layers. <code>domain/</code> decides and does no I/O; <code>infra/</code> is the only layer that talks to anything.</figcaption>
+</figure>
+
+<h3>5 · Architecture</h3>
+<table>
+<tr><th style="width:30mm">Layer</th><th style="width:74mm">Responsibility</th><th>Files</th></tr>
+<tr><td><code>domain/</code></td><td>Cash flow, the floor test, the three verdicts, the safe-amount search. Pure functions over dataclasses.</td><td><code>cashflow.py</code>, <code>engine.py</code>, <code>reservation.py</code></td></tr>
+<tr><td><code>app/</code></td><td>Orchestration: quote → propose → approve → execute. The reservation lifecycle. The approval gate.</td><td><code>checkout.py</code>, <code>approvals.py</code>, <code>ports.py</code></td></tr>
+<tr><td><code>ai/</code></td><td>Reading unstructured text into dated amounts; the template fallback; the agent that fuses them and refuses bad input.</td><td><code>extract.py</code>, <code>template.py</code>, <code>agent.py</code></td></tr>
+<tr><td><code>infra/</code></td><td>PayPal adapter (live), simulated gateway, SQLite, RSA, webhook verification, webhook idempotency.</td><td><code>paypal_live.py</code>, <code>gateway.py</code>, <code>db.py</code>, <code>rsa.py</code>, <code>webhook.py</code></td></tr>
+<tr><td><code>interfaces/</code></td><td>HTTP, sessions, badges, the shopper screen, the plain-language layer, the webhook endpoint.</td><td><code>http.py</code>, <code>session.py</code>, <code>screens.py</code>, <code>badge.py</code>, <code>personas.py</code></td></tr>
+</table>
+
+<figure>
+  <img src="../product/assets/png/diagram-flow.png" alt="The decision flow">
+  <figcaption>The path a single purchase takes. Everything after the floor test is arithmetic.</figcaption>
+</figure>
+
+<h3>6 · The PayPal integration</h3>
+<p>Every call is server-side. No client secret reaches the browser, and the live adapter
+refuses to run if <code>PAYPAL_ENV</code> is anything but <code>sandbox</code>.</p>
+
+<table>
+<tr><th style="width:46mm">PayPal surface</th><th style="width:58mm">Endpoint</th><th>Used for</th></tr>
+<tr><td>OAuth 2 client credentials</td><td class="mono">POST /v1/oauth2/token</td><td>every call below; token cached for its 9-hour life</td></tr>
+<tr><td>Orders v2 — create + AUTHORIZE</td><td class="mono">POST /v2/checkout/orders</td><td>an OFFER reserves the funds rather than charging them</td></tr>
+<tr><td>Capture</td><td class="mono">POST /v2/payments/authorizations/{id}/capture</td><td>on the approved date</td></tr>
+<tr><td>Void</td><td class="mono">POST /v2/payments/authorizations/{id}/void</td><td>release when the shopper changes their mind</td></tr>
+<tr><td>Invoicing v2</td><td class="mono">POST /v2/invoicing/invoices</td><td>the DEFER invoice, <code>payment_term.due_date</code> set by the engine's payday maths</td></tr>
+<tr><td>Webhooks</td><td class="mono">/api/webhook</td><td>signature-verified; <code>INVOICING.INVOICE.PAID</code> is what turns a deferral into a shipment</td></tr>
+<tr><td>Idempotency</td><td class="mono">PayPal-Request-Id</td><td>a retried call returns the first result instead of creating a second charge</td></tr>
+</table>
+
+<figure>
+  <img src="../product/assets/png/diagram-defer.png" alt="DEFER lifecycle">
+  <figcaption>The hero path. Four steps, three of them PayPal's.</figcaption>
+</figure>
+
+<h4>Webhook verification, in full</h4>
+<p>The signed string is <code>transmissionId|transmissionTime|webhookId|crc32(rawBody)</code>
+computed over the <b>raw bytes</b>, checked with RSA-SHA256 PKCS#1 v1.5 against a certificate
+fetched from a URL inside the event. The certificate URL must be HTTPS and on a PayPal host,
+and that check lives in the key-fetch path, not only in the fetch helper — a security check in
+one code path is not a check. The implementation uses only the standard library: no
+<code>cryptography</code>, no <code>requests</code>.</p>
+
+<h3>7 · The AI boundary</h3>
+<p>The model's only job is reading a human sentence into structured facts. It cannot decide
+anything, and that is enforced structurally rather than promised in a README.</p>
+
+<figure>
+  <img src="../product/assets/png/diagram-ai-boundary.png" alt="The AI boundary">
+  <figcaption>The wall. <code>Agent.profile_from</code> raises rather than pass a low-grade extraction through.</figcaption>
+</figure>
+
+<table>
+<tr><th style="width:52mm">Failure mode</th><th>What the system does</th></tr>
+<tr><td>Low confidence on a field</td><td>The field is kept, capped in confidence, and <b>flagged to the shopper</b> with a question. It is not silently trusted.</td></tr>
+<tr><td>Nothing readable</td><td>The answer degrades to <code>partial</code> or <code>demo</code>. It never guesses and never crashes.</td></tr>
+<tr><td>Extraction graded <code>demo</code></td><td><code>profile_from</code> raises. The engine never sees it.</td></tr>
+<tr><td>Junk wording, valid facts</td><td>The verdict does not move. There is a test for exactly this.</td></tr>
+<tr><td>No key configured</td><td>A deterministic template reader runs instead, and the on-screen badge says <code>AI · LLM-MOCK</code>.</td></tr>
+</table>
+
+<div class="box">
+<h4>Why the boring choice is the good one</h4>
+<p>Most submissions put the model in charge and hope. Here the model is a very good parser and
+nothing else: <code>temperature: 0</code>, JSON mode, per-field confidence, and an agent that
+raises on anything it cannot stand behind. It is the least fashionable use of an LLM in this
+competition and the only one we can defend line by line.</p>
+</div>
+
+<h3>8 · The security model</h3>
+<figure>
+  <img src="../product/assets/png/diagram-gate.png" alt="The approval gate">
+  <figcaption>Money moves only through a token that is bound to one action, one amount, one session.</figcaption>
+</figure>
+
+<table>
+<tr><th style="width:56mm">Control</th><th>Implementation</th></tr>
+<tr><td>Session isolation</td><td>A session per cookie, in memory, with its <b>own signing secret</b>. A token minted in one visitor's gate cannot verify in another's — this was a real defect, found and fixed.</td></tr>
+<tr><td>Human approval</td><td>HMAC over the tool name and the exact arguments, single use, 600-second TTL. Nothing reaches PayPal until it is redeemed.</td></tr>
+<tr><td>Tamper refusal</td><td>An edited amount, an altered due date, a replayed token, an expired token and a foreign token are all refused with <b>403 before the gateway is called</b>.</td></tr>
+<tr><td>Rate limits</td><td>Two-key: 30 model calls per session and 90 per IP per 600 s, so clearing a cookie does not buy a fresh budget.</td></tr>
+<tr><td>Spend cap</td><td>In-process daily call budget (1,500) as a backstop; the provider-side cap is the real protection and is set in the account.</td></tr>
+<tr><td>Health endpoint</td><td><code>/healthz</code> returns four booleans and a status word. No keys, no paths, no versions.</td></tr>
+<tr><td>Diagnostics</td><td><code>/diagnostics</code> returns 404 unless a token is configured, and counts only when it is.</td></tr>
+</table>
+
+<h3>9 · The decision engine</h3>
+<p>The core is a projection over a horizon, run once per candidate schedule. Its honesty comes
+from what it refuses to do: it will not spread a balance thinly and call it affordable, and
+it will not offer an instrument whose date is already in the past.</p>
+<figure>
+  <img src="../product/assets/png/diagram-verdicts.png" alt="Verdicts">
+  <figcaption>Three months, the same $249.00. The refusal quotes the amount that would fit.</figcaption>
+</figure>
+
+<h3>10 · The screen</h3>
+<p>One page. Three months visible without a click, each with its amount. The answer arrives as
+a sentence, not a status code, and the internal vocabulary never reaches the shopper — a test
+fails the build if words like <i>verdict</i>, <i>collision</i> or <i>token</i> appear in a
+sentence a shopper reads.</p>
+
+<table>
+<tr><th style="width:30mm">Element</th><th>Decision</th></tr>
+<tr><td>Badges</td><td><code>AI · LLM</code> / <code>AI · LLM-MOCK</code> and <code>PAYMENTS · SANDBOX</code> / <code>PAYMENTS · SIMULATED</code>, computed from configuration and never overridable by argument</td></tr>
+<tr><td>Assets</td><td>Inline CSS, inline SVG favicon, no external fonts, no CDN, no analytics — it renders on a locked-down laptop with no network</td></tr>
+<tr><td>Empty state</td><td>"Pick one of the three and the answer appears here" — the page is never a blank void</td></tr>
+<tr><td>Free text</td><td>Reads what you typed, shows what it understood, flags what it is unsure of, and decides nothing from it</td></tr>
+<tr><td>Mobile</td><td>Viewport meta, fluid cards, tap targets above 44 px</td></tr>
+</table>
+</section>
+
+<!-- ============================== PART III ============================== -->
+<section class="part">
+<div class="kicker">Part III · The evidence</div>
+<h2>What is verified, what is not, and how to check both</h2>
+<p class="lede">A claim is worth what the check behind it is worth. This part separates the
+measurements from the intentions, and lists the five things that broke along the way —
+because that list is the most convincing page in the document.</p>
+
+<h3>11 · Verified against READY</h3>
+<table>
+<tr><th style="width:46mm">Capability</th><th style="width:18mm">Status</th><th>Evidence</th></tr>
+<tr><td>Cash-flow engine and verdict rules</td><td class="ok">PASS</td><td>deterministic, unit-tested, three verdicts reproduced on any date for sixty days forward</td></tr>
+<tr><td>Test suite</td><td class="ok">PASS</td><td>170 tests, 0.7 s, no network, stdlib only</td></tr>
+<tr><td>Session isolation &amp; rate limits</td><td class="ok">PASS</td><td>22 checks over a live socket: two visitors, distinct keys, 200 → 429 at call 31, one visitor unaffected</td></tr>
+<tr><td>Approval tampering</td><td class="ok">PASS</td><td>unknown, forged, foreign, amount+1, altered-date, replayed and expired tokens all 403</td></tr>
+<tr><td>Webhook signature verification</td><td class="ok">PASS</td><td>RSA-SHA256 over the canonical string, verified on a live socket; missing header → HTTP 400 with the field named</td></tr>
+<tr><td>Deploy configuration</td><td class="ok">PASS</td><td><code>preflight_deploy.py</code> 17/17; mutation test 14 caught / 3 survived by design</td></tr>
+<tr><td>Five live PayPal calls</td><td class="mid">READY</td><td>written, tested against a simulated gateway with the same protocol; exit 2 without credentials</td></tr>
+<tr><td>Live model extraction</td><td class="mid">READY</td><td>OpenAI-compatible client written and unit-tested against a fake transport</td></tr>
+<tr><td>Public URL</td><td class="bad">OPEN</td><td>not deployed; <code>render.yaml</code> is preflighted and ready</td></tr>
+<tr><td>Video</td><td class="bad">OPEN</td><td>beat sheet written, nothing recorded</td></tr>
+<tr><td>Human validation</td><td class="bad">OPEN</td><td>n = 0. Conversations scheduled, not done</td></tr>
+</table>
+
+<h4>The two commands that turn READY into PASS</h4>
+<pre class="mono" style="background:#f6f7f9;padding:9pt;border-radius:3pt;font-size:8.2pt">python3 demo.py --live       # V3: OAuth → AUTHORIZE → capture, → void, → INV2 invoice, → same Request-Id twice
+python3 demo_ai.py --live    # V4: badge flips to AI · LLM, three messy passages, tampered approval refused</pre>
+<p class="small">Each writes <code>artifacts/v3/&lt;timestamp&gt;/</code> and
+<code>artifacts/v4/&lt;timestamp&gt;/</code> containing every raw response and, for each id, the
+dashboard location where a judge can find it. Terminal output is not evidence; the dashboard
+is.</p>
+
+<h3>12 · Five things that broke</h3>
+
+<h4>1 · The demo broke by itself, and that was the best bug</h4>
+<p>The three demo months were pinned to November 2026 dates, and <code>/api/plan</code> passed a
+hardcoded <code>date(2026, 11, 1)</code>. Nothing in the code changed; the calendar moved. Ben's
+payday passed, the reservation refused a date in the past, and the DEFER path — the hero of
+the pitch — returned <b>HTTP 500</b>. Judging runs 1–15 December, when every date would be
+stale and a demo the rules require to be runnable would not run.</p>
+<p><b>Fix:</b> months generated relative to today; a test walks sixty days forward asserting all
+three verdicts still appear; a lint fails the build if a literal date re-enters the demo path.</p>
+
+<h4>2 · The .env nothing read</h4>
+<p><code>.env.example</code> said "copy to <code>.env</code> and fill in", and only the
+precondition checker had a reader. Anyone following the instructions would set up credentials
+and then be told they were missing — while looking straight at them.</p>
+<p><b>Fix:</b> <code>config.py</code> loads <code>product/.env</code> at import, real environment
+variables win, and <code>ST_ENV=production</code> ignores the file entirely so a stray
+<code>.env</code> can never override a dashboard.</p>
+
+<h4>3 · <code>pay_on</code> was populated for OFFER</h4>
+<p>The recommended option for an OFFER carries an <code>invoice_due</code> — the first
+instalment — and the quote copied it into <code>pay_on</code>. The screen would have told a
+shopper who can pay <i>today</i> to wait.</p>
+<p><b>Fix:</b> the field is populated only for DEFER, with a test asserting it.</p>
+
+<h4>4 · Dollars against minor units</h4>
+<p>A hundred-fold error waiting to happen. Every amount in the system is an integer of cents,
+and there is exactly one place that converts. The other half was payday arithmetic: a
+fortnightly cadence with no anchor date must not borrow today's date at high confidence, so
+it caps the confidence and asks a question instead.</p>
+
+<h4>5 · A security check in one code path</h4>
+<p>The webhook certificate URL was validated in the fetch helper and not in the key path, so a
+second caller could reach an unvalidated URL. One check in one place is not a check.</p>
+<p><b>Fix:</b> validation moved into <code>_key()</code>, where every caller passes through.</p>
+
+<h3>13 · Gates V0–V8</h3>
+<table>
+<tr><th style="width:14mm">Gate</th><th style="width:26mm">Status</th><th>What it asks, and where it stands</th></tr>
+<tr><td><b>V0</b></td><td class="bad">OPEN</td><td>Preconditions: 14 environment variables proven real. Locally: credentials absent; on your machine, satisfied.</td></tr>
+<tr><td><b>V1</b></td><td class="mid">READY</td><td>Pay Later sandbox probe — confirm the band <i>from the response</i>, never assume. Probe page built.</td></tr>
+<tr><td><b>V2</b></td><td class="ok">PASS</td><td>Code correctness: 170 tests, preflight 17/17, mutation 14/3, hand-read assertions.</td></tr>
+<tr><td><b>V3</b></td><td class="mid">READY</td><td>Five live calls, each independently verifiable in the dashboard. Instrument complete; credentials absent here.</td></tr>
+<tr><td><b>V4</b></td><td class="mid">READY</td><td>Live AI: safety half proven offline, quality half one key away.</td></tr>
+<tr><td><b>V5</b></td><td class="ok">PASS</td><td>Isolation, limits, no unauthenticated money action — 22 live checks. One item pending a redeploy.</td></tr>
+<tr><td><b>V6</b></td><td class="bad">OPEN</td><td>Deployment and durability. Item 6 (calendar for 1 and 10 Dec) done; the rest needs the URL.</td></tr>
+<tr><td><b>V7</b></td><td class="bad">CLOSED</td><td>Human validation, <b>n = 0</b>. Capture tooling and a rule engine are built; the conversations are the owner's.</td></tr>
+<tr><td><b>V8</b></td><td class="mid">READY</td><td>Outside-eye rehearsal: screen, protocol and timer built; <b>n = 0</b> until a stranger uses it.</td></tr>
+</table>
+
+<h3>14 · The scorecard</h3>
+<p>Scored against the five judged criteria, with the anchors published so a number means
+something. <code>scripts/scorecard.py</code> regenerates this from the repo.</p>
+<table>
+<tr><th style="width:42mm">Criterion</th><th class="num" style="width:14mm">Now</th><th class="num" style="width:24mm">After the plan</th><th>Why now is what it is</th></tr>
+<tr><td>Technological Implementation</td><td class="num bad">1.7</td><td class="num ok">4.5–5.0</td><td>depth is real, verifiability is zero: no PayPal call has happened</td></tr>
+<tr><td>Design</td><td class="num mid">4.0</td><td class="num ok">5.0</td><td>the screen is product-shaped; nobody can open it</td></tr>
+<tr><td>Potential Impact</td><td class="num mid">4.1</td><td class="num ok">4.5–5.0</td><td>sourced pain and a working refusal; no human has used it</td></tr>
+<tr><td>Innovation</td><td class="num mid">4.5</td><td class="num ok">4.5–5.0</td><td>3 entries in a field of 549; self-scored, so discounted</td></tr>
+<tr><td>Presentation</td><td class="num bad">0.0</td><td class="num ok">4.5</td><td>nothing recorded — the largest recoverable loss</td></tr>
+<tr class="hi"><td><b>Mean</b></td><td class="num"><b>≈ 3.0</b></td><td class="num"><b>≈ 4.5</b></td><td>everything weak is weak for one reason: nothing has left this machine</td></tr>
+</table>
+
+<h4>Points per hour, ranked</h4>
+<table class="keep">
+<tr><th>Move</th><th class="num">Hours</th><th class="num">Δ mean</th></tr>
+<tr><td><code>demo.py --live</code> — five real calls</td><td class="num">2</td><td class="num">+0.4</td></tr>
+<tr><td>Deploy + licence + <code>git init</code> + push</td><td class="num">1</td><td class="num">+0.3</td></tr>
+<tr><td><code>demo_ai.py --live</code> — real model behind the badge</td><td class="num">1</td><td class="num">+0.2</td></tr>
+<tr><td>Webhook id + one real transmission</td><td class="num">0.5</td><td class="num">+0.1</td></tr>
+<tr><td><code>/proof</code> page and <code>SECURITY.md</code></td><td class="num">2</td><td class="num">+0.2</td></tr>
+<tr class="hi"><td><b>Video, 2:40</b></td><td class="num">5</td><td class="num"><b>+0.9</b></td></tr>
+<tr><td>V8 rehearsal, then fix the copy it exposes</td><td class="num">1</td><td class="num">+0.2</td></tr>
+<tr><td>V7 conversations, or accept n = 0</td><td class="num">8</td><td class="num">+0.2</td></tr>
+</table>
+<p class="small">The three technical moves at the top are one afternoon. The video is worth
+more than everything technical that remains — and it is the one artefact every judge is
+guaranteed to consume.</p>
+
+</section>
+
+<!-- ============================== PART IV ============================== -->
+<section class="part">
+<div class="kicker">Part IV · The submission</div>
+<h2>The words, the pictures, the three minutes</h2>
+
+<h3>15 · Devpost copy</h3>
+<table>
+<tr><th style="width:34mm">Field</th><th>Answer</th></tr>
+<tr><td>Project name</td><td><b>Second Thought</b></td></tr>
+<tr><td>Elevator pitch</td><td>A checkout that says not yet. AI reads your month; if four payments would break it, PayPal invoices you on payday instead — and the merchant ships only once you've paid. <span class="small">(169 / 200 characters)</span></td></tr>
+<tr><td>Built with</td><td class="small">Python, PayPal, PayPal Orders API v2, PayPal Invoicing API, PayPal Webhooks, PayPal Sandbox, OAuth 2.0, SQLite, AI, Large Language Models, OpenAI API, JSON Mode, HTML, CSS, JavaScript, Render, GitHub, unittest</td></tr>
+<tr><td>Sponsor tool</td><td><b>Render</b> only. AG Grid, APIMatic, Postman, Elastic, Zapier, Channel3, Bryntum, Astropods, KERNEL: left blank rather than claimed.</td></tr>
+<tr><td>PayPal experience</td><td><b>8 / 10</b>, with the friction named: Pay Later eligibility is client-side, several v2 endpoints return 204 without <code>Prefer: return=representation</code>, OAuth answers form-encoded, invoices sit as DRAFT until sent, and webhook verification fails closed with no explanation</td></tr>
+</table>
+
+<h4>The story, in the order the form asks for</h4>
+<ol>
+<li><b>Inspiration</b> — every BNPL checkout asks how much and which country, never "can you carry this". Opens on the sourced numbers, then immediately on the counter-argument to its own statistic.</li>
+<li><b>What it does</b> — the projection, the floor test, three verdicts, and the two screens quoted verbatim.</li>
+<li><b>How we built it</b> — four layers, the PayPal surface by name, the AI boundary, the security model, 170 tests.</li>
+<li><b>Challenges</b> — the sandbox cannot originate a real Pay Later plan; the demo broke by itself; money in minor units; webhook verification with no dependencies.</li>
+<li><b>Accomplishments</b> — pay-before-ship enforced in code; the refusal that carries a number; a model with no vote; and the admission that we have not tested with users yet.</li>
+<li><b>What we learned</b> — the payment is not the decision; deterministic money, fluent language; fake transports beat mocks; nobody reads status codes.</li>
+<li><b>What's next</b> — five conversations this month, a merchant view, closing the loop on a native Pay Later plan, twelve weeks of dates.</li>
+</ol>
+
+<h3>16 · Assets</h3>
+<p>Eighteen assets, SVG source and PNG, generated from one palette so the logo, the diagrams
+and the product page cannot drift apart. Placeholders are pointless here: the mark is a solid
+thought and an open one, the same moment looked at twice.</p>
+<table>
+<tr><th style="width:52mm">Asset</th><th>Use</th></tr>
+<tr><td><code>logo-primary</code>, <code>logo-mono-white</code>, <code>logo-mark-white</code></td><td>README header, video title and end cards, this cover</td></tr>
+<tr><td><code>app-icon</code> 512², <code>favicon</code> 256²</td><td>avatar, listing, browser tab (the page serves the favicon as an inline data URI)</td></tr>
+<tr><td><code>devpost-thumbnail</code> 1280×720</td><td>the only image most judges see before deciding to click</td></tr>
+<tr><td><code>og-card</code> 1200×630</td><td>repository social preview</td></tr>
+<tr><td>7 diagrams</td><td>story illustrations and the video's technical beat</td></tr>
+</table>
+
+<h3>17 · The video</h3>
+<p>Two minutes forty, no slides, recorded after the outside-eye pass so the stuck points write
+the script rather than our enthusiasm.</p>
+<table>
+<tr><th style="width:18mm">Time</th><th style="width:52mm">On screen</th><th>Why it is there</th></tr>
+<tr><td class="mono">0:00</td><td>The DECLINE screen, unedited</td><td>Lead with the refusal. It is the whole idea in one sentence and no other entry opens with a "no"</td></tr>
+<tr><td class="mono">0:12</td><td>47% paid late · 63% stacked · 10,884 complaints</td><td>Impact, with the counter-argument on screen for two seconds so it reads as honesty, not hedging</td></tr>
+<tr><td class="mono">0:25</td><td>Cleo: collision named, <i>"up to $140.00 would work today"</i>, then re-run at $140 → OFFER</td><td>The product proves itself on camera</td></tr>
+<tr><td class="mono">0:55</td><td>Ben: DEFER → invoice dated to payday → paid → ships</td><td>The hero path, with the PayPal sandbox invoice visible in the dashboard</td></tr>
+<tr><td class="mono">1:35</td><td>Free text: messy month → what it read → flagged field</td><td>AI, visibly doing something a regex cannot</td></tr>
+<tr><td class="mono">1:55</td><td>Tampered approval → 403</td><td>Technological Implementation: a failure path, deliberately shown</td></tr>
+<tr><td class="mono">2:15</td><td>The boundary diagram, 6 seconds</td><td>"the model supplies facts, the engine supplies the verdict"</td></tr>
+<tr><td class="mono">2:30</td><td>Closing card; "researched and built by one person, not yet tested with users"</td><td>The claim we are allowed to make, made plainly</td></tr>
+</table>
+<div class="box warn">
+<h4>Rules for the recording</h4>
+<p>Under 3:00 with the runtime checked, not assumed. No music that needs a licence. No PayPal
+logo, wordmark or trade dress anywhere in frame — the word is fine in body copy. Every number
+spoken must exist in the repo. And the DECLINE case must be in it; a video that only shows an
+offer is a video of a different, much more common product.</p>
+</div>
+</section>
+
+<!-- ============================== PART V ============================== -->
+<section class="part">
+<div class="kicker">Part V · The honest parts</div>
+<h2>What is missing, what would lose, and what happens next</h2>
+
+<h3>18 · Limits, stated plainly</h3>
+<table>
+<tr><th style="width:50mm">Limit</th><th>What it costs, and what we say instead</th></tr>
+<tr><td>No live PayPal call in this workspace</td><td>Stage 1 asks whether PayPal is genuinely applied. The adapter is written and tested against a protocol-identical simulation; it has not moved sandbox money here. On your machine it does — and the artifacts go in the appendix.</td></tr>
+<tr><td>No users (n = 0)</td><td>The claim is <b>"researched, built and tested by us"</b>. Never "validated". Five conversations are scheduled; if they do not happen, the pitch says so early rather than being found out late.</td></tr>
+<tr><td>No stranger has tried the screen (V8, n = 0)</td><td>We wrote it to be understood and have not watched anyone try. The plain-language audit is a proxy, and it caught two real defects — it is not the same as comprehension.</td></tr>
+<tr><td>No deployment</td><td>Three gates and the video stand on a public URL. Until it exists, every Design claim is unverifiable by anyone.</td></tr>
+<tr><td>Session state is in memory</td><td>A redeploy logs everyone out. Correct for a demo, and said out loud rather than discovered by a judge.</td></tr>
+<tr><td>Pay Later cannot be originated in sandbox</td><td>Eligibility is decided client-side from amount and country. So the mechanic sits on AUTHORIZE and Invoicing, which we control end to end — a stronger promise than borrowing, and honestly labelled as a different primitive.</td></tr>
+</table>
+
+<h4>Three ways this loses anyway</h4>
+<ol>
+<li><b>The safe path gets taken.</b> A lookalike "AI shopping agent with a budget" sits in a
+cluster of 47. Anything that reads as responsible-lending advice is scored as a lecture. The
+refusal must be shown as a feature with a number in it.</li>
+<li><b>The claim outruns the evidence.</b> "Validated with users" at n = 0 is the fastest way to
+lose a judge who checks. The honesty costs nothing and buys the rest of the document.</li>
+<li><b>It is not there in December.</b> The rules require availability until 15 Dec. Memory
+sessions, a sleeping free tier, or a stale demo data set each break that — the date bug in §12
+was exactly this failure, and was found by luck rather than by design.</li>
+</ol>
+
+<h3>19 · The eight days</h3>
+<table>
+<tr><th style="width:26mm">When</th><th>What</th></tr>
+<tr><td>Day 1</td><td><code>demo.py --live</code> and <code>demo_ai.py --live</code>. Collect five artifacts and three dashboard screenshots. Badge flips.</td></tr>
+<tr><td>Day 2</td><td><code>git init</code>, <code>.gitignore</code>, <code>LICENSE</code>, push, deploy to Render on Starter, add the webhook id, take one verified transmission.</td></tr>
+<tr><td>Day 3</td><td><code>/proof</code> page, <code>SECURITY.md</code>, README privacy line, screenshots. Scorecard run with <code>--url</code>.</td></tr>
+<tr><td>Day 4</td><td>V8: one person, the URL, the repo, the README, no narration. Write down every stuck point — the script below is the whole of it.</td></tr>
+<tr><td>Day 5–6</td><td>Video: record from the stuck points, 2:40, under 3:00, DECLINE included.</td></tr>
+<tr><td>Day 7</td><td>Devpost form, thumbnail, all fields, internal submit and tag the commit.</td></tr>
+<tr><td>Day 8</td><td>Buffer. Nothing new ships. <code>main</code> stays stable to 15 Dec.</td></tr>
+</table>
+
+<div class="box" style="margin-top:14pt">
+<h4 style="margin-top:0">The V8 rehearsal, as a script</h4>
+<p class="small">Ninety seconds, one person who has never seen the screen, no explanation from
+you. Hand over a phone on <code>/checkout?persona=ada</code> and say nothing. Then ask these five
+questions in order and write down their answers verbatim:</p>
+<table class="keep" style="margin-bottom:6pt">
+<tr><th style="width:8mm">#</th><th>Ask</th><th style="width:66mm">Pass looks like</th></tr>
+<tr><td>1</td><td>Read the first screen out loud.</td><td>No question about what the product is; no request for context.</td></tr>
+<tr><td>2</td><td>Pick “defer”. What did you just agree to?</td><td>“Half now, half in a fortnight” without opening any help text.</td></tr>
+<tr><td>3</td><td>You want to pay early. Where do you go?</td><td>Finds the change control in under twenty seconds.</td></tr>
+<tr><td>4</td><td>Whose money is this, and is it a loan?</td><td>Says the shop’s money, through PayPal; says it is not credit.</td></tr>
+<tr><td>5</td><td>Change your mind and go back. Dead end?</td><td>Returns cleanly; the badge still tells the truth about what is paid.</td></tr>
+</table>
+<p class="small" style="margin-bottom:0">The first sentence out of their mouth containing
+“wait” or “so…” is the copy you rewrite that night — not a new feature. n = 1 beats n = 0 by
+enough that it is worth the hour.</p>
+</div>
+
+<h3>20 · Appendices</h3>
+
+<h4>A · File map</h4>
+<table>
+<tr><th style="width:60mm">Path</th><th>What it is</th></tr>
+<tr><td><code>product/secondthought/domain/</code></td><td>the verdict engine — cash flow, floor test, three answers, safe amount</td></tr>
+<tr><td><code>product/secondthought/app/</code></td><td>checkout orchestration, reservation lifecycle, approval gate</td></tr>
+<tr><td><code>product/secondthought/ai/</code></td><td>model reader, template fallback, the agent and its refusals</td></tr>
+<tr><td><code>product/secondthought/infra/</code></td><td>PayPal adapter, simulated gateway, SQLite, RSA, webhooks</td></tr>
+<tr><td><code>product/secondthought/interfaces/</code></td><td>HTTP, sessions, badges, personas, the shopper screen</td></tr>
+<tr><td><code>product/tests/</code></td><td>170 tests across 12 files</td></tr>
+<tr><td><code>product/scripts/</code></td><td>preflight, V0 check, two-jar security suite, cold check, V7 capture, V8 observer, scorecard, asset generators</td></tr>
+<tr><td><code>product/assets/</code></td><td>17 generated assets, SVG and PNG, plus a contact sheet</td></tr>
+<tr><td><code>docs/research/</code></td><td>50 documents: contest, intent, field, pain, capability, concepts</td></tr>
+<tr><td><code>docs/plan/</code></td><td>the plan of record, one document per gate, the scorecard, the submission kit</td></tr>
+</table>
+
+<h4>B · The environment contract (14 variables)</h4>
+<table>
+<tr><th style="width:52mm">Variable</th><th>Purpose</th></tr>
+<tr><td class="mono">PAYPAL_CLIENT_ID / _SECRET</td><td>sandbox app credentials; the badge reads SANDBOX only when both are present</td></tr>
+<tr><td class="mono">PAYPAL_WEBHOOK_ID</td><td>the id a webhook signature is verified against</td></tr>
+<tr><td class="mono">PAYPAL_ENV</td><td><code>sandbox</code>; the live adapter refuses anything else</td></tr>
+<tr><td class="mono">LLM_API_KEY / _MODEL / _BASE_URL</td><td>any OpenAI-compatible endpoint; absent means the template fallback and an honest badge</td></tr>
+<tr><td class="mono">LLM_DAILY_CALL_BUDGET</td><td>in-process backstop (1,500); the provider-side cap is the real protection</td></tr>
+<tr><td class="mono">APPROVAL_SECRET</td><td>signs approval tokens; a shipped default is reported by <code>/diagnostics</code>, not hidden</td></tr>
+<tr><td class="mono">DIAG_TOKEN</td><td>gates <code>/diagnostics</code>; unset means 404</td></tr>
+<tr><td class="mono">RENDER_API_KEY</td><td>read only by the precondition check, to prove the instance is paid rather than free</td></tr>
+<tr><td class="mono">ST_ENV / ST_DB_PATH / PORT</td><td>runtime; <code>ST_ENV=production</code> also disables <code>.env</code> loading</td></tr>
+</table>
+
+<h4>C · Commands</h4>
+<pre class="mono" style="background:#f6f7f9;padding:9pt;border-radius:3pt;font-size:8.1pt">cd product
+
+python3 -m secondthought.cli              # the whole engine in a terminal, no network
+python3 scripts/serve.py                  # the page on :8000
+python3 -m unittest discover -s tests -q  # 170 tests, 0.7 s
+bash scripts/v5_two_jars.sh               # 22 live security checks
+python3 scripts/preflight_deploy.py       # 17 checks on render.yaml
+python3 scripts/v0_check.py               # the precondition gate
+python3 demo.py --live                    # V3, five PayPal calls
+python3 demo_ai.py --live                 # V4, the real model
+python3 scripts/scorecard.py --url …      # the five criteria, measured
+python3 scripts/v8_observer.py --precheck --url …
+python3 scripts/make_assets.py && python3 scripts/make_diagrams.py \
+  && python3 scripts/make_diagrams_tech.py && python3 scripts/make_asset_index.py</pre>
+
+<h4>D · Sources</h4>
+<p class="small">Official Rules and the Devpost listing, retrieved 1 Nov 2026 · LendingTree BNPL
+late-payment survey, 2026 · CFPB BNPL market report, January 2025 · CFPB consumer complaint
+database, BNPL keyword, 2025–2026 · PayPal developer documentation: Orders v2, Invoicing v2,
+webhooks and the certificate chain · the 549-repo field scan performed for this project,
+1 Nov 2026. Every figure in this dossier traces to one of these; the ones that do not are
+labelled as estimates.</p>
+
+<div class="box" style="margin-top:16pt">
+</section>
+
+<section class="endpaper">
+<div class="endmark"><img src="../product/assets/svg/logo-mark.svg" alt=""></div>
+<h4>Closing</h4>
+<p>The strongest thing this project has is not the AI and not the API surface. It is that the
+system is willing to say no, and that the person who built it is willing to write down what
+did not work. Both are rare in a field of five hundred.</p>
+<p><b>Second Thought</b> · Python 3.11+ · no dependencies · 170 tests ·
+sandbox only · one page, three answers, one honest badge.</p>
+<p class="colophon">Researched, built and measured between 1 and 12 November 2026.
+Twenty pages, eight figures, one open gate that matters. This document was typeset from
+<code>docs/DOSSIER.html</code> by <code>docs/tools/build_dossier.py</code> and rebuilt from
+source every time a number in it changed — which is the only reason to trust the numbers.</p>
+</section>
+
+</body></html>
